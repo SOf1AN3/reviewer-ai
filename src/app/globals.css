@@ -1,26 +1,257 @@
 @import "tailwindcss";
 
+/* ============================================
+   NEO-BRUTALIST DESIGN SYSTEM
+   ============================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light Theme - Neo Brutalist */
+  --background: #f5f0e8;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #fbbf24;
+  --secondary-foreground: #1a1a1a;
+  --muted: #e5e5e5;
+  --muted-foreground: #666666;
+  --accent: #f472b6;
+  --accent-foreground: #1a1a1a;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #1a1a1a;
+  --input: #1a1a1a;
+  --ring: #2563eb;
+
+  /* Brutalist-specific tokens */
+  --brutal-shadow: 4px 4px 0px #1a1a1a;
+  --brutal-shadow-sm: 2px 2px 0px #1a1a1a;
+  --brutal-shadow-lg: 6px 6px 0px #1a1a1a;
+  --brutal-border: 2px solid #1a1a1a;
+  --brutal-border-thick: 3px solid #1a1a1a;
+
+  /* Score colors */
+  --score-great: #22c55e;
+  --score-good: #eab308;
+  --score-ok: #f97316;
+  --score-bad: #ef4444;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-score-great: var(--score-great);
+  --color-score-good: var(--score-good);
+  --color-score-ok: var(--score-ok);
+  --color-score-bad: var(--score-bad);
+  --color-brutal-shadow: var(--brutal-shadow);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark Theme - Neo Brutalist */
+.dark {
+  --background: #0a0a0f;
+  --foreground: #d4d4d8;
+  --card: #111118;
+  --card-foreground: #d4d4d8;
+  --primary: #3b82f6;
+  --primary-foreground: #0a0a0f;
+  --secondary: #d97706;
+  --secondary-foreground: #0a0a0f;
+  --muted: #18181f;
+  --muted-foreground: #71717a;
+  --accent: #db2777;
+  --accent-foreground: #0a0a0f;
+  --destructive: #dc2626;
+  --destructive-foreground: #0a0a0f;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #3b82f6;
+
+  --brutal-shadow: 4px 4px 0px #e4e4e7;
+  --brutal-shadow-sm: 2px 2px 0px #e4e4e7;
+  --brutal-shadow-lg: 6px 6px 0px #e4e4e7;
+  --brutal-border: 2px solid #e4e4e7;
+  --brutal-border-thick: 3px solid #e4e4e7;
+
+  --score-great: #16a34a;
+  --score-good: #ca8a04;
+  --score-ok: #ea580c;
+  --score-bad: #dc2626;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+* {
+  border-color: var(--border);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+}
+
+/* Brutalist scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+  border-left: 2px solid var(--border);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 2px solid var(--background);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.brutal-card {
+  background: var(--card);
+  border: var(--brutal-border-thick);
+  border-radius: 0px;
+  box-shadow: var(--brutal-shadow);
+  padding: 1.5rem;
+}
+
+.brutal-card-hover {
+  background: var(--card);
+  border: var(--brutal-border-thick);
+  border-radius: 0px;
+  box-shadow: var(--brutal-shadow);
+  padding: 1.5rem;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.brutal-card-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--brutal-shadow-lg);
+}
+
+.brutal-input {
+  background: var(--card);
+  border: var(--brutal-border);
+  border-radius: 0px;
+  box-shadow: var(--brutal-shadow-sm);
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  outline: none;
+}
+.brutal-input:focus {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--brutal-shadow);
+}
+
+.brutal-btn {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: var(--brutal-border-thick);
+  border-radius: 0px;
+  box-shadow: var(--brutal-shadow);
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.brutal-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--brutal-shadow-lg);
+}
+.brutal-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+.brutal-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--brutal-shadow);
+}
+
+.brutal-btn-secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.brutal-btn-accent {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.brutal-btn-destructive {
+  background: var(--destructive);
+  color: var(--destructive-foreground);
+}
+
+.brutal-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--border);
+  border-radius: 0px;
+  box-shadow: var(--brutal-shadow-sm);
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.brutal-tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 2px solid var(--border);
+  box-shadow: var(--brutal-shadow-sm);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes brutal-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+@keyframes brutal-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-brutal-shake {
+  animation: brutal-shake 0.3s ease-in-out;
+}
+
+.animate-brutal-bounce {
+  animation: brutal-bounce 0.5s ease-in-out infinite;
 }
