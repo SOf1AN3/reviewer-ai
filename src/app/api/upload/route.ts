@@ -52,7 +52,7 @@ export const POST = auth(async (req) => {
     switch (fileType) {
       case "pdf": {
         const result = await extractText(new Uint8Array(buffer), { mergePages: true });
-        text = cleanLatexText(result.text);
+        text = result.text;
         break;
       }
       case "docx": {
