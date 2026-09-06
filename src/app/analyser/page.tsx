@@ -37,10 +37,10 @@ export default function AnalyserPage() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-8 sm:py-12">
       <div className="mx-auto max-w-2xl">
         <div className="mb-8 text-center">
-          <h1 className="mb-2 text-3xl font-bold uppercase tracking-tight">
+          <h1 className="mb-2 text-2xl sm:text-3xl font-bold uppercase tracking-tight">
             Analyser un article
           </h1>
           <p className="text-muted-foreground">
@@ -49,8 +49,8 @@ export default function AnalyserPage() {
         </div>
 
         {isAnalyzing ? (
-          <div className="brutal-card p-12 text-center">
-            <div className="relative mx-auto mb-6 h-32 w-32">
+          <div className="brutal-card p-6 sm:p-12 text-center">
+            <div className="relative mx-auto mb-6 h-24 w-24 sm:h-32 sm:w-32">
               <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
                 <circle
                   cx="50"
@@ -77,7 +77,7 @@ export default function AnalyserPage() {
                 <span className="text-xs font-bold text-muted-foreground">%</span>
               </div>
             </div>
-            <p className="text-xl font-bold uppercase">Analyse en cours...</p>
+            <p className="text-lg sm:text-xl font-bold uppercase">Analyse en cours...</p>
             <p className="mt-2 text-sm text-muted-foreground">
               L&apos;IA analyse votre article. Cela peut prendre quelques minutes.
             </p>

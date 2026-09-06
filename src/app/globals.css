@@ -105,23 +105,29 @@
   border-color: var(--border);
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
 }
 
-/* Brutalist scrollbar */
-::-webkit-scrollbar {
-  width: 12px;
-}
-::-webkit-scrollbar-track {
-  background: var(--background);
-  border-left: 2px solid var(--border);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border: 2px solid var(--background);
+/* Brutalist scrollbar - hidden on mobile */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+    border-left: 2px solid var(--border);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border: 2px solid var(--background);
+  }
 }
 
 /* ============================================
@@ -133,7 +139,7 @@ body {
   border: var(--brutal-border-thick);
   border-radius: 0px;
   box-shadow: var(--brutal-shadow);
-  padding: 1.5rem;
+  padding: clamp(1rem, 4vw, 1.5rem);
 }
 
 .brutal-card-hover {
@@ -141,7 +147,7 @@ body {
   border: var(--brutal-border-thick);
   border-radius: 0px;
   box-shadow: var(--brutal-shadow);
-  padding: 1.5rem;
+  padding: clamp(1rem, 4vw, 1.5rem);
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 .brutal-card-hover:hover {

@@ -75,7 +75,7 @@ export default function AnalysePage() {
               {error || "Analyse non trouvée"}
             </p>
             <button
-              onClick={() => router.push("/")}
+onClick={() => router.push("/analyser")}
               className="brutal-btn mt-4 inline-flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -95,10 +95,10 @@ export default function AnalysePage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-6xl">
         {/* Back button */}
         <button
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/analyser")}
           className="brutal-btn mb-6 inline-flex items-center gap-2 text-xs"
         >
           <ArrowLeft className="h-4 w-4" />

@@ -24,7 +24,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const stored = localStorage.getItem("paperlens-theme") as Theme | null;
+    const stored = localStorage.getItem("papernote-theme") as Theme | null;
     if (stored) {
       setTheme(stored);
       document.documentElement.classList.toggle("dark", stored === "dark");
@@ -38,7 +38,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const toggleTheme = () => {
     const next = theme === "light" ? "dark" : "light";
     setTheme(next);
-    localStorage.setItem("paperlens-theme", next);
+    localStorage.setItem("papernote-theme", next);
     document.documentElement.classList.toggle("dark", next === "dark");
   };
 

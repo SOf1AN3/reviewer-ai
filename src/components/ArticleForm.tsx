@@ -199,7 +199,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
       </div>
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <label
             htmlFor="contenu"
             className="text-sm font-bold uppercase tracking-wider"
@@ -227,7 +227,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
           value={contenu}
           onChange={(e) => setContenu(e.target.value)}
           placeholder="Collez ici le contenu complet de votre article scientifique..."
-          className="brutal-input h-72 w-full resize-none"
+          className="brutal-input h-48 sm:h-72 w-full resize-none"
           required
         />
         <p className="text-xs font-mono font-bold text-muted-foreground">

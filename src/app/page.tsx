@@ -3,7 +3,6 @@
 import Link from "next/link";
 import {
   FlaskConical,
-  Zap,
   FileText,
   BarChart3,
   CheckCircle,
@@ -71,10 +70,10 @@ export default function Home() {
       {/* Hero */}
       <section className="container mx-auto px-4 pb-16 pt-20 text-center">
         <div className="mx-auto max-w-3xl">
-          <div className="mb-8 inline-flex items-center justify-center bg-secondary px-6 py-4 border-3 border-border shadow-[4px_4px_0px_var(--border)]">
-            <FlaskConical className="h-14 w-14 text-foreground" />
+          <div className="mb-8 inline-flex items-center justify-center bg-secondary px-4 py-3 sm:px-6 sm:py-4 border-3 border-border shadow-[4px_4px_0px_var(--border)]">
+            <FlaskConical className="h-10 w-10 sm:h-14 sm:w-14 text-foreground" />
           </div>
-          <h1 className="mb-6 text-5xl font-bold uppercase tracking-tight sm:text-6xl">
+          <h1 className="mb-6 text-3xl font-bold uppercase tracking-tight sm:text-5xl lg:text-6xl">
             Peer review augmenté par l&apos;IA
           </h1>
           <p className="mb-8 text-lg text-muted-foreground sm:text-xl">
@@ -83,24 +82,19 @@ export default function Home() {
             concrètes.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href="/register" className="brutal-btn flex items-center gap-2 px-8 py-4 text-base">
+            <Link href="/analyser" className="brutal-btn flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base">
               Commencer l&apos;analyse
               <ArrowRight className="h-5 w-5" />
             </Link>
-            <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-secondary" />
-              <span className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
-                Propulsé par Gemini AI
-              </span>
-            </div>
+
           </div>
         </div>
       </section>
 
       {/* Fonctionnalités */}
-      <section className="border-y-[3px] border-border bg-card py-16">
+      <section className="border-y-[3px] border-border bg-card py-10 sm:py-16">
         <div className="container mx-auto px-4">
-          <h2 className="mb-12 text-center text-3xl font-bold uppercase tracking-tight">
+          <h2 className="mb-8 sm:mb-12 text-center text-2xl sm:text-3xl font-bold uppercase tracking-tight">
             Tout pour analyser vos articles
           </h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -120,9 +114,9 @@ export default function Home() {
       </section>
 
       {/* Comment ça marche */}
-      <section className="py-16">
+      <section className="py-10 sm:py-16">
         <div className="container mx-auto px-4">
-          <h2 className="mb-12 text-center text-3xl font-bold uppercase tracking-tight">
+          <h2 className="mb-8 sm:mb-12 text-center text-2xl sm:text-3xl font-bold uppercase tracking-tight">
             Comment ça marche
           </h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -147,9 +141,9 @@ export default function Home() {
       </section>
 
       {/* Critères d'analyse */}
-      <section className="border-y-[3px] border-border bg-card py-16">
+      <section className="border-y-[3px] border-border bg-card py-10 sm:py-16">
         <div className="container mx-auto px-4">
-          <h2 className="mb-4 text-center text-3xl font-bold uppercase tracking-tight">
+          <h2 className="mb-4 text-center text-2xl sm:text-3xl font-bold uppercase tracking-tight">
             8 critères d&apos;évaluation
           </h2>
           <p className="mb-12 text-center text-muted-foreground">
@@ -172,10 +166,10 @@ export default function Home() {
       </section>
 
       {/* CTA final */}
-      <section className="py-16">
+      <section className="py-10 sm:py-16">
         <div className="container mx-auto px-4 text-center">
           <div className="mx-auto max-w-2xl">
-            <h2 className="mb-4 text-3xl font-bold uppercase tracking-tight">
+            <h2 className="mb-4 text-2xl sm:text-3xl font-bold uppercase tracking-tight">
               Prêt à analyser votre article ?
             </h2>
             <p className="mb-8 text-muted-foreground">
@@ -184,7 +178,7 @@ export default function Home() {
             </p>
             <Link
               href="/register"
-              className="brutal-btn inline-flex items-center gap-2 px-8 py-4 text-base"
+              className="brutal-btn inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base"
             >
               Créer un compte gratuit
               <ArrowRight className="h-5 w-5" />
@@ -198,7 +192,7 @@ export default function Home() {
         <div className="container mx-auto px-4 text-center">
           <div className="inline-block border-2 border-border bg-background px-6 py-3 shadow-[2px_2px_0px_var(--border)]">
             <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              PaperLens utilise l&apos;IA pour fournir des analyses indicatives.
+              PaperNote utilise l&apos;IA pour fournir des analyses indicatives.
             </p>
             <p className="mt-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
               Les résultats ne remplacent pas la relecture par un pair expert.

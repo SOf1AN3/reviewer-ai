@@ -79,12 +79,12 @@ export default function HistoriquePage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mx-auto max-w-3xl">
-        <h1 className="mb-8 text-3xl font-bold uppercase tracking-tight">
+        <h1 className="mb-8 text-2xl sm:text-3xl font-bold uppercase tracking-tight">
           Historique des analyses
         </h1>
 
         {history.length === 0 ? (
-          <div className="brutal-card p-12 text-center">
+          <div className="brutal-card p-8 sm:p-12 text-center">
             <FlaskConical className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
             <p className="text-lg font-bold uppercase">
               Aucune analyse pour le moment
@@ -93,7 +93,7 @@ export default function HistoriquePage() {
               Analysez votre premier article pour commencer.
             </p>
             <button
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/analyser")}
               className="brutal-btn mt-6 inline-flex items-center gap-2"
             >
               Analyser un article

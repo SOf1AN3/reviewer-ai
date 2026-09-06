@@ -18,7 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PaperLens - Analyse d'articles scientifiques par IA",
+  title: "PaperNote - Analyse d'articles scientifiques",
   description:
     "Analysez vos articles scientifiques avec l'intelligence artificielle. Obtenez une note détaillée et un rapport complet.",
 };

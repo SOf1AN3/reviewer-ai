@@ -54,13 +54,13 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-8 sm:py-12">
       <div className="mx-auto max-w-md">
         <div className="mb-8 text-center">
           <div className="mb-4 inline-flex items-center justify-center bg-secondary px-4 py-3 border-2 border-border shadow-[3px_3px_0px_var(--border)]">
             <FlaskConical className="h-8 w-8 text-foreground" />
           </div>
-          <h1 className="mb-2 text-3xl font-bold uppercase tracking-tight">
+          <h1 className="mb-2 text-2xl sm:text-3xl font-bold uppercase tracking-tight">
             Inscription
           </h1>
           <p className="text-sm text-muted-foreground">
