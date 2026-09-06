@@ -9,24 +9,6 @@ export function buildAnalysisPrompt(article: ArticleInput): string {
     )
     .join("\n");
 
-  const artefactInstructions = `
-## Instructions critiques sur le texte fourni
-
-Le texte de l'article ci-dessus peut contenir des **artefacts de conversion** issus du processus d'extraction automatique. Ces artefacts proviennent du pipeline de traitement et **NE SONT PAS des problèmes de l'article original**.
-
-Tu dois impérativement ignorer les éléments suivants dans ton évaluation :
-- Symboles mathématiques convertis en Unicode (ex: symboles de sommation, intégration, lettres grecques, etc.)
-- Equations presentees en texte brut avec des carets et underscores
-- Artefacts de tableaux (separateurs pipe, cellules mal formatees)
-- Espacements ou sauts de ligne inhabituels
-- Caracteres manquants ou degrades dus a l'extraction
-
-**Concentre-toi UNIQUEMENT sur le fond scientifique** : rigueur methodologique, originalite, qualite de l'argumentation, solidite des resultats, pertinence des references, et clarte de la redaction.
-
-Ne signale jamais les artefacts de conversion comme des faiblesses de l'article. Si le texte paraît corrompu à certains endroits, considère-le comme une limitation de l'extraction et évalue le contenu tel qu'il est intelligible.
-
-Sois exigeant mais juste dans ton évaluation. Chaque commentaire doit être spécifique et constructif.`;
-
   return `Tu es un relecteur scientifique expert. Tu dois analyser l'article scientifique suivant et fournir une évaluation détaillée.
 
 ## Critères d'analyse
@@ -47,34 +29,39 @@ ${article.contenu}
 Tu dois impérativement répondre en JSON valide avec la structure suivante (sans markdown, sans texte avant ou après le JSON) :
 
 {
-  "noteGlobale": NOMBRE,
+  "noteGlobale": <nombre entre 0 et 100>,
   "notesParCritere": {
-    "rigueur_methode": NOMBRE,
-    "originalite": NOMBRE,
-    "revue_litterature": NOMBRE,
-    "clarte_redaction": NOMBRE,
-    "resultats_analyse": NOMBRE,
-    "discussion_implications": NOMBRE,
-    "conformite_normes": NOMBRE,
-    "impact_potentiel": NOMBRE
+    "rigueur_methode": <nombre 0-100>,
+    "originalite": <nombre 0-100>,
+    "revue_litterature": <nombre 0-100>,
+    "clarte_redaction": <nombre 0-100>,
+    "resultats_analyse": <nombre 0-100>,
+    "discussion_implications": <nombre 0-100>,
+    "conformite_normes": <nombre 0-100>,
+    "impact_potentiel": <nombre 0-100>
   },
   "rapport": {
-    "resume": "RESUME_DE_2_3_phrases",
-    "points_forts": ["POINT_FORT_1", "POINT_FORT_2", "POINT_FORT_3"],
-    "points_a_ameliorer": ["AMELIORATION_1", "AMELIORATION_2", "AMELIORATION_3"],
+    "resume": "<résumé de 2-3 phrases de ton évaluation globale>",
+    "points_forts": ["<point fort 1>", "<point fort 2>", "<point fort 3>"],
+    "points_a_ameliorer": ["<amélioration 1>", "<amélioration 2>", "<amélioration 3>"],
     "sections": {
-      "rigueur_methode": { "note": NOMBRE, "commentaire": "COMMENTAIRE_DETAILLE" },
-      "originalite": { "note": NOMBRE, "commentaire": "COMMENTAIRE_DETAILLE" },
-      "revue_litterature": { "note": NOMBRE, "commentaire": "COMMENTAIRE_DETAILLE" },
-      "clarte_redaction": { "note": NOMBRE, "commentaire": "COMMENTAIRE_DETAILLE" },
-      "resultats_analyse": { "note": NOMBRE, "commentaire": "COMMENTAIRE_DETAILLE" },
-      "discussion_implications": { "note": NOMBRE, "commentaire": "COMMENTAIRE_DETAILLE" },
-      "conformite_normes": { "note": NOMBRE, "commentaire": "COMMENTAIRE_DETAILLE" },
-      "impact_potentiel": { "note": NOMBRE, "commentaire": "COMMENTAIRE_DETAILLE" }
+      "rigueur_methode": { "note": <0-100>, "commentaire": "<commentaire détaillé>" },
+      "originalite": { "note": <0-100>, "commentaire": "<commentaire détaillé>" },
+      "revue_litterature": { "note": <0-100>, "commentaire": "<commentaire détaillé>" },
+      "clarte_redaction": { "note": <0-100>, "commentaire": "<commentaire détaillé>" },
+      "resultats_analyse": { "note": <0-100>, "commentaire": "<commentaire détaillé>" },
+      "discussion_implications": { "note": <0-100>, "commentaire": "<commentaire détaillé>" },
+      "conformite_normes": { "note": <0-100>, "commentaire": "<commentaire détaillé>" },
+      "impact_potentiel": { "note": <0-100>, "commentaire": "<commentaire détaillé>" }
     },
-    "recommandations": ["RECOMMANDATION_1", "RECOMMANDATION_2", "RECOMMANDATION_3"],
-    "verdict": "VERDICT"
+    "recommandations": ["<recommandation 1>", "<recommandation 2>", "<recommandation 3>"],
+    "verdict": "<verdict court : 'Article accepté', 'Révisions mineures requises', 'Révisions majeures requises', ou 'Rejeté'>"
   }
 }
-${artefactInstructions}`;
+
+## Note importante
+
+Le texte de l'article peut contenir des artefacts de conversion issus de l'extraction automatique (symboles Unicode, espacements inhabituels). Ces artefacts proviennent du pipeline de traitement et ne sont pas des problèmes de l'article original. Évalue le contenu scientifique en te basant sur ce qui est intelligible.
+
+Sois exigeant mais juste dans ton évaluation. Chaque commentaire doit être spécifique et constructif.`;
 }
