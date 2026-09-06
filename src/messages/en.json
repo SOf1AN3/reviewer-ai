@@ -1,0 +1,156 @@
+{
+  "metadata": {
+    "title": "PaperNote - Scientific Article Analysis",
+    "description": "Analyze your scientific articles with artificial intelligence. Get a detailed score and comprehensive report."
+  },
+  "home": {
+    "heroTitle": "AI-Powered Peer Review",
+    "heroDescription": "Submit your scientific article and get a detailed analysis with a score, comprehensive report, and actionable recommendations.",
+    "heroCta": "Start Analysis",
+    "featuresTitle": "Everything to Analyze Your Articles",
+    "features": [
+      {
+        "title": "Advanced AI Analysis",
+        "description": "Our AI evaluates your article based on 8 scientific criteria and provides a score out of 100."
+      },
+      {
+        "title": "Detailed Score",
+        "description": "Get a numeric evaluation per criterion with a complete strengths/weaknesses report."
+      },
+      {
+        "title": "Multiple Formats",
+        "description": "Import your articles in PDF, DOCX, TEX, TXT or MD. Drag and drop or paste the text."
+      },
+      {
+        "title": "Recommendations",
+        "description": "A clear verdict: Accepted, Minor Revisions, Major Revisions, or Rejected."
+      }
+    ],
+    "stepsTitle": "How It Works",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Submit Your Article",
+        "description": "Paste the content or import a file. Add title, author(s) and target journal."
+      },
+      {
+        "number": "02",
+        "title": "In-Depth AI Analysis",
+        "description": "Gemini AI evaluates your article based on 8 rigorous scientific criteria."
+      },
+      {
+        "number": "03",
+        "title": "Receive Your Report",
+        "description": "Overall score, per-criterion details, strengths, weaknesses, and concrete recommendations."
+      }
+    ],
+    "criteriaTitle": "8 Evaluation Criteria",
+    "criteriaDescription": "Each article is analyzed based on these scientific criteria.",
+    "ctaTitle": "Ready to Analyze Your Article?",
+    "ctaDescription": "Create your free account and get a detailed analysis of your scientific article.",
+    "ctaButton": "Create Free Account",
+    "footerDisclaimer1": "PaperNote uses AI to provide indicative analyses.",
+    "footerDisclaimer2": "Results do not replace peer review by an expert.",
+    "footerLogin": "Login",
+    "footerRegister": "Sign Up"
+  },
+  "header": {
+    "analyze": "Analyze",
+    "history": "History",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Sign Up",
+    "toggleTheme": "Toggle theme"
+  },
+  "login": {
+    "title": "Login",
+    "subtitle": "Sign in to analyze your articles",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "submit": "Sign In",
+    "googleSubmit": "Sign in with Google",
+    "or": "or",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign Up",
+    "errorCredentials": "Incorrect email or password",
+    "errorGeneric": "An error occurred"
+  },
+  "register": {
+    "title": "Sign Up",
+    "subtitle": "Create your account to get started",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Minimum 8 characters",
+    "submit": "Create My Account",
+    "googleSubmit": "Sign up with Google",
+    "or": "or",
+    "hasAccount": "Already have an account?",
+    "signIn": "Sign In",
+    "errorGeneric": "Registration error",
+    "errorLoginFailed": "Account created but login failed. Please sign in.",
+    "errorUnexpected": "An error occurred"
+  },
+  "analyze": {
+    "title": "Analyze an Article",
+    "subtitle": "Submit your article and get a detailed AI analysis.",
+    "progressTitle": "Analysis in Progress...",
+    "progressDescription": "The AI is analyzing your article. This may take a few minutes."
+  },
+  "articleForm": {
+    "titleLabel": "Article Title *",
+    "titlePlaceholder": "Title of your scientific article",
+    "author": "Author(s)",
+    "authorPlaceholder": "Author name(s)",
+    "journal": "Target Journal",
+    "journalPlaceholder": "e.g. Nature, Science, Lancet...",
+    "contentLabel": "Article Content *",
+    "contentPlaceholder": "Paste the full content of your scientific article here...",
+    "importFile": "Import a file",
+    "importing": "Importing...",
+    "dropzoneTitle": "Drop your file here",
+    "dropzoneFormats": "PDF, DOCX, TEX, TXT or MD",
+    "charCount": "characters • Min. 100 required",
+    "submitAnalyzing": "Analysis in progress...",
+    "submitButton": "Analyze Article",
+    "errorUpload": "Error reading file",
+    "errorUploadImport": "Error importing file",
+    "errorAnalysis": "Error during analysis",
+    "errorUnknown": "Unknown error"
+  },
+  "historique": {
+    "title": "Analysis History",
+    "loading": "Loading history...",
+    "emptyTitle": "No analyses yet",
+    "emptyDescription": "Analyze your first article to get started.",
+    "emptyButton": "Analyze an Article",
+    "errorLoading": "Error loading data",
+    "errorUnknown": "Unknown error"
+  },
+  "analyseDetail": {
+    "loading": "Loading analysis...",
+    "notFound": "Analysis not found",
+    "backHome": "Back to Home",
+    "newAnalysis": "New Analysis",
+    "analyzedOn": "Analyzed on"
+  },
+  "result": {
+    "overallScore": "Overall Score",
+    "scoreByCriteria": "Score by Criterion",
+    "strengths": "Strengths",
+    "weaknesses": "Areas for Improvement",
+    "recommendations": "Recommendations",
+    "detailedAnalysis": "Detailed Analysis by Criterion"
+  },
+  "criteria": {
+    "rigueur_methode": "Methodological Rigor",
+    "originalite": "Originality & Novelty",
+    "revue_litterature": "Literature Review Quality",
+    "clarte_redaction": "Writing Clarity",
+    "resultats_analyse": "Results & Analysis Quality",
+    "discussion_implications": "Discussion & Implications",
+    "conformite_normes": "Standards Compliance",
+    "impact_potentiel": "Potential Impact"
+  }
+}

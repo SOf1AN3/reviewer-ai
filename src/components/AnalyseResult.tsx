@@ -1,7 +1,8 @@
 "use client";
 
 import type { AnalyseResult } from "@/lib/types";
-import { criteres } from "@/config/crits";
+import { useI18n } from "./I18nProvider";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import {
   CheckCircle,
   AlertCircle,
@@ -86,6 +87,17 @@ function CritereBar({ note, label }: { note: number; label: string }) {
   );
 }
 
+const criteriaIds = [
+  "rigueur_methode",
+  "originalite",
+  "revue_litterature",
+  "clarte_redaction",
+  "resultats_analyse",
+  "discussion_implications",
+  "conformite_normes",
+  "impact_potentiel",
+] as const;
+
 export function NoteGlobaleCard({
   noteGlobale,
   verdict,
@@ -95,11 +107,14 @@ export function NoteGlobaleCard({
   verdict: string;
   resume: string;
 }) {
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
+
   return (
     <div className="brutal-card">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
         <Target className="h-5 w-5" />
-        Note globale
+        {dict.result.overallScore}
       </h2>
       <div className="flex flex-col sm:flex-row items-start gap-6">
         <NoteGauge note={noteGlobale} />
@@ -119,18 +134,21 @@ export function NotesParCritereCard({
 }: {
   notesParCritere: Record<string, number>;
 }) {
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
+
   return (
     <div className="brutal-card">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
         <TrendingUp className="h-5 w-5" />
-        Notes par critère
+        {dict.result.scoreByCriteria}
       </h2>
       <div className="grid gap-4 md:grid-cols-2">
-        {criteres.map((critere) => (
+        {criteriaIds.map((id) => (
           <CritereBar
-            key={critere.id}
-            note={notesParCritere[critere.id] || 0}
-            label={critere.label}
+            key={id}
+            note={notesParCritere[id] || 0}
+            label={dict.criteria[id]}
           />
         ))}
       </div>
@@ -143,11 +161,14 @@ export function PointsFortsCard({
 }: {
   points: string[];
 }) {
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
+
   return (
     <div className="brutal-card">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider text-score-great">
         <CheckCircle className="h-5 w-5" />
-        Points forts
+        {dict.result.strengths}
       </h2>
       <ul className="space-y-3">
         {points.map((point, i) => (
@@ -168,11 +189,14 @@ export function PointsAmeliorerCard({
 }: {
   points: string[];
 }) {
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
+
   return (
     <div className="brutal-card">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider text-score-ok">
         <AlertCircle className="h-5 w-5" />
-        Points à améliorer
+        {dict.result.weaknesses}
       </h2>
       <ul className="space-y-3">
         {points.map((point, i) => (
@@ -193,11 +217,14 @@ export function RecommandationsCard({
 }: {
   recommandations: string[];
 }) {
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
+
   return (
     <div className="brutal-card">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
         <Lightbulb className="h-5 w-5" />
-        Recommandations
+        {dict.result.recommendations}
       </h2>
       <ul className="space-y-3">
         {recommandations.map((rec, i) => (
@@ -216,14 +243,17 @@ export function AnalyseDetailleeCard({
 }: {
   rapport: AnalyseResult["rapport"];
 }) {
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
+
   return (
     <div className="brutal-card">
       <h2 className="mb-4 text-lg font-bold uppercase tracking-wider">
-        Analyse détaillée par critère
+        {dict.result.detailedAnalysis}
       </h2>
       <div className="space-y-4">
-        {criteres.map((critere) => {
-          const section = rapport.sections[critere.id];
+        {criteriaIds.map((id) => {
+          const section = rapport.sections[id];
           if (!section) return null;
           const scoreColor =
             section.note >= 80
@@ -235,12 +265,12 @@ export function AnalyseDetailleeCard({
               : "text-score-bad border-score-bad";
           return (
             <div
-              key={critere.id}
+              key={id}
               className="border-b-2 border-border pb-4 last:border-0"
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-bold uppercase tracking-wider text-sm">
-                  {critere.label}
+                  {dict.criteria[id]}
                 </h3>
                 <span
                   className={`font-mono text-sm font-bold border-2 px-2 py-0.5 ${scoreColor}`}

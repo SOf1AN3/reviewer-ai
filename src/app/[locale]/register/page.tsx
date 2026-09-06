@@ -5,9 +5,13 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FlaskConical, Loader2, UserPlus } from "lucide-react";
+import { useI18n } from "@/components/I18nProvider";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +33,7 @@ export default function RegisterPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "Erreur lors de l'inscription");
+        setError(data.error || dict.register.errorGeneric);
         return;
       }
 
@@ -40,14 +44,14 @@ export default function RegisterPage() {
       });
 
       if (result?.error) {
-        setError("Compte créé mais connexion échouée. Veuillez vous connecter.");
-        router.push("/login");
+        setError(dict.register.errorLoginFailed);
+        router.push(`/${locale}/login`);
       } else {
-        router.push("/");
+        router.push(`/${locale}`);
         router.refresh();
       }
     } catch {
-      setError("Une erreur est survenue");
+      setError(dict.register.errorUnexpected);
     } finally {
       setLoading(false);
     }
@@ -61,10 +65,10 @@ export default function RegisterPage() {
             <FlaskConical className="h-8 w-8 text-foreground" />
           </div>
           <h1 className="mb-2 text-2xl sm:text-3xl font-bold uppercase tracking-tight">
-            Inscription
+            {dict.register.title}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Créez votre compte pour commencer
+            {dict.register.subtitle}
           </p>
         </div>
 
@@ -81,7 +85,7 @@ export default function RegisterPage() {
                 htmlFor="name"
                 className="mb-1 block text-xs font-bold uppercase tracking-wider"
               >
-                Nom
+                {dict.register.nameLabel}
               </label>
               <input
                 id="name"
@@ -89,7 +93,7 @@ export default function RegisterPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="brutal-input w-full"
-                placeholder="Votre nom"
+                placeholder={dict.register.namePlaceholder}
                 required
               />
             </div>
@@ -99,7 +103,7 @@ export default function RegisterPage() {
                 htmlFor="email"
                 className="mb-1 block text-xs font-bold uppercase tracking-wider"
               >
-                Email
+                {dict.register.emailLabel}
               </label>
               <input
                 id="email"
@@ -117,7 +121,7 @@ export default function RegisterPage() {
                 htmlFor="password"
                 className="mb-1 block text-xs font-bold uppercase tracking-wider"
               >
-                Mot de passe
+                {dict.register.passwordLabel}
               </label>
               <input
                 id="password"
@@ -125,7 +129,7 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="brutal-input w-full"
-                placeholder="8 caractères minimum"
+                placeholder={dict.register.passwordPlaceholder}
                 minLength={8}
                 required
               />
@@ -141,20 +145,20 @@ export default function RegisterPage() {
               ) : (
                 <UserPlus className="h-4 w-4" />
               )}
-              Créer mon compte
+              {dict.register.submit}
             </button>
           </form>
 
           <div className="my-6 flex items-center gap-3">
             <div className="h-px flex-1 bg-border" />
             <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              ou
+              {dict.register.or}
             </span>
             <div className="h-px flex-1 bg-border" />
           </div>
 
           <button
-            onClick={() => signIn("google", { callbackUrl: "/" })}
+            onClick={() => signIn("google", { callbackUrl: `/${locale}` })}
             className="brutal-btn-secondary brutal-btn w-full flex items-center justify-center gap-2"
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24">
@@ -175,17 +179,17 @@ export default function RegisterPage() {
                 fill="#EA4335"
               />
             </svg>
-            S&apos;inscrire avec Google
+            {dict.register.googleSubmit}
           </button>
         </div>
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          Déjà un compte ?{" "}
+          {dict.register.hasAccount}{" "}
           <Link
-            href="/login"
+            href={`/${locale}/login`}
             className="font-bold text-primary underline-offset-4 hover:underline"
           >
-            Se connecter
+            {dict.register.signIn}
           </Link>
         </p>
       </div>

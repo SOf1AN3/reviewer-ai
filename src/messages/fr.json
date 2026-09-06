@@ -1,0 +1,156 @@
+{
+  "metadata": {
+    "title": "PaperNote - Analyse d'articles scientifiques",
+    "description": "Analysez vos articles scientifiques avec l'intelligence artificielle. Obtenez une note détaillée et un rapport complet."
+  },
+  "home": {
+    "heroTitle": "Peer review augmenté par l'IA",
+    "heroDescription": "Soumettez votre article scientifique et obtenez une analyse détaillée avec une note, un rapport complet et des recommandations concrètes.",
+    "heroCta": "Commencer l'analyse",
+    "featuresTitle": "Tout pour analyser vos articles",
+    "features": [
+      {
+        "title": "Analyse IA avancée",
+        "description": "Notre IA évalue votre article selon 8 critères scientifiques et fournit une note sur 100."
+      },
+      {
+        "title": "Note détaillée",
+        "description": "Obtenez une évaluation chiffrée par critère avec un rapport complet forces/faiblesses."
+      },
+      {
+        "title": "Formats multiples",
+        "description": "Importez vos articles en PDF, DOCX, TEX, TXT ou MD. Glissez-déposez ou collez le texte."
+      },
+      {
+        "title": "Recommandations",
+        "description": "Un verdict clair : Accepté, Révisions mineures, Révisions majeures, ou Rejeté."
+      }
+    ],
+    "stepsTitle": "Comment ça marche",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Soumettez votre article",
+        "description": "Collez le contenu ou importez un fichier. Ajoutez titre, auteur(s) et revue ciblée."
+      },
+      {
+        "number": "02",
+        "title": "L'IA analyse en profondeur",
+        "description": "Gemini AI évalue votre article selon 8 critères scientifiques rigoureux."
+      },
+      {
+        "number": "03",
+        "title": "Recevez votre rapport",
+        "description": "Note globale, détails par critère, forces, faiblesses et recommandations concrètes."
+      }
+    ],
+    "criteriaTitle": "8 critères d'évaluation",
+    "criteriaDescription": "Chaque article est analysé selon ces critères scientifiques.",
+    "ctaTitle": "Prêt à analyser votre article ?",
+    "ctaDescription": "Créez votre compte gratuitement et obtenez une analyse détaillée de votre article scientifique.",
+    "ctaButton": "Créer un compte gratuit",
+    "footerDisclaimer1": "PaperNote utilise l'IA pour fournir des analyses indicatives.",
+    "footerDisclaimer2": "Les résultats ne remplacent pas la relecture par un pair expert.",
+    "footerLogin": "Connexion",
+    "footerRegister": "Inscription"
+  },
+  "header": {
+    "analyze": "Analyser",
+    "history": "Historique",
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "register": "Inscription",
+    "toggleTheme": "Changer de thème"
+  },
+  "login": {
+    "title": "Connexion",
+    "subtitle": "Connectez-vous pour analyser vos articles",
+    "emailLabel": "Email",
+    "passwordLabel": "Mot de passe",
+    "submit": "Se connecter",
+    "googleSubmit": "Se connecter avec Google",
+    "or": "ou",
+    "noAccount": "Pas encore de compte ?",
+    "signUp": "S'inscrire",
+    "errorCredentials": "Email ou mot de passe incorrect",
+    "errorGeneric": "Une erreur est survenue"
+  },
+  "register": {
+    "title": "Inscription",
+    "subtitle": "Créez votre compte pour commencer",
+    "nameLabel": "Nom",
+    "namePlaceholder": "Votre nom",
+    "emailLabel": "Email",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "8 caractères minimum",
+    "submit": "Créer mon compte",
+    "googleSubmit": "S'inscrire avec Google",
+    "or": "ou",
+    "hasAccount": "Déjà un compte ?",
+    "signIn": "Se connecter",
+    "errorGeneric": "Erreur lors de l'inscription",
+    "errorLoginFailed": "Compte créé mais connexion échouée. Veuillez vous connecter.",
+    "errorUnexpected": "Une erreur est survenue"
+  },
+  "analyze": {
+    "title": "Analyser un article",
+    "subtitle": "Soumettez votre article et obtenez une analyse détaillée par IA.",
+    "progressTitle": "Analyse en cours...",
+    "progressDescription": "L'IA analyse votre article. Cela peut prendre quelques minutes."
+  },
+  "articleForm": {
+    "titleLabel": "Titre de l'article *",
+    "titlePlaceholder": "Titre de votre article scientifique",
+    "author": "Auteur(s)",
+    "authorPlaceholder": "Nom de(s) auteur(s)",
+    "journal": "Revue ciblée",
+    "journalPlaceholder": "Ex : Nature, Science, Lancet...",
+    "contentLabel": "Contenu de l'article *",
+    "contentPlaceholder": "Collez ici le contenu complet de votre article scientifique...",
+    "importFile": "Importer un fichier",
+    "importing": "Import...",
+    "dropzoneTitle": "Déposez votre fichier ici",
+    "dropzoneFormats": "PDF, DOCX, TEX, TXT ou MD",
+    "charCount": "caractères • Min. 100 requis",
+    "submitAnalyzing": "Analyse en cours...",
+    "submitButton": "Analyser l'article",
+    "errorUpload": "Erreur lors de la lecture du fichier",
+    "errorUploadImport": "Erreur lors de l'import du fichier",
+    "errorAnalysis": "Erreur lors de l'analyse",
+    "errorUnknown": "Erreur inconnue"
+  },
+  "historique": {
+    "title": "Historique des analyses",
+    "loading": "Chargement de l'historique...",
+    "emptyTitle": "Aucune analyse pour le moment",
+    "emptyDescription": "Analysez votre premier article pour commencer.",
+    "emptyButton": "Analyser un article",
+    "errorLoading": "Erreur lors du chargement",
+    "errorUnknown": "Erreur inconnue"
+  },
+  "analyseDetail": {
+    "loading": "Chargement de l'analyse...",
+    "notFound": "Analyse non trouvée",
+    "backHome": "Retour à l'accueil",
+    "newAnalysis": "Nouvelle analyse",
+    "analyzedOn": "Analysé le"
+  },
+  "result": {
+    "overallScore": "Note globale",
+    "scoreByCriteria": "Notes par critère",
+    "strengths": "Points forts",
+    "weaknesses": "Points à améliorer",
+    "recommendations": "Recommandations",
+    "detailedAnalysis": "Analyse détaillée par critère"
+  },
+  "criteria": {
+    "rigueur_methode": "Rigueur méthodologique",
+    "originalite": "Originalité et novelty",
+    "revue_litterature": "Qualité de la revue de littérature",
+    "clarte_redaction": "Clarté de rédaction",
+    "resultats_analyse": "Qualité des résultats et analyses",
+    "discussion_implications": "Discussion et implications",
+    "conformite_normes": "Conformité aux normes",
+    "impact_potentiel": "Impact potentiel"
+  }
+}

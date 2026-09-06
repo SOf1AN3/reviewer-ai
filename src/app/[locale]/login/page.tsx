@@ -5,11 +5,15 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FlaskConical, Loader2, Mail } from "lucide-react";
+import { useI18n } from "@/components/I18nProvider";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -28,13 +32,13 @@ function LoginForm() {
       });
 
       if (result?.error) {
-        setError("Email ou mot de passe incorrect");
+        setError(dict.login.errorCredentials);
       } else {
         router.push(callbackUrl);
         router.refresh();
       }
     } catch {
-      setError("Une erreur est survenue");
+      setError(dict.login.errorGeneric);
     } finally {
       setLoading(false);
     }
@@ -54,7 +58,7 @@ function LoginForm() {
             htmlFor="email"
             className="mb-1 block text-xs font-bold uppercase tracking-wider"
           >
-            Email
+            {dict.login.emailLabel}
           </label>
           <input
             id="email"
@@ -72,7 +76,7 @@ function LoginForm() {
             htmlFor="password"
             className="mb-1 block text-xs font-bold uppercase tracking-wider"
           >
-            Mot de passe
+            {dict.login.passwordLabel}
           </label>
           <input
             id="password"
@@ -95,14 +99,14 @@ function LoginForm() {
           ) : (
             <Mail className="h-4 w-4" />
           )}
-          Se connecter
+          {dict.login.submit}
         </button>
       </form>
 
       <div className="my-6 flex items-center gap-3">
         <div className="h-px flex-1 bg-border" />
         <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-          ou
+          {dict.login.or}
         </span>
         <div className="h-px flex-1 bg-border" />
       </div>
@@ -129,13 +133,16 @@ function LoginForm() {
             fill="#EA4335"
           />
         </svg>
-        Se connecter avec Google
+        {dict.login.googleSubmit}
       </button>
     </>
   );
 }
 
 export default function LoginPage() {
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
+
   return (
     <div className="container mx-auto px-4 py-8 sm:py-12">
       <div className="mx-auto max-w-md">
@@ -144,10 +151,10 @@ export default function LoginPage() {
             <FlaskConical className="h-8 w-8 text-foreground" />
           </div>
           <h1 className="mb-2 text-2xl sm:text-3xl font-bold uppercase tracking-tight">
-            Connexion
+            {dict.login.title}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Connectez-vous pour analyser vos articles
+            {dict.login.subtitle}
           </p>
         </div>
 
@@ -164,12 +171,12 @@ export default function LoginPage() {
         </div>
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          Pas encore de compte ?{" "}
+          {dict.login.noAccount}{" "}
           <Link
-            href="/register"
+            href={`/${locale}/register`}
             className="font-bold text-primary underline-offset-4 hover:underline"
           >
-            S&apos;inscrire
+            {dict.login.signUp}
           </Link>
         </p>
       </div>

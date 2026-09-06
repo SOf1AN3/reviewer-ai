@@ -10,6 +10,7 @@ const articleSchema = z.object({
   contenu: z.string().min(100, "Le contenu doit faire au moins 100 caractères"),
   auteur: z.string().optional(),
   revueCiblee: z.string().optional(),
+  locale: z.string().optional().default("fr"),
 });
 
 export const POST = auth(async (req) => {
@@ -31,7 +32,7 @@ export const POST = auth(async (req) => {
       },
     });
 
-    const prompt = buildAnalysisPrompt(validated);
+    const prompt = buildAnalysisPrompt(validated, validated.locale);
     const ai = getAIProvider();
     const rawResponse = await ai.generate(prompt);
 

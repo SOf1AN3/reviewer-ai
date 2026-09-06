@@ -11,19 +11,30 @@ import {
   LogIn,
   Menu,
   X,
+  Globe,
 } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
+import { useI18n } from "./I18nProvider";
+import { locales, type Locale } from "@/lib/i18n";
+
+const localeLabels: Record<Locale, string> = {
+  fr: "FR",
+  en: "EN",
+  ar: "AR",
+};
 
 export function Header() {
   const { theme, toggleTheme } = useTheme();
   const { data: session } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const { locale, setLocale } = useI18n();
 
   return (
     <header className="border-b-[3px] border-border bg-card">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link
-          href="/"
+          href={`/${locale}`}
           className="flex items-center gap-2 sm:gap-3 text-lg sm:text-xl font-bold uppercase tracking-wider"
         >
           <div className="flex items-center justify-center bg-secondary px-2 sm:px-3 py-1 border-2 border-border shadow-[2px_2px_0px_var(--border)]">
@@ -37,23 +48,23 @@ export function Header() {
           {session ? (
             <>
               <Link
-                href="/analyser"
+                href={`/${locale}/analyser`}
                 className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
               >
-                Analyser
+                {locale === "fr" ? "Analyser" : locale === "en" ? "Analyze" : "تحليل"}
               </Link>
               <Link
-                href="/historique"
+                href={`/${locale}/historique`}
                 className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
               >
-                Historique
+                {locale === "fr" ? "Historique" : locale === "en" ? "History" : "السجل"}
               </Link>
               <div className="mx-2 h-6 w-px bg-border" />
               <span className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
                 {session.user?.name || session.user?.email}
               </span>
               <button
-                onClick={() => signOut({ callbackUrl: "/login" })}
+                onClick={() => signOut({ callbackUrl: `/${locale}/login` })}
                 className="brutal-btn-destructive brutal-btn px-3 py-2 text-xs flex items-center gap-1"
               >
                 <LogOut className="h-4 w-4" />
@@ -62,20 +73,51 @@ export function Header() {
           ) : (
             <>
               <Link
-                href="/login"
+                href={`/${locale}/login`}
                 className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs flex items-center gap-1"
               >
                 <LogIn className="h-4 w-4" />
-                Connexion
+                {locale === "fr" ? "Connexion" : locale === "en" ? "Login" : "دخول"}
               </Link>
               <Link
-                href="/register"
+                href={`/${locale}/register`}
                 className="brutal-btn px-4 py-2 text-xs"
               >
-                Inscription
+                {locale === "fr" ? "Inscription" : locale === "en" ? "Sign Up" : "تسجيل"}
               </Link>
             </>
           )}
+
+          {/* Language switcher */}
+          <div className="relative">
+            <button
+              onClick={() => setLangOpen(!langOpen)}
+              className="brutal-btn px-3 py-2 text-xs flex items-center gap-1"
+              aria-label="Change language"
+            >
+              <Globe className="h-4 w-4" />
+              <span>{localeLabels[locale]}</span>
+            </button>
+            {langOpen && (
+              <div className="absolute right-0 top-full z-50 mt-1 border-2 border-border bg-card shadow-[4px_4px_0px_var(--border)]">
+                {locales.map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => {
+                      setLocale(l);
+                      setLangOpen(false);
+                    }}
+                    className={`block w-full px-4 py-2 text-xs font-bold uppercase tracking-wider hover:bg-secondary transition-colors ${
+                      locale === l ? "bg-secondary text-foreground" : "text-muted-foreground"
+                    }`}
+                  >
+                    {localeLabels[l]}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           <button
             onClick={toggleTheme}
             className="brutal-btn px-3 py-2 text-xs"
@@ -89,8 +131,33 @@ export function Header() {
           </button>
         </nav>
 
-        {/* Mobile: theme toggle + hamburger */}
+        {/* Mobile: theme toggle + language + hamburger */}
         <div className="flex sm:hidden items-center gap-2">
+          <button
+            onClick={() => setLangOpen(!langOpen)}
+            className="brutal-btn px-3 py-2 text-xs"
+            aria-label="Change language"
+          >
+            <Globe className="h-4 w-4" />
+          </button>
+          {langOpen && (
+            <div className="absolute right-12 top-14 z-50 border-2 border-border bg-card shadow-[4px_4px_0px_var(--border)]">
+              {locales.map((l) => (
+                <button
+                  key={l}
+                  onClick={() => {
+                    setLocale(l);
+                    setLangOpen(false);
+                  }}
+                  className={`block w-full px-4 py-2 text-xs font-bold uppercase tracking-wider hover:bg-secondary transition-colors ${
+                    locale === l ? "bg-secondary text-foreground" : "text-muted-foreground"
+                  }`}
+                >
+                  {localeLabels[l]}
+                </button>
+              ))}
+            </div>
+          )}
           <button
             onClick={toggleTheme}
             className="brutal-btn px-3 py-2 text-xs"
@@ -126,46 +193,46 @@ export function Header() {
                   {session.user?.name || session.user?.email}
                 </span>
                 <Link
-                  href="/analyser"
+                  href={`/${locale}/analyser`}
                   onClick={() => setMobileOpen(false)}
                   className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
                 >
-                  Analyser
+                  {locale === "fr" ? "Analyser" : locale === "en" ? "Analyze" : "تحليل"}
                 </Link>
                 <Link
-                  href="/historique"
+                  href={`/${locale}/historique`}
                   onClick={() => setMobileOpen(false)}
                   className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
                 >
-                  Historique
+                  {locale === "fr" ? "Historique" : locale === "en" ? "History" : "السجل"}
                 </Link>
                 <button
                   onClick={() => {
                     setMobileOpen(false);
-                    signOut({ callbackUrl: "/login" });
+                    signOut({ callbackUrl: `/${locale}/login` });
                   }}
                   className="brutal-btn-destructive brutal-btn px-4 py-3 text-sm flex items-center justify-center gap-2"
                 >
                   <LogOut className="h-4 w-4" />
-                  Déconnexion
+                  {locale === "fr" ? "Déconnexion" : locale === "en" ? "Logout" : "خروج"}
                 </button>
               </>
             ) : (
               <>
                 <Link
-                  href="/login"
+                  href={`/${locale}/login`}
                   onClick={() => setMobileOpen(false)}
                   className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm flex items-center justify-center gap-2"
                 >
                   <LogIn className="h-4 w-4" />
-                  Connexion
+                  {locale === "fr" ? "Connexion" : locale === "en" ? "Login" : "دخول"}
                 </Link>
                 <Link
-                  href="/register"
+                  href={`/${locale}/register`}
                   onClick={() => setMobileOpen(false)}
                   className="brutal-btn px-4 py-3 text-sm text-center"
                 >
-                  Inscription
+                  {locale === "fr" ? "Inscription" : locale === "en" ? "Sign Up" : "تسجيل"}
                 </Link>
               </>
             )}

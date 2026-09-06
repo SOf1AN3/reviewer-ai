@@ -3,6 +3,8 @@
 import { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Send, Upload, Loader2, FileUp } from "lucide-react";
+import { useI18n } from "./I18nProvider";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
 interface ArticleFormProps {
   onAnalysisStart?: () => void;
@@ -11,6 +13,8 @@ interface ArticleFormProps {
 
 export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps) {
   const router = useRouter();
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
   const [titre, setTitre] = useState("");
   const [contenu, setContenu] = useState("");
   const [auteur, setAuteur] = useState("");
@@ -37,7 +41,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Erreur lors de la lecture du fichier");
+        throw new Error(data.error || dict.articleForm.errorUpload);
       }
 
       setContenu(data.text);
@@ -45,11 +49,11 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
         setTitre(file.name.replace(/\.[^/.]+$/, ""));
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur lors de l'import du fichier");
+      setError(err instanceof Error ? err.message : dict.articleForm.errorUploadImport);
     } finally {
       setIsUploading(false);
     }
-  }, [titre]);
+  }, [titre, dict.articleForm.errorUpload, dict.articleForm.errorUploadImport]);
 
   const handleDragEnter = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -96,19 +100,19 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
       const response = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ titre, contenu, auteur, revueCiblee }),
+        body: JSON.stringify({ titre, contenu, auteur, revueCiblee, locale }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Erreur lors de l'analyse");
+        throw new Error(data.error || dict.articleForm.errorAnalysis);
       }
 
       onAnalysisEnd?.();
-      router.push(`/analyse/${data.articleId}`);
+      router.push(`/${locale}/analyse/${data.articleId}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur inconnue");
+      setError(err instanceof Error ? err.message : dict.articleForm.errorUnknown);
       setIsLoading(false);
       onAnalysisEnd?.();
     }
@@ -136,10 +140,10 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
           <div className="text-center">
             <FileUp className="mx-auto mb-4 h-12 w-12 animate-bounce text-primary" />
             <p className="text-lg font-bold uppercase tracking-wider">
-              Déposez votre fichier ici
+              {dict.articleForm.dropzoneTitle}
             </p>
             <p className="mt-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              PDF, DOCX, TEX, TXT ou MD
+              {dict.articleForm.dropzoneFormats}
             </p>
           </div>
         </div>
@@ -150,14 +154,14 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
           htmlFor="titre"
           className="text-sm font-bold uppercase tracking-wider"
         >
-          Titre de l&apos;article *
+          {dict.articleForm.titleLabel}
         </label>
         <input
           id="titre"
           type="text"
           value={titre}
           onChange={(e) => setTitre(e.target.value)}
-          placeholder="Titre de votre article scientifique"
+          placeholder={dict.articleForm.titlePlaceholder}
           className="brutal-input w-full"
           required
         />
@@ -169,14 +173,14 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
             htmlFor="auteur"
             className="text-sm font-bold uppercase tracking-wider"
           >
-            Auteur(s)
+            {dict.articleForm.author}
           </label>
           <input
             id="auteur"
             type="text"
             value={auteur}
             onChange={(e) => setAuteur(e.target.value)}
-            placeholder="Nom de(s) auteur(s)"
+            placeholder={dict.articleForm.authorPlaceholder}
             className="brutal-input w-full"
           />
         </div>
@@ -185,14 +189,14 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
             htmlFor="revue"
             className="text-sm font-bold uppercase tracking-wider"
           >
-            Revue ciblée
+            {dict.articleForm.journal}
           </label>
           <input
             id="revue"
             type="text"
             value={revueCiblee}
             onChange={(e) => setRevueCiblee(e.target.value)}
-            placeholder="Ex: Nature, Science, Lancet..."
+            placeholder={dict.articleForm.journalPlaceholder}
             className="brutal-input w-full"
           />
         </div>
@@ -204,7 +208,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
             htmlFor="contenu"
             className="text-sm font-bold uppercase tracking-wider"
           >
-            Contenu de l&apos;article *
+            {dict.articleForm.contentLabel}
           </label>
           <label className="flex cursor-pointer items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground">
             {isUploading ? (
@@ -212,7 +216,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
             ) : (
               <Upload className="h-4 w-4" />
             )}
-            {isUploading ? "Import..." : "Importer un fichier"}
+            {isUploading ? dict.articleForm.importing : dict.articleForm.importFile}
             <input
               type="file"
               accept=".txt,.md,.docx,.pdf,.tex"
@@ -226,12 +230,12 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
           id="contenu"
           value={contenu}
           onChange={(e) => setContenu(e.target.value)}
-          placeholder="Collez ici le contenu complet de votre article scientifique..."
+          placeholder={dict.articleForm.contentPlaceholder}
           className="brutal-input h-48 sm:h-72 w-full resize-none"
           required
         />
         <p className="text-xs font-mono font-bold text-muted-foreground">
-          {contenu.length} caractères • Min. 100 requis
+          {contenu.length} {dict.articleForm.charCount}
         </p>
       </div>
 
@@ -249,12 +253,12 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
         {isLoading ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" />
-            Analyse en cours...
+            {dict.articleForm.submitAnalyzing}
           </>
         ) : (
           <>
             <Send className="h-4 w-4" />
-            Analyser l&apos;article
+            {dict.articleForm.submitButton}
           </>
         )}
       </button>

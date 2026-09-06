@@ -1,0 +1,156 @@
+{
+  "metadata": {
+    "title": "PaperNote - تحليل المقالات العلمية",
+    "description": "حلل مقالاتك العلمية بالذكاء الاصطناعي. احصل على تقييم مفصل وتقرير شامل."
+  },
+  "home": {
+    "heroTitle": "مراجعة الأقران بقوة الذكاء الاصطناعي",
+    "heroDescription": "أرسل مقالك العلمي واحصل على تحليل مفصل مع تقييم شامل وتوصيات عملية.",
+    "heroCta": "ابدأ التحليل",
+    "featuresTitle": "كل ما تحتاجه لتحليل مقالاتك",
+    "features": [
+      {
+        "title": "تحليل ذكاء اصطناعي متقدم",
+        "description": "يقيّم الذكاء الاصطناعي مقالك وفقاً لـ 8 معايير علمية ويقدم تقييماً من 100."
+      },
+      {
+        "title": "تقييم مفصل",
+        "description": "احصل على تقييم رقمي لكل معيار مع تقرير شامل عن نقاط القوة والضعف."
+      },
+      {
+        "title": "تنسيقات متعددة",
+        "description": "استورد مقالاتك بصيغ PDF أو DOCX أو TEX أو TXT أو MD. اسحب وأفلت أو الصق النص."
+      },
+      {
+        "title": "توصيات",
+        "description": "حكم واضح: مقبول، تعديلات طفيفة، تعديلات جوهرية، أو مرفوض."
+      }
+    ],
+    "stepsTitle": "كيف يعمل",
+    "steps": [
+      {
+        "number": "01",
+        "title": "أرسل مقالك",
+        "description": "الصق المحتوى أو استورد ملفاً. أضف العنوان والمؤلف(ين) والمجلة المستهدفة."
+      },
+      {
+        "number": "02",
+        "title": "تحليل عميق بالذكاء الاصطناعي",
+        "description": "يقيّم Gemini AI مقالك وفقاً لـ 8 معايير علمية صارمة."
+      },
+      {
+        "number": "03",
+        "title": "تلقّ تقريرك",
+        "description": "التقييم الإجمالي، تفاصيل كل معيار، نقاط القوة والضعف، وتوصيات عملية."
+      }
+    ],
+    "criteriaTitle": "8 معايير التقييم",
+    "criteriaDescription": "يتم تحليل كل مقال وفقاً لهذه المعايير العلمية.",
+    "ctaTitle": "هل أنت مستعد لتحليل مقالك؟",
+    "ctaDescription": "أنشئ حسابك مجاناً واحصل على تحليل مفصل لمقالك العلمي.",
+    "ctaButton": "إنشاء حساب مجاني",
+    "footerDisclaimer1": "يستخدم PaperNote الذكاء الاصطناعي لتقديم تحليلات توجيهية.",
+    "footerDisclaimer2": "النتائج لا تحل محل مراجعة الأقران من خبراء.",
+    "footerLogin": "تسجيل الدخول",
+    "footerRegister": "إنشاء حساب"
+  },
+  "header": {
+    "analyze": "تحليل",
+    "history": "السجل",
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "toggleTheme": "تغيير المظهر"
+  },
+  "login": {
+    "title": "تسجيل الدخول",
+    "subtitle": "سجّل دخولك لتحليل مقالاتك",
+    "emailLabel": "البريد الإلكتروني",
+    "passwordLabel": "كلمة المرور",
+    "submit": "تسجيل الدخول",
+    "googleSubmit": "تسجيل الدخول بحساب Google",
+    "or": "أو",
+    "noAccount": "ليس لديك حساب؟",
+    "signUp": "إنشاء حساب",
+    "errorCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "errorGeneric": "حدث خطأ"
+  },
+  "register": {
+    "title": "إنشاء حساب",
+    "subtitle": "أنشئ حسابك للبدء",
+    "nameLabel": "الاسم",
+    "namePlaceholder": "اسمك",
+    "emailLabel": "البريد الإلكتروني",
+    "passwordLabel": "كلمة المرور",
+    "passwordPlaceholder": "8 أحرف على الأقل",
+    "submit": "إنشاء حسابي",
+    "googleSubmit": "التسجيل بحساب Google",
+    "or": "أو",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "signIn": "تسجيل الدخول",
+    "errorGeneric": "خطأ في التسجيل",
+    "errorLoginFailed": "تم إنشاء الحساب لكن فشل تسجيل الدخول. يرجى تسجيل الدخول.",
+    "errorUnexpected": "حدث خطأ"
+  },
+  "analyze": {
+    "title": "تحليل مقال",
+    "subtitle": "أرسل مقالك واحصل على تحليل مفصل بالذكاء الاصطناعي.",
+    "progressTitle": "التحليل جارٍ...",
+    "progressDescription": "يقوم الذكاء الاصطناعي بتحليل مقالك. قد يستغرق هذا بضع دقائق."
+  },
+  "articleForm": {
+    "titleLabel": "عنوان المقال *",
+    "titlePlaceholder": "عنوان مقالك العلمي",
+    "author": "المؤلف(ون)",
+    "authorPlaceholder": "اسم(أسماء) المؤلف(ين)",
+    "journal": "المجلة المستهدفة",
+    "journalPlaceholder": "مثال: Nature, Science, Lancet...",
+    "contentLabel": "محتوى المقال *",
+    "contentPlaceholder": "الصق هنا المحتوى الكامل لمقالك العلمي...",
+    "importFile": "استيراد ملف",
+    "importing": "جاري الاستيراد...",
+    "dropzoneTitle": "أفلت ملفك هنا",
+    "dropzoneFormats": "PDF, DOCX, TEX, TXT أو MD",
+    "charCount": "حرف • الحد الأدنى 100 مطلوب",
+    "submitAnalyzing": "التحليل جارٍ...",
+    "submitButton": "تحليل المقال",
+    "errorUpload": "خطأ في قراءة الملف",
+    "errorUploadImport": "خطأ في استيراد الملف",
+    "errorAnalysis": "خطأ أثناء التحليل",
+    "errorUnknown": "خطأ غير معروف"
+  },
+  "historique": {
+    "title": "سجل التحليلات",
+    "loading": "جاري تحميل السجل...",
+    "emptyTitle": "لا توجد تحليلات بعد",
+    "emptyDescription": "حلل مقالك الأول للبدء.",
+    "emptyButton": "تحليل مقال",
+    "errorLoading": "خطأ في تحميل البيانات",
+    "errorUnknown": "خطأ غير معروف"
+  },
+  "analyseDetail": {
+    "loading": "جاري تحميل التحليل...",
+    "notFound": "التحليل غير موجود",
+    "backHome": "العودة للرئيسية",
+    "newAnalysis": "تحليل جديد",
+    "analyzedOn": "تم التحليل في"
+  },
+  "result": {
+    "overallScore": "التقييم الإجمالي",
+    "scoreByCriteria": "التقييم حسب المعيار",
+    "strengths": "نقاط القوة",
+    "weaknesses": "نقاط للتحسين",
+    "recommendations": "التوصيات",
+    "detailedAnalysis": "تحليل مفصل حسب المعيار"
+  },
+  "criteria": {
+    "rigueur_methode": "الصرامة المنهجية",
+    "originalite": "الأصالة والجدة",
+    "revue_litterature": "جودة مراجعة الأدبيات",
+    "clarte_redaction": "وضوح الكتابة",
+    "resultats_analyse": "جودة النتائج والتحليلات",
+    "discussion_implications": "النقاش والآثار",
+    "conformite_normes": "الامتثال للمعايير",
+    "impact_potentiel": "التأثير المحتمل"
+  }
+}

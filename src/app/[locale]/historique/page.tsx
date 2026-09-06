@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Clock, Loader2, FlaskConical, ArrowRight } from "lucide-react";
+import { useI18n } from "@/components/I18nProvider";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
 interface HistoryItem {
   id: string;
@@ -16,6 +18,8 @@ interface HistoryItem {
 
 export default function HistoriquePage() {
   const router = useRouter();
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,19 +31,21 @@ export default function HistoriquePage() {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || "Erreur lors du chargement");
+          throw new Error(data.error || dict.historique.errorLoading);
         }
 
         setHistory(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Erreur inconnue");
+        setError(
+          err instanceof Error ? err.message : dict.historique.errorUnknown
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchHistory();
-  }, []);
+  }, [dict.historique.errorLoading, dict.historique.errorUnknown]);
 
   const getNoteStyle = (note: number) => {
     if (note >= 80)
@@ -51,13 +57,15 @@ export default function HistoriquePage() {
     return "text-score-bad border-score-bad bg-score-bad/10 shadow-[2px_2px_0px_var(--score-bad)]";
   };
 
+  const dateLocale = locale === "ar" ? "ar-SA" : locale === "en" ? "en-US" : "fr-FR";
+
   if (loading) {
     return (
       <div className="container mx-auto flex min-h-[60vh] items-center justify-center px-4">
         <div className="text-center">
           <Loader2 className="mx-auto mb-4 h-8 w-8 animate-spin text-primary" />
           <p className="font-bold uppercase tracking-wider text-muted-foreground">
-            Chargement de l&apos;historique...
+            {dict.historique.loading}
           </p>
         </div>
       </div>
@@ -80,23 +88,23 @@ export default function HistoriquePage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mx-auto max-w-3xl">
         <h1 className="mb-8 text-2xl sm:text-3xl font-bold uppercase tracking-tight">
-          Historique des analyses
+          {dict.historique.title}
         </h1>
 
         {history.length === 0 ? (
           <div className="brutal-card p-8 sm:p-12 text-center">
             <FlaskConical className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
             <p className="text-lg font-bold uppercase">
-              Aucune analyse pour le moment
+              {dict.historique.emptyTitle}
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              Analysez votre premier article pour commencer.
+              {dict.historique.emptyDescription}
             </p>
             <button
-              onClick={() => router.push("/analyser")}
+              onClick={() => router.push(`/${locale}/analyser`)}
               className="brutal-btn mt-6 inline-flex items-center gap-2"
             >
-              Analyser un article
+              {dict.historique.emptyButton}
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
@@ -105,7 +113,7 @@ export default function HistoriquePage() {
             {history.map((item) => (
               <button
                 key={item.id}
-                onClick={() => router.push(`/analyse/${item.id}`)}
+                onClick={() => router.push(`/${locale}/analyse/${item.id}`)}
                 className="brutal-card-hover w-full text-left"
               >
                 <div className="flex items-start justify-between gap-4">
@@ -122,7 +130,7 @@ export default function HistoriquePage() {
                       )}
                       <span className="inline-flex items-center gap-1 font-mono text-xs text-muted-foreground">
                         <Clock className="h-3 w-3" />
-                        {new Date(item.dateAnalyse).toLocaleDateString("fr-FR")}
+                        {new Date(item.dateAnalyse).toLocaleDateString(dateLocale)}
                       </span>
                     </div>
                   </div>

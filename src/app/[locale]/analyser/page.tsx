@@ -2,12 +2,16 @@
 
 import { useState, useRef, useCallback } from "react";
 import { ArticleForm } from "@/components/ArticleForm";
+import { useI18n } from "@/components/I18nProvider";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
 export default function AnalyserPage() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [progress, setProgress] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startTimeRef = useRef<number>(0);
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
 
   const startProgress = useCallback(() => {
     setIsAnalyzing(true);
@@ -41,10 +45,10 @@ export default function AnalyserPage() {
       <div className="mx-auto max-w-2xl">
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-2xl sm:text-3xl font-bold uppercase tracking-tight">
-            Analyser un article
+            {dict.analyze.title}
           </h1>
           <p className="text-muted-foreground">
-            Soumettez votre article et obtenez une analyse détaillée par IA.
+            {dict.analyze.subtitle}
           </p>
         </div>
 
@@ -77,9 +81,11 @@ export default function AnalyserPage() {
                 <span className="text-xs font-bold text-muted-foreground">%</span>
               </div>
             </div>
-            <p className="text-lg sm:text-xl font-bold uppercase">Analyse en cours...</p>
+            <p className="text-lg sm:text-xl font-bold uppercase">
+              {dict.analyze.progressTitle}
+            </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              L&apos;IA analyse votre article. Cela peut prendre quelques minutes.
+              {dict.analyze.progressDescription}
             </p>
             <div className="mt-4 h-2 w-full overflow-hidden border-2 border-border bg-muted shadow-[2px_2px_0px_var(--border)]">
               <div

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { AnalyseResultDisplay } from "@/components/AnalyseResult";
+import { useI18n } from "@/components/I18nProvider";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import type { AnalyseResult } from "@/lib/types";
 
 interface ArticleData {
@@ -26,10 +28,14 @@ interface AnalyseData {
 export default function AnalysePage() {
   const params = useParams();
   const router = useRouter();
+  const { locale } = useI18n();
+  const dict = getDictionary(locale as Locale);
   const [article, setArticle] = useState<ArticleData | null>(null);
   const [analyse, setAnalyse] = useState<AnalyseData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const dateLocale = locale === "ar" ? "ar-SA" : locale === "en" ? "en-US" : "fr-FR";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,20 +44,22 @@ export default function AnalysePage() {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || "Erreur lors du chargement");
+          throw new Error(data.error || dict.analyseDetail.loading);
         }
 
         setArticle(data.article);
         setAnalyse(data.analyse);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Erreur inconnue");
+        setError(
+          err instanceof Error ? err.message : dict.analyseDetail.notFound
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [params.id]);
+  }, [params.id, dict.analyseDetail.loading, dict.analyseDetail.notFound]);
 
   if (loading) {
     return (
@@ -59,7 +67,7 @@ export default function AnalysePage() {
         <div className="text-center">
           <Loader2 className="mx-auto mb-4 h-8 w-8 animate-spin text-primary" />
           <p className="font-bold uppercase tracking-wider text-muted-foreground">
-            Chargement de l&apos;analyse...
+            {dict.analyseDetail.loading}
           </p>
         </div>
       </div>
@@ -72,14 +80,14 @@ export default function AnalysePage() {
         <div className="mx-auto max-w-2xl text-center">
           <div className="brutal-card p-8">
             <p className="text-lg font-bold text-destructive">
-              {error || "Analyse non trouvée"}
+              {error || dict.analyseDetail.notFound}
             </p>
             <button
-onClick={() => router.push("/analyser")}
+              onClick={() => router.push(`/${locale}/analyser`)}
               className="brutal-btn mt-4 inline-flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
-              Retour à l&apos;accueil
+              {dict.analyseDetail.backHome}
             </button>
           </div>
         </div>
@@ -98,11 +106,11 @@ onClick={() => router.push("/analyser")}
       <div className="mx-auto max-w-6xl">
         {/* Back button */}
         <button
-          onClick={() => router.push("/analyser")}
+          onClick={() => router.push(`/${locale}/analyser`)}
           className="brutal-btn mb-6 inline-flex items-center gap-2 text-xs"
         >
           <ArrowLeft className="h-4 w-4" />
-          Nouvelle analyse
+          {dict.analyseDetail.newAnalysis}
         </button>
 
         {/* Article info */}
@@ -118,8 +126,8 @@ onClick={() => router.push("/analyser")}
               <span className="brutal-tag">{article.revueCiblee}</span>
             )}
             <span className="inline-flex items-center font-mono text-xs text-muted-foreground">
-              Analysé le{" "}
-              {new Date(analyse.dateAnalyse).toLocaleDateString("fr-FR")}
+              {dict.analyseDetail.analyzedOn}{" "}
+              {new Date(analyse.dateAnalyse).toLocaleDateString(dateLocale)}
             </span>
           </div>
         </div>
