@@ -1,0 +1,4 @@
+# Normalise les fins de ligne pour éviter la dérive des checksums Prisma (SHA-256)
+# sous Windows avec core.autocrlf=true — voir prisma/prisma#7101
+prisma/migrations/** text eol=lf
+*.sql text eol=lf
