@@ -3,6 +3,7 @@ import { extractText } from "unpdf";
 import mammoth from "mammoth";
 import { auth } from "@/lib/auth";
 import { cleanLatexText } from "@/lib/latex-clean";
+import { requireUser } from "@/lib/guards";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
@@ -26,8 +27,9 @@ function detectType(file: File): string {
 }
 
 export const POST = auth(async (req) => {
-  if (!req.auth?.user) {
-    return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+  const currentUser = await requireUser(req);
+  if (currentUser instanceof NextResponse) {
+    return currentUser;
   }
 
   try {

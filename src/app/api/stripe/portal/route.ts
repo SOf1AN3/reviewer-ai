@@ -2,15 +2,19 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { stripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
+import { requireUser } from "@/lib/guards";
 
 export const POST = auth(async (req) => {
-  if (!req.auth?.user) {
-    return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+  // Customer Stripe opéré exclusivement depuis la session : aucun
+  // `customerId`/`userId` accepté depuis le body ou la query (anti-IDOR).
+  const currentUser = await requireUser(req);
+  if (currentUser instanceof NextResponse) {
+    return currentUser;
   }
 
   try {
     const user = await db.user.findUnique({
-      where: { id: req.auth.user.id! },
+      where: { id: currentUser.id },
       select: { stripeCustomerId: true },
     });
 

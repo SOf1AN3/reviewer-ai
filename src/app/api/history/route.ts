@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { auth } from "@/lib/auth";
+import { requireUser } from "@/lib/guards";
 
 interface HistoryItem {
   id: string;
@@ -13,13 +14,14 @@ interface HistoryItem {
 }
 
 export const GET = auth(async (req) => {
-  if (!req.auth?.user) {
-    return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+  const currentUser = await requireUser(req);
+  if (currentUser instanceof NextResponse) {
+    return currentUser;
   }
 
   try {
     const articles = await db.article.findMany({
-      where: { userId: req.auth.user.id! },
+      where: { userId: currentUser.id },
       include: {
         analyses: {
           orderBy: { dateAnalyse: "desc" },

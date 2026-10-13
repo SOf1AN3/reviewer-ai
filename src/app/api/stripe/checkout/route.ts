@@ -1,7 +1,16 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { stripe, PLANS, type PlanKey } from "@/lib/stripe";
 import { db } from "@/lib/db";
+import { requireUser } from "@/lib/guards";
+
+// Seul champ accepté depuis le body : le plan. Aucun `userId`/`customerId`
+// n'est lisible depuis la requête (anti-IDOR) — le customer Stripe est
+// toujours celui de l'utilisateur de la session.
+const checkoutSchema = z.object({
+  plan: z.enum(["pro", "business"]),
+});
 
 async function getOrCreatePriceId(plan: PlanKey): Promise<string> {
   const planConfig = PLANS[plan];
@@ -36,19 +45,23 @@ async function getOrCreatePriceId(plan: PlanKey): Promise<string> {
 }
 
 export const POST = auth(async (req) => {
-  if (!req.auth?.user) {
-    return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+  const currentUser = await requireUser(req);
+  if (currentUser instanceof NextResponse) {
+    return currentUser;
   }
 
   try {
-    const { plan } = await req.json();
+    const body: unknown = await req.json();
+    const parsed = checkoutSchema.safeParse(body);
 
-    if (!plan || !["pro", "business"].includes(plan)) {
+    if (!parsed.success) {
       return NextResponse.json({ error: "Plan invalide" }, { status: 400 });
     }
 
+    const { plan } = parsed.data;
+
     const user = await db.user.findUnique({
-      where: { id: req.auth.user.id! },
+      where: { id: currentUser.id },
       select: { email: true, name: true, stripeCustomerId: true },
     });
 
@@ -62,12 +75,12 @@ export const POST = auth(async (req) => {
       const customer = await stripe.customers.create({
         email: user.email!,
         name: user.name || undefined,
-        metadata: { userId: req.auth.user.id! },
+        metadata: { userId: currentUser.id },
       });
       customerId = customer.id;
 
       await db.user.update({
-        where: { id: req.auth.user.id! },
+        where: { id: currentUser.id },
         data: { stripeCustomerId: customerId },
       });
     }
@@ -87,7 +100,7 @@ export const POST = auth(async (req) => {
       success_url: `${process.env.NEXT_APP_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/analyser?upgraded=true`,
       cancel_url: `${process.env.NEXT_APP_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/pricing`,
       metadata: {
-        userId: req.auth.user.id!,
+        userId: currentUser.id,
         plan: plan,
       },
     });

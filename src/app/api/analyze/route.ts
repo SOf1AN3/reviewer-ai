@@ -5,6 +5,7 @@ import { getAIProvider, parseAIResponse } from "@/lib/ai";
 import { buildAnalysisPrompt } from "@/lib/prompt";
 import { auth } from "@/lib/auth";
 import { consumeQuota } from "@/lib/plan";
+import { requireUser } from "@/lib/guards";
 
 const articleSchema = z.object({
   titre: z.string().min(1, "Le titre est requis"),
@@ -15,12 +16,13 @@ const articleSchema = z.object({
 });
 
 export const POST = auth(async (req) => {
-  if (!req.auth?.user) {
-    return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+  const currentUser = await requireUser(req);
+  if (currentUser instanceof NextResponse) {
+    return currentUser;
   }
 
   try {
-    const userId = req.auth.user.id!;
+    const userId = currentUser.id;
 
     const body = await req.json();
     const validated = articleSchema.parse(body);
