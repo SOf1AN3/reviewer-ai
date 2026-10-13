@@ -37,29 +37,38 @@ export const POST = auth(async (req) => {
 
     const isFreePlan = quota.plan.key === "free";
 
-    const article = await db.article.create({
-      data: {
-        userId,
-        titre: validated.titre,
-        contenu: validated.contenu,
-        auteur: validated.auteur || null,
-        revueCiblee: validated.revueCiblee || null,
-      },
-    });
-
+    // Appel IA + parsing AVANT toute écriture DB : si l'IA échoue
+    // (timeout, quota Gemini, AIParseError...), aucune ligne n'est écrite
+    // → plus d'articles orphelins. Le quota, lui, est déjà consommé
+    // (décision de sécurité assumée, cf. plus haut).
     const prompt = buildAnalysisPrompt(validated, validated.locale, isFreePlan);
     const ai = getAIProvider();
     const rawResponse = await ai.generate(prompt);
 
     const analyseResult = parseAIResponse(rawResponse, { freePlan: isFreePlan });
 
-    const analyse = await db.analyse.create({
-      data: {
-        articleId: article.id,
-        rapport: JSON.stringify(analyseResult.rapport),
-        noteGlobale: analyseResult.noteGlobale,
-        noteParCritere: analyseResult.notesParCritere,
-      },
+    // Création Article + Analyse atomique : si l'une échoue, rien n'est écrit.
+    const { article, analyse } = await db.$transaction(async (tx) => {
+      const createdArticle = await tx.article.create({
+        data: {
+          userId,
+          titre: validated.titre,
+          contenu: validated.contenu,
+          auteur: validated.auteur || null,
+          revueCiblee: validated.revueCiblee || null,
+        },
+      });
+
+      const createdAnalyse = await tx.analyse.create({
+        data: {
+          articleId: createdArticle.id,
+          rapport: JSON.stringify(analyseResult.rapport),
+          noteGlobale: analyseResult.noteGlobale,
+          noteParCritere: analyseResult.notesParCritere,
+        },
+      });
+
+      return { article: createdArticle, analyse: createdAnalyse };
     });
 
     return NextResponse.json({
