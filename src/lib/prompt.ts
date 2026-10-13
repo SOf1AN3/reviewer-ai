@@ -99,7 +99,7 @@ ${article.contenu}
 
 ${t.responseInstructions}
 
-IMPORTANT: Pour les utilisateurs gratuits, fournis UNIQUEMENT la note globale, un résumé court, le verdict, et les points forts. Les notes par critère et le rapport détaillé ne sont pas inclus.
+IMPORTANT: Fournis OBLIGATOIREMENT le JSON ci-dessous avec TOUTES les clés présentes (ne supprime aucune clé). Pour les utilisateurs gratuits, remplis uniquement la note globale, le résumé, le verdict et les points forts : laisse "notesParCritere" et "rapport.sections" vides ({}), et les tableaux restants vides ([]).
 
 {
   "noteGlobale": <${t.noteLabel}>,
