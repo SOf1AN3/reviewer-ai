@@ -89,7 +89,18 @@ export default function AnalysePage() {
   const [state, setState] = useState<PageState>({ kind: "loading" });
   const [article, setArticle] = useState<ArticleData | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const [trackedArticleId, setTrackedArticleId] = useState(articleId);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Réinitialise l'état à chaque changement de route (navigation client vers
+  // une autre analyse). Pattern officiel React « adjust state during render » :
+  // évite un setState synchrone dans l'effet (react-hooks/set-state-in-effect)
+  // tout en garantissant un écran de chargement au premier rendu de chaque id.
+  if (trackedArticleId !== articleId) {
+    setTrackedArticleId(articleId);
+    setState({ kind: "loading" });
+    setArticle(null);
+  }
 
   const dateLocale = locale === "ar" ? "ar-SA" : locale === "en" ? "en-US" : "fr-FR";
 
@@ -146,7 +157,6 @@ export default function AnalysePage() {
     };
 
     const startedAt = Date.now();
-    setState({ kind: "loading" });
     fetchStatus();
 
     return () => {

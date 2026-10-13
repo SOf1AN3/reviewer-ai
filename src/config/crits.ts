@@ -72,7 +72,6 @@ const criteresBase: { id: string; descriptions: Record<string, string> }[] = [
 ];
 
 export function getCriteres(locale: string = "fr"): Critere[] {
-  const labelKey = `criteria.${""}`;
   return criteresBase.map((c) => ({
     id: c.id,
     label: locale === "fr"

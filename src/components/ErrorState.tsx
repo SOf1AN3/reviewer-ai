@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useI18n } from "@/components/I18nProvider";
-import { defaultLocale, isValidLocale, type Locale } from "@/lib/i18n";
+import { isValidLocale, type Locale } from "@/lib/i18n";
 
 // TODO(i18n): move these labels into an "errors" namespace in
 // src/messages/{fr,en,ar}.json. The messages files are out of scope for T3.1,
