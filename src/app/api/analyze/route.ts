@@ -51,7 +51,7 @@ export const POST = auth(async (req) => {
     const ai = getAIProvider();
     const rawResponse = await ai.generate(prompt);
 
-    const analyseResult = parseAIResponse(rawResponse);
+    const analyseResult = parseAIResponse(rawResponse, { freePlan: isFreePlan });
 
     const analyse = await db.analyse.create({
       data: {
