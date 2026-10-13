@@ -15,6 +15,9 @@
  *   - STRIPE_* absentes/placeholder ⇒ fonctionnalités Stripe désactivées proprement.
  * - STRIPE_WEBHOOK_SECRET commençant par « whsec_REPLACE_ME » = non configuré
  *   (warning en dev, erreur en prod).
+ * - Jamais requises (dev comme prod, aucun warning) :
+ *   UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN (store Redis optionnel du
+ *   rate limiting ; leur absence bascule sur le store mémoire local).
  *
  * Comportement :
  * - production : UNE SEULE erreur listant TOUTES les variables manquantes/invalides ;
@@ -50,6 +53,9 @@ export type Env = {
   STRIPE_PRO_PRICE_ID?: string;
   STRIPE_BUSINESS_PRICE_ID?: string;
   NEXT_APP_URL?: string;
+  // Optionnelles en toutes circonstances (rate limiting Redis partagé) :
+  UPSTASH_REDIS_REST_URL?: string;
+  UPSTASH_REDIS_REST_TOKEN?: string;
 };
 
 const IS_PROD = process.env.NODE_ENV === "production";
@@ -90,6 +96,18 @@ function buildEnvSchema(strict: boolean) {
       )
     : optional("STRIPE_WEBHOOK_SECRET");
 
+  /**
+   * Optionnelle en toutes circonstances (dev comme prod) : jamais requise,
+   * aucun warning. Utilisée pour le store Redis du rate limiting (absence
+   * ⇒ store mémoire local, comportement attendu et sans erreur).
+   */
+  const neverRequired = () =>
+    z
+      .string()
+      .min(1)
+      .optional()
+      .catch(undefined);
+
   return z.object({
     NODE_ENV: strict
       ? z.enum(["development", "production", "test"], {
@@ -119,6 +137,10 @@ function buildEnvSchema(strict: boolean) {
     STRIPE_PRO_PRICE_ID: optional("STRIPE_PRO_PRICE_ID"),
     STRIPE_BUSINESS_PRICE_ID: optional("STRIPE_BUSINESS_PRICE_ID"),
     NEXT_APP_URL: optional("NEXT_APP_URL"),
+
+    // --- Optionnelles en toutes circonstances (store Redis du rate limiting) ---
+    UPSTASH_REDIS_REST_URL: neverRequired(),
+    UPSTASH_REDIS_REST_TOKEN: neverRequired(),
   });
 }
 
