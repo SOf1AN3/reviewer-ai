@@ -7,6 +7,31 @@ import { auth } from "@/lib/auth";
 import { consumeQuota } from "@/lib/plan";
 import { requireUser } from "@/lib/guards";
 
+/**
+ * Identifiant d'erreur réduit pour le log — jamais l'objet erreur complet.
+ *
+ * Le message d'une erreur du SDK Gemini (`GoogleGenerativeAIError`) embarque
+ * l'URL complète de la requête, `?key=<GEMINI_API_KEY>` compris : on ne
+ * journalise donc ni `error.message` ni `error.stack` brut, seulement le
+ * `name`, le `status` HTTP éventuel et les frames `at …` (sans la ligne
+ * d'en-tête qui contient le message).
+ *
+ * Équivalent local du helper `describeError` de `@/lib/ai`, qui n'est pas
+ * exporté (donc non importable ici).
+ */
+function describeError(error: unknown): string {
+  if (!(error instanceof Error)) return "non-Error";
+  const status =
+    "status" in error && typeof error.status === "number"
+      ? ` status=${error.status}`
+      : "";
+  const frames = (error.stack ?? "")
+    .split("\n")
+    .filter((line) => /^\s*at\s/.test(line));
+  const stack = frames.length > 0 ? `\n${frames.join("\n")}` : "";
+  return `${error.name}${status}${stack}`;
+}
+
 const articleSchema = z.object({
   titre: z.string().min(1, "Le titre est requis"),
   contenu: z.string().min(100, "Le contenu doit faire au moins 100 caractères"),
@@ -105,7 +130,9 @@ export const POST = auth(async (req) => {
       result: analyseResult,
     });
   } catch (error) {
-    console.error("Analysis error:", error);
+    // Log sécurisé : jamais l'objet erreur brut (le message du SDK Gemini
+    // contient l'URL de requête avec `?key=<GEMINI_API_KEY>`).
+    console.error("Analysis error:", describeError(error));
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(
