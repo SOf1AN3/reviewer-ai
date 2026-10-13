@@ -136,9 +136,9 @@
   "historique": {
     "title": "Analysis History",
     "loading": "Loading history...",
-    "emptyTitle": "No analyses yet",
-    "emptyDescription": "Analyze your first article to get started.",
-    "emptyButton": "Analyze an Article",
+    "emptyTitle": "Welcome to your lab!",
+    "emptyDescription": "Run your first analysis in under two minutes: paste the article's text or URL, the AI does the rest.",
+    "emptyButton": "Analyze my first article",
     "errorLoading": "Error loading data",
     "errorUnknown": "Unknown error"
   },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Clock, Loader2, FlaskConical, ArrowRight } from "lucide-react";
 import { useI18n } from "@/components/I18nProvider";
@@ -94,19 +95,19 @@ export default function HistoriquePage() {
         {history.length === 0 ? (
           <div className="brutal-card p-8 sm:p-12 text-center">
             <FlaskConical className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
-            <p className="text-lg font-bold uppercase">
+            <h2 className="text-xl font-bold uppercase">
               {dict.historique.emptyTitle}
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
               {dict.historique.emptyDescription}
             </p>
-            <button
-              onClick={() => router.push(`/${locale}/analyser`)}
+            <Link
+              href={`/${locale}/analyser`}
               className="brutal-btn mt-6 inline-flex items-center gap-2"
             >
               {dict.historique.emptyButton}
               <ArrowRight className="h-4 w-4" />
-            </button>
+            </Link>
           </div>
         ) : (
           <div className="space-y-4">

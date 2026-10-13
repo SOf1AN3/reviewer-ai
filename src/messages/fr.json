@@ -136,9 +136,9 @@
   "historique": {
     "title": "Historique des analyses",
     "loading": "Chargement de l'historique...",
-    "emptyTitle": "Aucune analyse pour le moment",
-    "emptyDescription": "Analysez votre premier article pour commencer.",
-    "emptyButton": "Analyser un article",
+    "emptyTitle": "Bienvenue dans votre laboratoire !",
+    "emptyDescription": "Lancez votre première analyse en moins de deux minutes : collez le texte ou l'URL de l'article, l'IA s'occupe du reste.",
+    "emptyButton": "Analyser mon premier article",
     "errorLoading": "Erreur lors du chargement",
     "errorUnknown": "Erreur inconnue"
   },
