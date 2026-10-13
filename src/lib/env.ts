@@ -7,10 +7,12 @@
  * Règles :
  * - Toujours requises : DATABASE_URL, AUTH_SECRET, NEXT_PUBLIC_APP_URL.
  * - Requises uniquement en production (NODE_ENV === "production") :
- *   GEMINI_API_KEY, RESEND_API_KEY, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET,
- *   GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET,
+ *   GEMINI_API_KEY, RESEND_API_KEY, CRON_SECRET, STRIPE_SECRET_KEY,
+ *   STRIPE_WEBHOOK_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET,
  *   STRIPE_PRO_PRICE_ID, STRIPE_BUSINESS_PRICE_ID, NEXT_APP_URL.
  *   En développement :
+ *   - CRON_SECRET absente ⇒ route cron `/api/cron/retention` répond 503
+ *     (purge de rétention désactivée, jamais exécutée à l'aveugle) ;
  *   - RESEND_API_KEY absente ⇒ vérification email désactivée (bypass automatique) ;
  *   - STRIPE_* absentes/placeholder ⇒ fonctionnalités Stripe désactivées proprement.
  * - STRIPE_WEBHOOK_SECRET commençant par « whsec_REPLACE_ME » = non configuré
@@ -46,6 +48,7 @@ export type Env = {
   // Optionnelles en dev, exigées en production :
   GEMINI_API_KEY?: string;
   RESEND_API_KEY?: string;
+  CRON_SECRET?: string;
   STRIPE_SECRET_KEY?: string;
   STRIPE_WEBHOOK_SECRET?: string;
   GOOGLE_CLIENT_ID?: string;
@@ -141,6 +144,9 @@ function buildEnvSchema(strict: boolean) {
     // Absente en dev ⇒ envoi email en no-op silencieux + bypass de la
     // vérification email (état attendu, aucun warning bloquant).
     RESEND_API_KEY: requiredInProd("RESEND_API_KEY"),
+    // Secrète des routes cron (purge de rétention). Absente en dev ⇒ la route
+    // répond 503 et la purge n'est jamais exécutée sans secret valide.
+    CRON_SECRET: requiredInProd("CRON_SECRET"),
     STRIPE_SECRET_KEY: optional("STRIPE_SECRET_KEY"),
     STRIPE_WEBHOOK_SECRET: stripeWebhookSecret,
     GOOGLE_CLIENT_ID: optional("GOOGLE_CLIENT_ID"),
