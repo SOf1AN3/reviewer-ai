@@ -10,8 +10,9 @@
  * Choix d'implémentation : SDK officiel `resend` (installé en dépendance
  * explicite de `package.json`). Le rendu des gabarits React n'utilise PAS
  * react-email : les `React.ReactNode` sont rendus en HTML statique via
- * `react-dom/server` (déjà présent dans le projet) puis envoyés via le champ
- * `html` de l'API Resend. Conséquence : si un appelant transmet un composant
+ * `react-dom/server` (déjà présent dans le projet, importé de façon DYNAMIQUE
+ * dans `sendEmail` pour satisfaire Next.js 16 + Turbopack) puis envoyés via le
+ * champ `html` de l'API Resend. Conséquence : si un appelant transmet un composant
  * issu de `@react-email/components`, cette dépendance devra être ajoutée par
  * l'appelant — le SDK n'a alors pas besoin de son peer optionnel
  * `@react-email/render`.
@@ -28,7 +29,6 @@
 import { Resend } from "resend";
 import type { CreateEmailOptions } from "resend";
 import type { ReactNode } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
 import { env, isEmailEnabled } from "@/lib/env";
 import { logEvent } from "@/lib/logger";
 
@@ -148,9 +148,17 @@ export async function sendEmail(opts: SendEmailOptions): Promise<SendEmailResult
   }
 
   // --- Corps de l'email (React optionnel, rendu statique) ---
+  // Import DYNAMIQUE de `react-dom/server` : un import statique est refusé par
+  // Next.js 16 + Turbopack dans le graphe des routes API (erreur E394, qui
+  // empoisonne tout le serveur dev). Il est réalisé UNIQUEMENT ici, dans le
+  // chemin qui a réellement besoin de rendre — jamais dans le bypass sans clé
+  // situé plus haut (aucun import, aucune requête réseau, zéro throw).
   let html: string | undefined;
   try {
-    html = opts.react ? renderToStaticMarkup(opts.react) : undefined;
+    if (opts.react) {
+      const { renderToStaticMarkup } = await import("react-dom/server");
+      html = renderToStaticMarkup(opts.react);
+    }
   } catch (error) {
     const message = `render_failed: ${formatError(error)}`;
     logEvent("email", { email: "failed", reason: "render_failed", to, subject });
