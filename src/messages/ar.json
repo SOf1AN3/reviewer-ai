@@ -60,7 +60,9 @@
     "logout": "تسجيل الخروج",
     "login": "تسجيل الدخول",
     "register": "إنشاء حساب",
-    "toggleTheme": "تغيير المظهر"
+    "toggleTheme": "تغيير المظهر",
+    "profile": "الملف الشخصي",
+    "billing": "الفوترة"
   },
   "login": {
     "title": "تسجيل الدخول",
@@ -169,5 +171,70 @@
       "cta": "الترقية إلى Business"
     },
     "guarantee": "إلغاء في أي время. بدون التزام."
+  },
+  "settings": {
+    "common": {
+      "invalidResponse": "رد غير صالح من الخادم."
+    },
+    "profile": {
+      "title": "إعدادات الحساب",
+      "subtitle": "أدر ملفك الشخصي وبياناتك الشخصية.",
+      "sectionTitle": "الملف الشخصي",
+      "emailLabel": "البريد الإلكتروني",
+      "verified": "موثّق",
+      "unverified": "غير موثّق",
+      "planLabel": "الخطة الحالية",
+      "nameLabel": "الاسم المعروض",
+      "namePlaceholder": "اسمك",
+      "saveButton": "حفظ",
+      "saveSuccess": "تم حفظ التعديلات.",
+      "saveError": "تعذّر الحفظ، حاول مرة أخرى.",
+      "loadError": "تعذّر تحميل ملفك الشخصي.",
+      "danger": {
+        "title": "المنطقة الخطرة",
+        "warningStrong": "حذف حسابك نهائي.",
+        "warningBody": "سيتم مسح جميع بياناتك (المقالات، التحليلات، السجل، الاشتراك والفواتير) بشكل لا رجعة فيه. لا يمكن التراجع عن هذا الإجراء ولن يتمكن الدعم من استعادتها.",
+        "confirmLabel": "للتأكيد، اكتب بريدك الإلكتروني:",
+        "confirmPlaceholder": "you@example.com",
+        "deleteButton": "حذف حسابي نهائياً",
+        "deleteErrorInvalidEmail": "فشل الحذف، تحقق من البريد المُدخل.",
+        "deleteErrorGeneric": "فشل الحذف، حاول مرة أخرى.",
+        "deleteHint": "لا يتم تفعيل الزر إلا إذا تطابق ما أدخلته تماماً مع بريدك الإلكتروني."
+      }
+    },
+    "billing": {
+      "title": "الفوترة",
+      "subtitle": "اطّلع على خطتك وحصتك الشهرية واشتراكك.",
+      "planLabel": "الخطة الحالية",
+      "freePrice": "مجاني",
+      "monthlyPrice": "{price}€/شهر",
+      "monthlyRenewal": "تجديد شهري",
+      "usageLabel": "التحليلات هذا الشهر",
+      "usageValue": "{used} / {limit}",
+      "usageUnlimited": "{used} / غير محدود",
+      "unlimitedNote": "خطتك بلا حد شهري.",
+      "includedTitle": "مشمول في خطتك",
+      "features": {
+        "fullReport": "تقرير مفصل (8 معايير)",
+        "formats": "التنسيقات: {list}",
+        "historyUnlimited": "سجل غير محدود",
+        "historyDays": "السجل: {days} يوم",
+        "exportPdf": "تصدير PDF",
+        "supportPriority": "دعم ذو أولوية",
+        "supportEmail": "دعم عبر البريد الإلكتروني",
+        "supportCommunity": "دعم مجتمعي"
+      },
+      "subscriptionTitle": "الاشتراك",
+      "statusUnavailable": "حالة الفوترة غير متاحة حالياً.",
+      "portalDescription": "أدر وسيلة الدفع والفواتير وإلغاء اشتراكك من بوابة Stripe.",
+      "portalButton": "إدارة اشتراكي",
+      "portalError": "تعذّر فتح بوابة الفوترة.",
+      "notActivated": "الفوترة غير مفعّلة بعد. سيصبح الدفع عبر الإنترنت متاحاً قريباً — خطتك الحالية قابلة للاستخدام دون بطاقة بنكية.",
+      "invoicesTitle": "سجل الفواتير",
+      "invoicesEmpty": "لا توجد فواتير متاحة حالياً.",
+      "loadErrorPlan": "تعذّر تحميل خطتك.",
+      "loadErrorBilling": "تعذّر تحميل معلومات الفوترة.",
+      "invalidResponse": "رد غير صالح من الخادم."
+    }
   }
 }

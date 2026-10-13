@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 import { useI18n } from "./I18nProvider";
-import { locales, type Locale } from "@/lib/i18n";
+import { locales, type Locale, getDictionary } from "@/lib/i18n";
 
 const localeLabels: Record<Locale, string> = {
   fr: "FR",
@@ -30,6 +30,7 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const { locale, setLocale } = useI18n();
+  const dict = getDictionary(locale);
   const [userPlan, setUserPlan] = useState<string | null>(null);
 
   useEffect(() => {
@@ -76,6 +77,18 @@ export function Header() {
               >
                 <CreditCard className="h-3 w-3" />
                 {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : "Upgrade"}
+              </Link>
+              <Link
+                href={`/${locale}/settings/profile`}
+                className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
+              >
+                {dict.header.profile}
+              </Link>
+              <Link
+                href={`/${locale}/settings/billing`}
+                className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
+              >
+                {dict.header.billing}
               </Link>
               <div className="mx-2 h-6 w-px bg-border" />
               <span className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
@@ -231,6 +244,20 @@ export function Header() {
                 >
                   <CreditCard className="h-4 w-4" />
                   {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : "Upgrade"}
+                </Link>
+                <Link
+                  href={`/${locale}/settings/profile`}
+                  onClick={() => setMobileOpen(false)}
+                  className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
+                >
+                  {dict.header.profile}
+                </Link>
+                <Link
+                  href={`/${locale}/settings/billing`}
+                  onClick={() => setMobileOpen(false)}
+                  className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
+                >
+                  {dict.header.billing}
                 </Link>
                 <button
                   onClick={() => {

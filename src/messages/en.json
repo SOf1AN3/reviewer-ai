@@ -60,7 +60,9 @@
     "logout": "Logout",
     "login": "Login",
     "register": "Sign Up",
-    "toggleTheme": "Toggle theme"
+    "toggleTheme": "Toggle theme",
+    "profile": "Profile",
+    "billing": "Billing"
   },
   "login": {
     "title": "Login",
@@ -169,5 +171,70 @@
       "cta": "Upgrade to Business"
     },
     "guarantee": "Cancel anytime. No commitment."
+  },
+  "settings": {
+    "common": {
+      "invalidResponse": "Invalid response from the server."
+    },
+    "profile": {
+      "title": "Account Settings",
+      "subtitle": "Manage your profile and personal data.",
+      "sectionTitle": "Profile",
+      "emailLabel": "Email address",
+      "verified": "Verified",
+      "unverified": "Not verified",
+      "planLabel": "Current plan",
+      "nameLabel": "Display name",
+      "namePlaceholder": "Your name",
+      "saveButton": "Save",
+      "saveSuccess": "Changes saved.",
+      "saveError": "Could not save, please try again.",
+      "loadError": "Could not load your profile.",
+      "danger": {
+        "title": "Danger Zone",
+        "warningStrong": "Deleting your account is permanent.",
+        "warningBody": "All of your data (articles, analyses, history, subscription and invoices) will be erased irreversibly. This action cannot be undone and support will not be able to restore it.",
+        "confirmLabel": "To confirm, type your email address:",
+        "confirmPlaceholder": "you@example.com",
+        "deleteButton": "Permanently delete my account",
+        "deleteErrorInvalidEmail": "Deletion failed, check the address you entered.",
+        "deleteErrorGeneric": "Deletion failed, please try again.",
+        "deleteHint": "The button is only enabled when the input exactly matches your email address."
+      }
+    },
+    "billing": {
+      "title": "Billing",
+      "subtitle": "View your plan, monthly quota and subscription.",
+      "planLabel": "Current plan",
+      "freePrice": "Free",
+      "monthlyPrice": "{price}€/month",
+      "monthlyRenewal": "Monthly renewal",
+      "usageLabel": "Analyses this month",
+      "usageValue": "{used} / {limit}",
+      "usageUnlimited": "{used} / unlimited",
+      "unlimitedNote": "Your plan has no monthly limit.",
+      "includedTitle": "Included in your plan",
+      "features": {
+        "fullReport": "Detailed report (8 criteria)",
+        "formats": "Formats: {list}",
+        "historyUnlimited": "Unlimited history",
+        "historyDays": "History: {days} days",
+        "exportPdf": "PDF export",
+        "supportPriority": "Priority support",
+        "supportEmail": "Email support",
+        "supportCommunity": "Community support"
+      },
+      "subscriptionTitle": "Subscription",
+      "statusUnavailable": "Billing status unavailable right now.",
+      "portalDescription": "Manage your payment method, invoices and subscription cancellation from the Stripe portal.",
+      "portalButton": "Manage my subscription",
+      "portalError": "Could not open the billing portal.",
+      "notActivated": "Billing is not enabled yet. Online payment will be available soon — your current plan remains usable without a credit card.",
+      "invoicesTitle": "Invoice history",
+      "invoicesEmpty": "No invoices available for now.",
+      "loadErrorPlan": "Could not load your plan.",
+      "loadErrorBilling": "Could not load your billing information.",
+      "invalidResponse": "Invalid response from the server."
+    }
   }
 }

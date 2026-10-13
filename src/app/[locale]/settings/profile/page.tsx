@@ -13,10 +13,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { useI18n } from "@/components/I18nProvider";
-
-// TODO(i18n): aucune clé `settings.*` n'existe dans src/messages/*.json.
-// Les textes ci-dessous sont codés en dur en FR en attendant l'ajout des
-// traductions (fichiers de messages NON modifiés par cette tâche).
+import { getDictionary } from "@/lib/i18n";
 
 /** Contrat de `GET /api/user/profile` (validé côté client, sans `any`). */
 const profileSchema = z.object({
@@ -46,6 +43,7 @@ type SaveState = "idle" | "saving" | "success" | "error";
 export default function SettingsProfilePage() {
   const router = useRouter();
   const { locale } = useI18n();
+  const settings = getDictionary(locale).settings;
   const { status } = useSession();
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -91,26 +89,26 @@ export default function SettingsProfilePage() {
           return;
         }
         if (!res.ok) {
-          setLoadError("Impossible de charger votre profil.");
+          setLoadError(settings.profile.loadError);
           return;
         }
 
         const body: unknown = await res.json();
         const parsed = profileSchema.safeParse(body);
         if (!parsed.success) {
-          setLoadError("Réponse invalide du serveur.");
+          setLoadError(settings.common.invalidResponse);
           return;
         }
 
         setProfile(parsed.data);
         setNameInput(parsed.data.name ?? "");
       } catch {
-        setLoadError("Impossible de charger votre profil.");
+        setLoadError(settings.profile.loadError);
       }
     };
 
     void loadProfile();
-  }, [status, locale, router]);
+  }, [status, locale, router, settings.profile.loadError, settings.common.invalidResponse]);
 
   const trimmedName = nameInput.trim();
   const canSave = trimmedName.length >= 2 && trimmedName.length <= 100;
@@ -132,9 +130,7 @@ export default function SettingsProfilePage() {
 
       if (!res.ok) {
         setSaveState("error");
-        setSaveError(
-          readApiError(body) ?? "Enregistrement impossible, réessayez."
-        );
+        setSaveError(readApiError(body) ?? settings.profile.saveError);
         return;
       }
 
@@ -143,7 +139,7 @@ export default function SettingsProfilePage() {
       setSaveState("success");
     } catch {
       setSaveState("error");
-      setSaveError("Enregistrement impossible, réessayez.");
+      setSaveError(settings.profile.saveError);
     }
   };
 
@@ -170,15 +166,14 @@ export default function SettingsProfilePage() {
       if (!res.ok) {
         leavingRef.current = false;
         setDeleteError(
-          readApiError(body) ??
-            "La suppression a échoué, vérifiez l'adresse saisie."
+          readApiError(body) ?? settings.profile.danger.deleteErrorInvalidEmail
         );
         setDeleting(false);
         return;
       }
     } catch {
       leavingRef.current = false;
-      setDeleteError("La suppression a échoué, réessayez.");
+      setDeleteError(settings.profile.danger.deleteErrorGeneric);
       setDeleting(false);
       return;
     }
@@ -215,24 +210,23 @@ export default function SettingsProfilePage() {
       <div className="mx-auto max-w-2xl">
         <div className="mb-8">
           <h1 className="mb-2 text-2xl font-bold uppercase tracking-tight sm:text-3xl">
-            Paramètres du compte
+            {settings.profile.title}
           </h1>
-          {/* TODO(i18n): sous-titre */}
           <p className="text-sm text-muted-foreground">
-            Gérez votre profil et vos données personnelles.
+            {settings.profile.subtitle}
           </p>
         </div>
 
         {/* --- Profil --- */}
         <section className="brutal-card mb-6">
           <h2 className="mb-6 text-lg font-bold uppercase tracking-wider">
-            Profil
+            {settings.profile.sectionTitle}
           </h2>
 
           <dl className="mb-6 space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <dt className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                Adresse email
+                {settings.profile.emailLabel}
               </dt>
               <dd className="flex items-center gap-3">
                 <span className="text-sm font-bold">
@@ -241,12 +235,12 @@ export default function SettingsProfilePage() {
                 {profile.emailVerified ? (
                   <span className="brutal-badge flex items-center gap-1 text-score-great">
                     <ShieldCheck className="h-3 w-3" />
-                    Vérifié
+                    {settings.profile.verified}
                   </span>
                 ) : (
                   <span className="brutal-badge flex items-center gap-1 text-destructive">
                     <ShieldAlert className="h-3 w-3" />
-                    Non vérifié
+                    {settings.profile.unverified}
                   </span>
                 )}
               </dd>
@@ -254,7 +248,7 @@ export default function SettingsProfilePage() {
 
             <div className="flex flex-wrap items-center justify-between gap-2">
               <dt className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                Plan actuel
+                {settings.profile.planLabel}
               </dt>
               <dd>
                 <span className="brutal-tag">{profile.plan}</span>
@@ -268,7 +262,7 @@ export default function SettingsProfilePage() {
                 htmlFor="profile-name"
                 className="mb-1 block text-xs font-bold uppercase tracking-wider"
               >
-                Nom affiché
+                {settings.profile.nameLabel}
               </label>
               <input
                 id="profile-name"
@@ -282,7 +276,7 @@ export default function SettingsProfilePage() {
                 minLength={2}
                 maxLength={100}
                 className="brutal-input w-full"
-                placeholder="Votre nom"
+                placeholder={settings.profile.namePlaceholder}
                 required
               />
             </div>
@@ -298,12 +292,12 @@ export default function SettingsProfilePage() {
                 ) : (
                   <Save className="h-4 w-4" />
                 )}
-                Enregistrer
+                {settings.profile.saveButton}
               </button>
 
               {saveState === "success" && (
                 <span className="text-sm font-bold text-score-great">
-                  Modifications enregistrées.
+                  {settings.profile.saveSuccess}
                 </span>
               )}
               {saveState === "error" && saveError && (
@@ -319,22 +313,19 @@ export default function SettingsProfilePage() {
         <section className="border-2 border-destructive bg-destructive/10 p-4 sm:p-6">
           <h2 className="mb-3 flex items-center gap-2 text-lg font-bold uppercase tracking-wider text-destructive">
             <AlertTriangle className="h-5 w-5" />
-            Zone dangereuse
+            {settings.profile.danger.title}
           </h2>
 
-          {/* TODO(i18n): textes de la zone dangereuse */}
           <p className="mb-3 text-sm">
-            <strong>Supprimer votre compte est définitif.</strong> Toutes vos
-            données (articles, analyses, historique, abonnement et factures)
-            seront effacées de manière irréversible. Cette action ne peut pas
-            être annulée et le support ne pourra pas les restaurer.
+            <strong>{settings.profile.danger.warningStrong}</strong>{" "}
+            {settings.profile.danger.warningBody}
           </p>
 
           <label
             htmlFor="confirm-delete-email"
             className="mb-1 block text-xs font-bold uppercase tracking-wider"
           >
-            Pour confirmer, tapez votre adresse email :{" "}
+            {settings.profile.danger.confirmLabel}{" "}
             <span className="text-destructive">{profile.email}</span>
           </label>
           <input
@@ -343,7 +334,9 @@ export default function SettingsProfilePage() {
             value={confirmInput}
             onChange={(e) => setConfirmInput(e.target.value)}
             className="brutal-input mb-4 w-full"
-            placeholder={profile.email ?? "vous@example.com"}
+            placeholder={
+              profile.email ?? settings.profile.danger.confirmPlaceholder
+            }
             autoComplete="off"
           />
 
@@ -366,13 +359,12 @@ export default function SettingsProfilePage() {
             ) : (
               <Trash2 className="h-4 w-4" />
             )}
-            Supprimer définitivement mon compte
+            {settings.profile.danger.deleteButton}
           </button>
 
           {!canDelete && !deleteError && (
             <p className="mt-3 text-xs text-muted-foreground">
-              Le bouton s&apos;active uniquement si la saisie correspond
-              exactement à votre adresse email.
+              {settings.profile.danger.deleteHint}
             </p>
           )}
         </section>

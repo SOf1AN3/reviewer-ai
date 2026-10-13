@@ -60,7 +60,9 @@
     "logout": "Déconnexion",
     "login": "Connexion",
     "register": "Inscription",
-    "toggleTheme": "Changer de thème"
+    "toggleTheme": "Changer de thème",
+    "profile": "Profil",
+    "billing": "Facturation"
   },
   "login": {
     "title": "Connexion",
@@ -169,5 +171,70 @@
       "cta": "Passer à Business"
     },
     "guarantee": "Annulation à tout moment. Aucun engagement."
+  },
+  "settings": {
+    "common": {
+      "invalidResponse": "Réponse invalide du serveur."
+    },
+    "profile": {
+      "title": "Paramètres du compte",
+      "subtitle": "Gérez votre profil et vos données personnelles.",
+      "sectionTitle": "Profil",
+      "emailLabel": "Adresse email",
+      "verified": "Vérifié",
+      "unverified": "Non vérifié",
+      "planLabel": "Plan actuel",
+      "nameLabel": "Nom affiché",
+      "namePlaceholder": "Votre nom",
+      "saveButton": "Enregistrer",
+      "saveSuccess": "Modifications enregistrées.",
+      "saveError": "Enregistrement impossible, réessayez.",
+      "loadError": "Impossible de charger votre profil.",
+      "danger": {
+        "title": "Zone dangereuse",
+        "warningStrong": "Supprimer votre compte est définitif.",
+        "warningBody": "Toutes vos données (articles, analyses, historique, abonnement et factures) seront effacées de manière irréversible. Cette action ne peut pas être annulée et le support ne pourra pas les restaurer.",
+        "confirmLabel": "Pour confirmer, tapez votre adresse email :",
+        "confirmPlaceholder": "vous@example.com",
+        "deleteButton": "Supprimer définitivement mon compte",
+        "deleteErrorInvalidEmail": "La suppression a échoué, vérifiez l'adresse saisie.",
+        "deleteErrorGeneric": "La suppression a échoué, réessayez.",
+        "deleteHint": "Le bouton s'active uniquement si la saisie correspond exactement à votre adresse email."
+      }
+    },
+    "billing": {
+      "title": "Facturation",
+      "subtitle": "Consultez votre plan, votre quota mensuel et votre abonnement.",
+      "planLabel": "Plan actuel",
+      "freePrice": "Gratuit",
+      "monthlyPrice": "{price}€/mois",
+      "monthlyRenewal": "Renouvellement mensuel",
+      "usageLabel": "Analyses ce mois-ci",
+      "usageValue": "{used} / {limit}",
+      "usageUnlimited": "{used} / illimité",
+      "unlimitedNote": "Votre plan n'a aucune limite mensuelle.",
+      "includedTitle": "Inclus dans votre plan",
+      "features": {
+        "fullReport": "Rapport détaillé (8 critères)",
+        "formats": "Formats : {list}",
+        "historyUnlimited": "Historique illimité",
+        "historyDays": "Historique : {days} jours",
+        "exportPdf": "Export PDF",
+        "supportPriority": "Support prioritaire",
+        "supportEmail": "Support par email",
+        "supportCommunity": "Support communautaire"
+      },
+      "subscriptionTitle": "Abonnement",
+      "statusUnavailable": "État de la facturation indisponible pour le moment.",
+      "portalDescription": "Gérez votre moyen de paiement, vos factures et la résiliation de votre abonnement depuis le portail Stripe.",
+      "portalButton": "Gérer mon abonnement",
+      "portalError": "Impossible d'ouvrir le portail de facturation.",
+      "notActivated": "La facturation n'est pas encore activée. Le paiement en ligne sera disponible prochainement — votre plan actuel reste utilisable sans carte bancaire.",
+      "invoicesTitle": "Historique des factures",
+      "invoicesEmpty": "Aucune facture disponible pour le moment.",
+      "loadErrorPlan": "Impossible de charger votre plan.",
+      "loadErrorBilling": "Impossible de charger vos informations de facturation.",
+      "invalidResponse": "Réponse invalide du serveur."
+    }
   }
 }

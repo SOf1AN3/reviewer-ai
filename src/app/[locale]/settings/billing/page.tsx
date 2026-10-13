@@ -13,9 +13,10 @@ import {
   X,
 } from "lucide-react";
 import { useI18n } from "@/components/I18nProvider";
+import { getDictionary, type Dictionary } from "@/lib/i18n";
 
-// TODO(i18n): aucune clé `settings.*` n'existe dans src/messages/*.json —
-// textes FR codés en dur en attendant l'ajout des traductions.
+/** Bloc traduit `settings.billing` (structure identique dans fr/en/ar). */
+type BillingDict = Dictionary["settings"]["billing"];
 
 /**
  * Config d'affichage PUBLIQUE des prix (aucun secret, aucun price ID Stripe,
@@ -60,28 +61,37 @@ interface FeatureRow {
 }
 
 /** Transforme les features brutes du plan en lignes affichables. */
-function buildFeatureRows(features: PlanFeatures): FeatureRow[] {
+function buildFeatureRows(
+  features: PlanFeatures,
+  billing: BillingDict
+): FeatureRow[] {
   const supportLabel =
     features.support === "priority"
-      ? "Support prioritaire"
+      ? billing.features.supportPriority
       : features.support === "email"
-        ? "Support par email"
-        : "Support communautaire";
+        ? billing.features.supportEmail
+        : billing.features.supportCommunity;
 
   return [
-    { label: "Rapport détaillé (8 critères)", included: features.fullReport },
+    { label: billing.features.fullReport, included: features.fullReport },
     {
-      label: `Formats : ${features.fileFormats.join(", ")}`,
+      label: billing.features.formats.replace(
+        "{list}",
+        features.fileFormats.join(", ")
+      ),
       included: features.fileFormats.length > 2,
     },
     {
       label:
         features.historyRetention === -1
-          ? "Historique illimité"
-          : `Historique : ${features.historyRetention} jours`,
+          ? billing.features.historyUnlimited
+          : billing.features.historyDays.replace(
+              "{days}",
+              String(features.historyRetention)
+            ),
       included: features.historyRetention === -1,
     },
-    { label: "Export PDF", included: features.exportPdf },
+    { label: billing.features.exportPdf, included: features.exportPdf },
     { label: supportLabel, included: true },
   ];
 }
@@ -100,6 +110,7 @@ function readApiError(body: unknown): string | null {
 export default function SettingsBillingPage() {
   const router = useRouter();
   const { locale } = useI18n();
+  const settings = getDictionary(locale).settings;
   const { status } = useSession();
 
   const [plan, setPlan] = useState<PlanInfo | null>(null);
@@ -134,14 +145,14 @@ export default function SettingsBillingPage() {
           return;
         }
         if (!planRes.ok) {
-          setLoadError("Impossible de charger votre plan.");
+          setLoadError(settings.billing.loadErrorPlan);
           return;
         }
 
         const planBody: unknown = await planRes.json();
         const parsedPlan = planSchema.safeParse(planBody);
         if (!parsedPlan.success) {
-          setLoadError("Réponse invalide du serveur.");
+          setLoadError(settings.common.invalidResponse);
           return;
         }
 
@@ -160,12 +171,19 @@ export default function SettingsBillingPage() {
         setPlan(parsedPlan.data);
         setStripeConfigured(flag);
       } catch {
-        setLoadError("Impossible de charger vos informations de facturation.");
+        setLoadError(settings.billing.loadErrorBilling);
       }
     };
 
     void loadBillingData();
-  }, [status, locale, router]);
+  }, [
+    status,
+    locale,
+    router,
+    settings.billing.loadErrorPlan,
+    settings.billing.loadErrorBilling,
+    settings.common.invalidResponse,
+  ]);
 
   const handleManageSubscription = async (): Promise<void> => {
     setPortalLoading(true);
@@ -176,10 +194,7 @@ export default function SettingsBillingPage() {
       const body: unknown = await res.json().catch(() => null);
 
       if (!res.ok) {
-        setPortalError(
-          readApiError(body) ??
-            "Impossible d'ouvrir le portail de facturation."
-        );
+        setPortalError(readApiError(body) ?? settings.billing.portalError);
         return;
       }
 
@@ -191,10 +206,10 @@ export default function SettingsBillingPage() {
       if (typeof url === "string" && url.length > 0) {
         window.location.href = url;
       } else {
-        setPortalError("Impossible d'ouvrir le portail de facturation.");
+        setPortalError(settings.billing.portalError);
       }
     } catch {
-      setPortalError("Impossible d'ouvrir le portail de facturation.");
+      setPortalError(settings.billing.portalError);
     } finally {
       // Réactive le bouton sur chaque échec (l'erreur reste affichée) ;
       // inoffensif si la navigation Stripe vient de démarrer.
@@ -222,18 +237,19 @@ export default function SettingsBillingPage() {
       ? 0
       : Math.min(100, Math.round((plan.analysesUsed / plan.monthlyLimit) * 100));
   const price = PLAN_PRICES[plan.plan] ?? 0;
-  const featureRows = plan.features ? buildFeatureRows(plan.features) : null;
+  const featureRows = plan.features
+    ? buildFeatureRows(plan.features, settings.billing)
+    : null;
 
   return (
     <div className="container mx-auto px-4 py-8 sm:py-12">
       <div className="mx-auto max-w-2xl">
         <div className="mb-8">
           <h1 className="mb-2 text-2xl font-bold uppercase tracking-tight sm:text-3xl">
-            Facturation
+            {settings.billing.title}
           </h1>
-          {/* TODO(i18n): sous-titre */}
           <p className="text-sm text-muted-foreground">
-            Consultez votre plan, votre quota mensuel et votre abonnement.
+            {settings.billing.subtitle}
           </p>
         </div>
 
@@ -242,24 +258,34 @@ export default function SettingsBillingPage() {
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                Plan actuel
+                {settings.billing.planLabel}
               </span>
               <div className="text-xl font-bold uppercase tracking-wider">
                 {plan.name ?? plan.plan}
                 <span className="ml-2 text-sm font-normal text-muted-foreground">
-                  {price === 0 ? "Gratuit" : `${price}€/mois`}
+                  {price === 0
+                    ? settings.billing.freePrice
+                    : settings.billing.monthlyPrice.replace(
+                        "{price}",
+                        String(price)
+                      )}
                 </span>
               </div>
             </div>
-            <span className="brutal-tag">Renouvellement mensuel</span>
+            <span className="brutal-tag">{settings.billing.monthlyRenewal}</span>
           </div>
 
           <div className="mb-2 flex items-center justify-between text-sm">
-            <span className="font-bold">Analyses ce mois-ci</span>
+            <span className="font-bold">{settings.billing.usageLabel}</span>
             <span>
               {unlimited
-                ? `${plan.analysesUsed} / illimité`
-                : `${plan.analysesUsed} / ${plan.monthlyLimit}`}
+                ? settings.billing.usageUnlimited.replace(
+                    "{used}",
+                    String(plan.analysesUsed)
+                  )
+                : settings.billing.usageValue
+                    .replace("{used}", String(plan.analysesUsed))
+                    .replace("{limit}", String(plan.monthlyLimit))}
             </span>
           </div>
           <div className="h-4 w-full border-2 border-border bg-secondary">
@@ -272,7 +298,7 @@ export default function SettingsBillingPage() {
           </div>
           {unlimited && (
             <p className="mt-2 text-xs text-muted-foreground">
-              Votre plan n&apos;a aucune limite mensuelle.
+              {settings.billing.unlimitedNote}
             </p>
           )}
         </section>
@@ -281,7 +307,7 @@ export default function SettingsBillingPage() {
         {featureRows && (
           <section className="brutal-card mb-6">
             <h2 className="mb-4 text-lg font-bold uppercase tracking-wider">
-              Inclus dans votre plan
+              {settings.billing.includedTitle}
             </h2>
             <ul className="space-y-3">
               {featureRows.map((row) => (
@@ -306,19 +332,18 @@ export default function SettingsBillingPage() {
         <section className="brutal-card mb-6">
           <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
             <CreditCard className="h-5 w-5" />
-            Abonnement
+            {settings.billing.subscriptionTitle}
           </h2>
 
           {stripeConfigured === null ? (
             /* État inconnu (flag illisible) : ni bouton cassé, ni mensonge. */
             <p className="text-sm text-muted-foreground">
-              État de la facturation indisponible pour le moment.
+              {settings.billing.statusUnavailable}
             </p>
           ) : stripeConfigured ? (
             <>
               <p className="mb-4 text-sm text-muted-foreground">
-                Gérez votre moyen de paiement, vos factures et la résiliation
-                de votre abonnement depuis le portail Stripe.
+                {settings.billing.portalDescription}
               </p>
               {portalError && (
                 <p className="mb-4 border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
@@ -338,30 +363,27 @@ export default function SettingsBillingPage() {
                 ) : (
                   <ExternalLink className="h-4 w-4" />
                 )}
-                Gérer mon abonnement
+                {settings.billing.portalButton}
               </button>
             </>
           ) : (
             /* Stripe non configuré (cas actuel) : état honnête, pas de bouton cassé. */
             <p className="text-sm text-muted-foreground">
-              La facturation n&apos;est pas encore activée. Le paiement en
-              ligne sera disponible prochainement — votre plan actuel reste
-              utilisable sans carte bancaire.
+              {settings.billing.notActivated}
             </p>
           )}
         </section>
 
-        {/* --- Historique des factures --- */}
-        {/* TODO(i18n): historique des factures — nécessite une route
-            `GET /api/user/invoices` (Stripe `invoices.list` ou table
-            `Invoice`) : emplacement réservé, volontairement vide. */}
+        {/* --- Historique des factures ---
+            Emplacement réservé : nécessite une route `GET /api/user/invoices`
+            (Stripe `invoices.list` ou table `Invoice`), volontairement vide. */}
         <section className="brutal-card">
           <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
             <Receipt className="h-5 w-5" />
-            Historique des factures
+            {settings.billing.invoicesTitle}
           </h2>
           <p className="text-sm text-muted-foreground">
-            Aucune facture disponible pour le moment.
+            {settings.billing.invoicesEmpty}
           </p>
         </section>
       </div>
