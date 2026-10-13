@@ -1,0 +1,103 @@
+# ============================================================================
+# PaperNote — CI (lint + typecheck + tests + build)
+#
+# Déclencheurs : push sur `main` et toute pull request.
+# AUCUN secret réel n'est utilisé ici : le build (`next build` s'exécute en
+# NODE_ENV=production) exige des variables d'env validées par
+# `src/lib/env.ts` — on fournit des placeholders évidemment faux au niveau
+# du job. Jamais de vraie clé dans ce fichier (un secret commité est
+# définitivement compromis).
+#
+# Volontairement absent : `prisma migrate deploy` (aucune base de données de
+# test dans la CI pour l'instant — voir le TODO en bas du workflow).
+# ============================================================================
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Principle of least privilege : la CI ne lit que le dépôt.
+permissions:
+  contents: read
+
+# Une seule CI par ref : la plus récente annule la précédente en cours.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Lint, typecheck, tests & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      # --- Placeholders FACTICES (zéro vraie clé) --------------------------
+      # Exigés par la validation stricte de `src/lib/env.ts` lorsque
+      # NODE_ENV=production (cas de `next build`) :
+      # - toujours requis : DATABASE_URL, AUTH_SECRET, NEXT_PUBLIC_APP_URL
+      #   (URL absolue) ;
+      # - requis uniquement en production : GEMINI_API_KEY, RESEND_API_KEY,
+      #   CRON_SECRET, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, GOOGLE_*,
+      #   STRIPE_*_PRICE_ID, NEXT_APP_URL.
+      # Note STRIPE_WEBHOOK_SECRET : doit être non vide ET ne pas commencer
+      # par « whsec_REPLACE_ME » (refine de env.ts) — d'où la valeur ci-dessous.
+      DATABASE_URL: "postgresql://ci_placeholder:ci_placeholder@localhost:5432/papernote_ci?schema=public"
+      AUTH_SECRET: "ci_placeholder_not_a_real_auth_secret"
+      NEXT_PUBLIC_APP_URL: "https://ci-placeholder.example.com"
+      NEXT_APP_URL: "https://ci-placeholder.example.com"
+      GEMINI_API_KEY: "ci_placeholder_not_a_real_gemini_key"
+      RESEND_API_KEY: "re_ci_placeholder_not_a_real_key"
+      CRON_SECRET: "ci_placeholder_not_a_real_cron_secret"
+      STRIPE_SECRET_KEY: "sk_test_ci_placeholder_not_a_real_key"
+      STRIPE_WEBHOOK_SECRET: "whsec_ci_placeholder_not_a_real_secret"
+      GOOGLE_CLIENT_ID: "ci_placeholder_google_client_id"
+      GOOGLE_CLIENT_SECRET: "ci_placeholder_google_client_secret"
+      STRIPE_PRO_PRICE_ID: "price_ci_placeholder_pro"
+      STRIPE_BUSINESS_PRICE_ID: "price_ci_placeholder_business"
+      # UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN : jamais requises
+      # (absence ⇒ store mémoire local) — volontairement omises.
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20 (cache npm)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        # `npm ci` déclenche aussi le postinstall `prisma generate`
+        # (aucune base de données ni secret requis pour la génération).
+        run: npm ci
+
+      - name: Validate Prisma schema
+        run: npx prisma validate
+
+      - name: Lint (ESLint)
+        run: npm run lint
+
+      - name: Typecheck (tsc --noEmit)
+        run: npx tsc --noEmit
+
+      - name: Unit tests (Vitest)
+        run: npm test
+
+      - name: Build (next build)
+        # NODE_ENV=production est défini par `next build` lui-même : la
+        # validation stricte de src/lib/env.ts s'applique, avec les
+        # placeholders factices déclarés au niveau du job ci-dessus.
+        run: npm run build
+
+      # TODO: migrate deploy on staging — à activer dès qu'une base de
+      # staging existe (DATABASE_URL de staging stockée en secret GitHub) :
+      #
+      # - name: Deploy DB migrations (staging)
+      #   run: npx prisma migrate deploy
+      #   env:
+      #     DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}

@@ -1,0 +1,93 @@
+# ============================================================================
+# PaperNote — Déploiement Vercel (production)
+#
+# Déclenché :
+# - automatiquement après le succès du workflow « CI » sur la branche `main`
+#   (via `workflow_run`) ;
+# - manuellement via `workflow_dispatch` (onglet Actions).
+#
+# Secrets GitHub À CONFIGURER (Repository > Settings > Secrets and variables
+# > Actions) — ils ne sont PAS fournis ni inventés ici :
+#   - VERCEL_TOKEN      : jeton d'accès Vercel (https://vercel.com/account/tokens)
+#   - VERCEL_ORG_ID     : identifiant d'équipe/orga Vercel
+#   - VERCEL_PROJECT_ID : identifiant du projet Vercel
+#
+# Tant qu'aucun de ces secrets n'est défini, le job s'arrête proprement avec
+# un simple avis (aucun échec rouge) : ce workflow ne peut pas déployer sans
+# secret réel, et n'en contient aucun.
+#
+# Les variables d'exécution de l'app (DATABASE_URL, clés API, etc.) sont
+# gérées côté Vercel (Project > Settings > Environment Variables) et
+# récupérées par `vercel pull` — jamais commitées dans ce dépôt.
+# ============================================================================
+
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Un seul déploiement production à la fois ; n'interrompt pas un déploiement
+# déjà en cours.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Vercel (production)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Uniquement si la CI de `main` a réussi, ou si l'exécution est manuelle.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+
+    env:
+      # Secrets GitHub (vides tant qu'ils ne sont pas configurés — jamais
+      # inventés, jamais de valeur par défaut dans ce fichier).
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - name: Vérifier la présence des secrets Vercel
+        id: check
+        run: |
+          if [ -z "${VERCEL_TOKEN}" ] || [ -z "${VERCEL_ORG_ID}" ] || [ -z "${VERCEL_PROJECT_ID}" ]; then
+            echo "configured=false" >> "${GITHUB_OUTPUT}"
+            echo "::notice title=Deploy ignoré::Secrets GitHub manquants (VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID). Configurez-les dans Settings > Secrets and variables > Actions pour activer le déploiement."
+          else
+            echo "configured=true" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Checkout
+        if: steps.check.outputs.configured == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node.js 20 (cache npm)
+        if: steps.check.outputs.configured == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Pull, build & deploy (Vercel CLI)
+        if: steps.check.outputs.configured == 'true'
+        # `vercel pull` récupère la config du projet + les variables
+        # d'environnement définies dans Vercel, `vercel build` exécute
+        # `npm run build` avec ces variables, `vercel deploy --prebuilt`
+        # publie l'artefact produit. Le token passe par l'env VERCEL_TOKEN.
+        run: |
+          npx --yes vercel pull --yes --environment=production
+          npx --yes vercel build
+          npx --yes vercel deploy --prebuilt --prod --yes
