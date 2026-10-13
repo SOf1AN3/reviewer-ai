@@ -4,6 +4,23 @@ import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
+import { env } from "@/lib/env";
+
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = env;
+
+/**
+ * Le provider Google n'est exposé que si ses identifiants sont configurés
+ * (obligatoires en production, optionnels en développement). Sans eux, il est
+ * simplement exclu de la liste : l'authentification par credentials continue
+ * de fonctionner sans valeurs `undefined`.
+ */
+const googleProvider =
+  GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET
+    ? Google({
+        clientId: GOOGLE_CLIENT_ID,
+        clientSecret: GOOGLE_CLIENT_SECRET,
+      })
+    : null;
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db),
@@ -12,10 +29,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/login",
   },
   providers: [
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
+    ...(googleProvider ? [googleProvider] : []),
     Credentials({
       name: "credentials",
       credentials: {
