@@ -255,5 +255,50 @@
       "loadErrorBilling": "Impossible de charger vos informations de facturation.",
       "invalidResponse": "Réponse invalide du serveur."
     }
+  },
+  "admin": {
+    "title": "Administration",
+    "subtitle": "Vue d'ensemble de la plateforme et gestion des utilisateurs.",
+    "forbiddenTitle": "Accès refusé",
+    "forbiddenDescription": "Votre compte ne dispose pas des droits administrateur.",
+    "backHome": "Retour à l'accueil",
+    "loadError": "Impossible de charger les statistiques.",
+    "invalidResponse": "Réponse invalide du serveur.",
+    "stats": {
+      "usersCard": "Utilisateurs",
+      "totalLabel": "Total",
+      "byPlan": "Répartition par plan",
+      "analysesCard": "Analyses",
+      "analysesMonth": "Ce mois-ci",
+      "analysesTotal": "Total",
+      "revenueCard": "Revenus",
+      "revenueMonth": "Revenus du mois",
+      "revenueTotal": "Revenus cumulés",
+      "mrr": "MRR estimé",
+      "mrrUnavailable": "MRR indisponible : Stripe non configuré.",
+      "mrrIncomplete": "Estimation partielle : un price ID Stripe est inconnu localement.",
+      "currencyNote": "Montants convertis depuis les centimes Stripe, en euros.",
+      "subscriptionsCard": "Abonnements",
+      "subscriptionsEmpty": "Aucun abonnement enregistré."
+    },
+    "users": {
+      "cardTitle": "Utilisateurs",
+      "loadError": "Impossible de charger la liste des utilisateurs.",
+      "searchLabel": "Rechercher un utilisateur",
+      "searchPlaceholder": "Email ou nom",
+      "searchButton": "Rechercher",
+      "empty": "Aucun utilisateur trouvé.",
+      "columns": {
+        "name": "Nom",
+        "email": "Email",
+        "role": "Rôle",
+        "plan": "Plan",
+        "analyses": "Analyses",
+        "analysesMonth": "Ce mois"
+      },
+      "pagination": "Page {page} / {pages}",
+      "prev": "Précédent",
+      "next": "Suivant"
+    }
   }
 }

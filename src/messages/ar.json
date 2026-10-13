@@ -255,5 +255,50 @@
       "loadErrorBilling": "تعذّر تحميل معلومات الفوترة.",
       "invalidResponse": "رد غير صالح من الخادم."
     }
+  },
+  "admin": {
+    "title": "الإدارة",
+    "subtitle": "نظرة عامة على المنصة وإدارة المستخدمين.",
+    "forbiddenTitle": "الوصول مرفوض",
+    "forbiddenDescription": "حسابك لا يملك صلاحيات المسؤول.",
+    "backHome": "العودة للرئيسية",
+    "loadError": "تعذّر تحميل الإحصائيات.",
+    "invalidResponse": "رد غير صالح من الخادم.",
+    "stats": {
+      "usersCard": "المستخدمون",
+      "totalLabel": "الإجمالي",
+      "byPlan": "التوزيع حسب الخطة",
+      "analysesCard": "التحليلات",
+      "analysesMonth": "هذا الشهر",
+      "analysesTotal": "الإجمالي",
+      "revenueCard": "الإيرادات",
+      "revenueMonth": "إيرادات الشهر",
+      "revenueTotal": "الإيرادات التراكمية",
+      "mrr": "الإيراد الشهري المتكرر المقدّر",
+      "mrrUnavailable": "الإيراد الشهري المتكرر غير متاح: لم يتم إعداد Stripe.",
+      "mrrIncomplete": "تقدير جزئي: معرّف سعر Stripe غير معروف محلياً.",
+      "currencyNote": "تم تحويل المبالغ من سنتات Stripe، بالعملة EUR.",
+      "subscriptionsCard": "الاشتراكات",
+      "subscriptionsEmpty": "لا توجد اشتراكات مسجّلة."
+    },
+    "users": {
+      "cardTitle": "المستخدمون",
+      "loadError": "تعذّر تحميل قائمة المستخدمين.",
+      "searchLabel": "البحث عن مستخدم",
+      "searchPlaceholder": "البريد الإلكتروني أو الاسم",
+      "searchButton": "بحث",
+      "empty": "لم يتم العثور على مستخدمين.",
+      "columns": {
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "role": "الدور",
+        "plan": "الخطة",
+        "analyses": "التحليلات",
+        "analysesMonth": "هذا الشهر"
+      },
+      "pagination": "الصفحة {page} / {pages}",
+      "prev": "السابق",
+      "next": "التالي"
+    }
   }
 }

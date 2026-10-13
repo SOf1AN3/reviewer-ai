@@ -255,5 +255,50 @@
       "loadErrorBilling": "Could not load your billing information.",
       "invalidResponse": "Invalid response from the server."
     }
+  },
+  "admin": {
+    "title": "Administration",
+    "subtitle": "Platform overview and user management.",
+    "forbiddenTitle": "Access denied",
+    "forbiddenDescription": "Your account does not have administrator rights.",
+    "backHome": "Back to Home",
+    "loadError": "Could not load the statistics.",
+    "invalidResponse": "Invalid response from the server.",
+    "stats": {
+      "usersCard": "Users",
+      "totalLabel": "Total",
+      "byPlan": "Breakdown by plan",
+      "analysesCard": "Analyses",
+      "analysesMonth": "This month",
+      "analysesTotal": "Total",
+      "revenueCard": "Revenue",
+      "revenueMonth": "Revenue this month",
+      "revenueTotal": "Lifetime revenue",
+      "mrr": "Estimated MRR",
+      "mrrUnavailable": "MRR unavailable: Stripe is not configured.",
+      "mrrIncomplete": "Partial estimate: one Stripe price ID is unknown locally.",
+      "currencyNote": "Amounts converted from Stripe cents, in euros.",
+      "subscriptionsCard": "Subscriptions",
+      "subscriptionsEmpty": "No subscriptions recorded."
+    },
+    "users": {
+      "cardTitle": "Users",
+      "loadError": "Could not load the user list.",
+      "searchLabel": "Search for a user",
+      "searchPlaceholder": "Email or name",
+      "searchButton": "Search",
+      "empty": "No users found.",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "plan": "Plan",
+        "analyses": "Analyses",
+        "analysesMonth": "This month"
+      },
+      "pagination": "Page {page} / {pages}",
+      "prev": "Previous",
+      "next": "Next"
+    }
   }
 }
