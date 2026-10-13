@@ -62,7 +62,10 @@
     "register": "Inscription",
     "toggleTheme": "Changer de thème",
     "profile": "Profil",
-    "billing": "Facturation"
+    "billing": "Facturation",
+    "upgrade": "Mettre à niveau",
+    "changeLanguage": "Changer de langue",
+    "menu": "Menu"
   },
   "login": {
     "title": "Connexion",

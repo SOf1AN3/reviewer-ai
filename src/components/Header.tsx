@@ -63,20 +63,20 @@ export function Header() {
                 href={`/${locale}/analyser`}
                 className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
               >
-                {locale === "fr" ? "Analyser" : locale === "en" ? "Analyze" : "تحليل"}
+                {dict.header.analyze}
               </Link>
               <Link
                 href={`/${locale}/historique`}
                 className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
               >
-                {locale === "fr" ? "Historique" : locale === "en" ? "History" : "السجل"}
+                {dict.header.history}
               </Link>
               <Link
                 href={`/${locale}/pricing`}
                 className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs flex items-center gap-1"
               >
                 <CreditCard className="h-3 w-3" />
-                {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : "Upgrade"}
+                {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : dict.header.upgrade}
               </Link>
               <Link
                 href={`/${locale}/settings/profile`}
@@ -97,6 +97,7 @@ export function Header() {
               <button
                 onClick={() => signOut({ callbackUrl: `/${locale}/login` })}
                 className="brutal-btn-destructive brutal-btn px-3 py-2 text-xs flex items-center gap-1"
+                aria-label={dict.header.logout}
               >
                 <LogOut className="h-4 w-4" />
               </button>
@@ -108,13 +109,13 @@ export function Header() {
                 className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs flex items-center gap-1"
               >
                 <LogIn className="h-4 w-4" />
-                {locale === "fr" ? "Connexion" : locale === "en" ? "Login" : "دخول"}
+                {dict.header.login}
               </Link>
               <Link
                 href={`/${locale}/register`}
                 className="brutal-btn px-4 py-2 text-xs"
               >
-                {locale === "fr" ? "Inscription" : locale === "en" ? "Sign Up" : "تسجيل"}
+                {dict.header.register}
               </Link>
             </>
           )}
@@ -124,7 +125,7 @@ export function Header() {
             <button
               onClick={() => setLangOpen(!langOpen)}
               className="brutal-btn px-3 py-2 text-xs flex items-center gap-1"
-              aria-label="Change language"
+              aria-label={dict.header.changeLanguage}
             >
               <Globe className="h-4 w-4" />
               <span>{localeLabels[locale]}</span>
@@ -139,7 +140,7 @@ export function Header() {
                       setLangOpen(false);
                     }}
                     className={`block w-full px-4 py-2 text-xs font-bold uppercase tracking-wider hover:bg-secondary transition-colors ${
-                      locale === l ? "bg-secondary text-foreground" : "text-muted-foreground"
+                      l === locale ? "bg-secondary text-foreground" : "text-muted-foreground"
                     }`}
                   >
                     {localeLabels[l]}
@@ -152,7 +153,7 @@ export function Header() {
           <button
             onClick={toggleTheme}
             className="brutal-btn px-3 py-2 text-xs"
-            aria-label="Changer de thème"
+            aria-label={dict.header.toggleTheme}
           >
             {theme === "light" ? (
               <Moon className="h-4 w-4" />
@@ -167,7 +168,7 @@ export function Header() {
           <button
             onClick={() => setLangOpen(!langOpen)}
             className="brutal-btn px-3 py-2 text-xs"
-            aria-label="Change language"
+            aria-label={dict.header.changeLanguage}
           >
             <Globe className="h-4 w-4" />
           </button>
@@ -181,7 +182,7 @@ export function Header() {
                     setLangOpen(false);
                   }}
                   className={`block w-full px-4 py-2 text-xs font-bold uppercase tracking-wider hover:bg-secondary transition-colors ${
-                    locale === l ? "bg-secondary text-foreground" : "text-muted-foreground"
+                    l === locale ? "bg-secondary text-foreground" : "text-muted-foreground"
                   }`}
                 >
                   {localeLabels[l]}
@@ -192,7 +193,7 @@ export function Header() {
           <button
             onClick={toggleTheme}
             className="brutal-btn px-3 py-2 text-xs"
-            aria-label="Changer de thème"
+            aria-label={dict.header.toggleTheme}
           >
             {theme === "light" ? (
               <Moon className="h-4 w-4" />
@@ -203,7 +204,7 @@ export function Header() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="brutal-btn px-3 py-2 text-xs"
-            aria-label="Menu"
+            aria-label={dict.header.menu}
           >
             {mobileOpen ? (
               <X className="h-4 w-4" />
@@ -228,14 +229,14 @@ export function Header() {
                   onClick={() => setMobileOpen(false)}
                   className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
                 >
-                  {locale === "fr" ? "Analyser" : locale === "en" ? "Analyze" : "تحليل"}
+                  {dict.header.analyze}
                 </Link>
                 <Link
                   href={`/${locale}/historique`}
                   onClick={() => setMobileOpen(false)}
                   className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
                 >
-                  {locale === "fr" ? "Historique" : locale === "en" ? "History" : "السجل"}
+                  {dict.header.history}
                 </Link>
                 <Link
                   href={`/${locale}/pricing`}
@@ -243,7 +244,7 @@ export function Header() {
                   className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center flex items-center justify-center gap-2"
                 >
                   <CreditCard className="h-4 w-4" />
-                  {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : "Upgrade"}
+                  {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : dict.header.upgrade}
                 </Link>
                 <Link
                   href={`/${locale}/settings/profile`}
@@ -267,7 +268,7 @@ export function Header() {
                   className="brutal-btn-destructive brutal-btn px-4 py-3 text-sm flex items-center justify-center gap-2"
                 >
                   <LogOut className="h-4 w-4" />
-                  {locale === "fr" ? "Déconnexion" : locale === "en" ? "Logout" : "خروج"}
+                  {dict.header.logout}
                 </button>
               </>
             ) : (
@@ -278,14 +279,14 @@ export function Header() {
                   className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm flex items-center justify-center gap-2"
                 >
                   <LogIn className="h-4 w-4" />
-                  {locale === "fr" ? "Connexion" : locale === "en" ? "Login" : "دخول"}
+                  {dict.header.login}
                 </Link>
                 <Link
                   href={`/${locale}/register`}
                   onClick={() => setMobileOpen(false)}
                   className="brutal-btn px-4 py-3 text-sm text-center"
                 >
-                  {locale === "fr" ? "Inscription" : locale === "en" ? "Sign Up" : "تسجيل"}
+                  {dict.header.register}
                 </Link>
               </>
             )}

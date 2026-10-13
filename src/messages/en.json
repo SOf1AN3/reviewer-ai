@@ -62,7 +62,10 @@
     "register": "Sign Up",
     "toggleTheme": "Toggle theme",
     "profile": "Profile",
-    "billing": "Billing"
+    "billing": "Billing",
+    "upgrade": "Upgrade",
+    "changeLanguage": "Change language",
+    "menu": "Menu"
   },
   "login": {
     "title": "Login",

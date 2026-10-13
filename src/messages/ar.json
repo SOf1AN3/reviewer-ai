@@ -62,7 +62,10 @@
     "register": "إنشاء حساب",
     "toggleTheme": "تغيير المظهر",
     "profile": "الملف الشخصي",
-    "billing": "الفوترة"
+    "billing": "الفوترة",
+    "upgrade": "ترقية",
+    "changeLanguage": "تغيير اللغة",
+    "menu": "القائمة"
   },
   "login": {
     "title": "تسجيل الدخول",
