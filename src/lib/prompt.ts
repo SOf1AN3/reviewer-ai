@@ -67,7 +67,7 @@ const promptInstructions = {
   },
 };
 
-export function buildAnalysisPrompt(article: ArticleInput, locale: string = "fr"): string {
+export function buildAnalysisPrompt(article: ArticleInput, locale: string = "fr", freePlan: boolean = false): string {
   const lang = locale in promptInstructions ? (locale as keyof typeof promptInstructions) : "fr";
   const t = promptInstructions[lang];
   const criteresList = getCriteres(locale);
@@ -78,6 +78,48 @@ export function buildAnalysisPrompt(article: ArticleInput, locale: string = "fr"
         `- **${c.label}** (id: \`${c.id}\`) : ${c.description}`
     )
     .join("\n");
+
+  if (freePlan) {
+    return `${t.system}
+
+## ${t.criteriaTitle}
+
+${criteresDescriptions}
+
+## ${t.articleTitle}
+
+**${t.titleLabel}** : ${article.titre}
+${article.auteur ? `**${t.authorLabel}** : ${article.auteur}` : ""}
+${article.revueCiblee ? `**${t.journalLabel}** : ${article.revueCiblee}` : ""}
+
+**${t.contentLabel}** :
+${article.contenu}
+
+## ${t.responseTitle}
+
+${t.responseInstructions}
+
+IMPORTANT: Pour les utilisateurs gratuits, fournis UNIQUEMENT la note globale, un résumé court, le verdict, et les points forts. Les notes par critère et le rapport détaillé ne sont pas inclus.
+
+{
+  "noteGlobale": <${t.noteLabel}>,
+  "notesParCritere": {},
+  "rapport": {
+    "resume": "<${t.summaryPlaceholder}>",
+    "points_forts": ["<${t.strengthPlaceholder} 1>", "<${t.strengthPlaceholder} 2>"],
+    "points_a_ameliorer": [],
+    "sections": {},
+    "recommandations": [],
+    "verdict": "<${t.verdictPlaceholder}>"
+  }
+}
+
+## ${t.importantNote}
+
+${t.importantNoteText}
+
+${t.closing}`;
+  }
 
   return `${t.system}
 

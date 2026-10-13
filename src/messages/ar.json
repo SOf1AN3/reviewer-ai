@@ -152,5 +152,22 @@
     "discussion_implications": "النقاش والآثار",
     "conformite_normes": "الامتثال للمعايير",
     "impact_potentiel": "التأثير المحتمل"
+  },
+  "pricing": {
+    "title": "اختر خطتك",
+    "subtitle": "ابدأ مجاناً، انتقل إلى الأعلى عندما تكون مستعداً.",
+    "free": {
+      "name": "مجاني",
+      "cta": "ابدأ مجاناً"
+    },
+    "pro": {
+      "name": "برو",
+      "cta": "الترقية إلى Pro"
+    },
+    "business": {
+      "name": "أعمال",
+      "cta": "الترقية إلى Business"
+    },
+    "guarantee": "إلغاء في أي время. بدون التزام."
   }
 }

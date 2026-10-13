@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import {
@@ -12,6 +12,7 @@ import {
   Menu,
   X,
   Globe,
+  CreditCard,
 } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 import { useI18n } from "./I18nProvider";
@@ -29,6 +30,16 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const { locale, setLocale } = useI18n();
+  const [userPlan, setUserPlan] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (session) {
+      fetch("/api/user/plan")
+        .then((res) => res.json())
+        .then((data) => setUserPlan(data.plan))
+        .catch(() => {});
+    }
+  }, [session]);
 
   return (
     <header className="border-b-[3px] border-border bg-card">
@@ -58,6 +69,13 @@ export function Header() {
                 className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
               >
                 {locale === "fr" ? "Historique" : locale === "en" ? "History" : "السجل"}
+              </Link>
+              <Link
+                href={`/${locale}/pricing`}
+                className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs flex items-center gap-1"
+              >
+                <CreditCard className="h-3 w-3" />
+                {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : "Upgrade"}
               </Link>
               <div className="mx-2 h-6 w-px bg-border" />
               <span className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
@@ -205,6 +223,14 @@ export function Header() {
                   className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
                 >
                   {locale === "fr" ? "Historique" : locale === "en" ? "History" : "السجل"}
+                </Link>
+                <Link
+                  href={`/${locale}/pricing`}
+                  onClick={() => setMobileOpen(false)}
+                  className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center flex items-center justify-center gap-2"
+                >
+                  <CreditCard className="h-4 w-4" />
+                  {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : "Upgrade"}
                 </Link>
                 <button
                   onClick={() => {

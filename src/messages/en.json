@@ -152,5 +152,22 @@
     "discussion_implications": "Discussion & Implications",
     "conformite_normes": "Standards Compliance",
     "impact_potentiel": "Potential Impact"
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "subtitle": "Start for free, upgrade when you're ready.",
+    "free": {
+      "name": "Free",
+      "cta": "Get Started Free"
+    },
+    "pro": {
+      "name": "Pro",
+      "cta": "Upgrade to Pro"
+    },
+    "business": {
+      "name": "Business",
+      "cta": "Upgrade to Business"
+    },
+    "guarantee": "Cancel anytime. No commitment."
   }
 }

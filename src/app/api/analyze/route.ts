@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { getAIProvider, parseAIResponse } from "@/lib/ai";
 import { buildAnalysisPrompt } from "@/lib/prompt";
 import { auth } from "@/lib/auth";
+import { canAnalyze, incrementUsage, getUserPlan } from "@/lib/plan";
 
 const articleSchema = z.object({
   titre: z.string().min(1, "Le titre est requis"),
@@ -19,12 +20,25 @@ export const POST = auth(async (req) => {
   }
 
   try {
+    const userId = req.auth.user.id!;
+
+    const access = await canAnalyze(userId);
+    if (!access.allowed) {
+      return NextResponse.json(
+        { error: access.reason, code: "QUOTA_EXCEEDED" },
+        { status: 403 }
+      );
+    }
+
     const body = await req.json();
     const validated = articleSchema.parse(body);
 
+    const userPlan = await getUserPlan(userId);
+    const isFreePlan = !userPlan || userPlan.key === "free";
+
     const article = await db.article.create({
       data: {
-        userId: req.auth.user.id!,
+        userId,
         titre: validated.titre,
         contenu: validated.contenu,
         auteur: validated.auteur || null,
@@ -32,7 +46,7 @@ export const POST = auth(async (req) => {
       },
     });
 
-    const prompt = buildAnalysisPrompt(validated, validated.locale);
+    const prompt = buildAnalysisPrompt(validated, validated.locale, isFreePlan);
     const ai = getAIProvider();
     const rawResponse = await ai.generate(prompt);
 
@@ -46,6 +60,8 @@ export const POST = auth(async (req) => {
         noteParCritere: analyseResult.notesParCritere,
       },
     });
+
+    await incrementUsage(userId);
 
     return NextResponse.json({
       articleId: article.id,

@@ -152,5 +152,22 @@
     "discussion_implications": "Discussion et implications",
     "conformite_normes": "Conformité aux normes",
     "impact_potentiel": "Impact potentiel"
+  },
+  "pricing": {
+    "title": "Choisissez votre plan",
+    "subtitle": "Commencez gratuitement, passez à la vitesse supérieure quand vous êtes prêt.",
+    "free": {
+      "name": "Free",
+      "cta": "Commencer gratuitement"
+    },
+    "pro": {
+      "name": "Pro",
+      "cta": "Passer à Pro"
+    },
+    "business": {
+      "name": "Business",
+      "cta": "Passer à Business"
+    },
+    "guarantee": "Annulation à tout moment. Aucun engagement."
   }
 }
