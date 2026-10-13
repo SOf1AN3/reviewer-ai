@@ -18,9 +18,14 @@ model User {
   plan             String    @default("free")
   analysesThisMonth Int      @default(0)
   analysesResetAt  DateTime?
+  role             String    @default("user")
   accounts         Account[]
   sessions         Session[]
   articles         Article[]
+  subscription     Subscription?
+  invoices         Invoice[]
+  usageEvents      UsageEvent[]
+  apiKeys          ApiKey[]
 }
 
 model Account {
@@ -53,6 +58,8 @@ model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
+  /// "verify" (vérification email) | "reset" (réinitialisation mot de passe)
+  type       String?  @default("verify")
 
   @@unique([identifier, token])
 }
@@ -67,6 +74,8 @@ model Article {
   revueCiblee String?
   dateCreation DateTime @default(now())
 
+  @@index([userId])
+
   analyses Analyse[]
 }
 
@@ -78,4 +87,71 @@ model Analyse {
   noteGlobale    Float
   noteParCritere Json
   dateAnalyse    DateTime @default(now())
+
+  @@index([articleId])
+}
+
+model Subscription {
+  id                   String    @id @default(cuid())
+  userId               String    @unique
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeSubscriptionId String    @unique
+  stripePriceId        String
+  status               String
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean   @default(false)
+  trialEnd             DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+}
+
+model Invoice {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeInvoiceId String   @unique
+  amountPaid      Int
+  currency        String
+  status          String
+  hostedInvoiceUrl String?
+  pdfUrl          String?
+  issuedAt        DateTime
+  createdAt       DateTime @default(now())
+
+  @@index([userId])
+}
+
+model UsageEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model ApiKey {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  keyPrefix    String
+  keyHash      String    @unique
+  monthlyLimit Int?
+  lastUsedAt   DateTime?
+  revokedAt    DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@index([userId])
+}
+
+model WebhookEvent {
+  id            String    @id @default(cuid())
+  stripeEventId String    @unique
+  type          String
+  processedAt   DateTime?
+  createdAt     DateTime  @default(now())
 }
