@@ -119,7 +119,16 @@
     "errorUpload": "خطأ في قراءة الملف",
     "errorUploadImport": "خطأ في استيراد الملف",
     "errorAnalysis": "خطأ أثناء التحليل",
-    "errorUnknown": "خطأ غير معروف"
+    "errorUnknown": "خطأ غير معروف",
+    "progressSending": "جارٍ إرسال المستند…",
+    "progressAnalyzing": "التحليل جارٍ…",
+    "progressDelay": "من 10 إلى 45 ثانية",
+    "progressHintSending": "جارٍ إرسال مقالك إلى الخادم",
+    "progressHintAnalyzing": "يقوم الذكاء الاصطناعي بتحليل مقالك في الخلفية — ستتم إعادة توجيهك تلقائياً",
+    "errorQuota": "تم بلوغ الحد الشهري للتحليلات.",
+    "errorNotLoggedIn": "سجّل الدخول لبدء التحليل.",
+    "ctaPricing": "عرض الخطط",
+    "ctaLogin": "تسجيل الدخول"
   },
   "historique": {
     "title": "سجل التحليلات",
@@ -135,7 +144,14 @@
     "notFound": "التحليل غير موجود",
     "backHome": "العودة للرئيسية",
     "newAnalysis": "تحليل جديد",
-    "analyzedOn": "تم التحليل في"
+    "analyzedOn": "تم التحليل في",
+    "pendingTitle": "التحليل جارٍ",
+    "pendingDescription": "تم استلام مقالك. يجري الذكاء الاصطناعي تحليله الآن، ويستغرق ذلك من 10 إلى 45 ثانية.",
+    "timeoutTitle": "التحليل ما زال جارياً",
+    "timeoutDescription": "استغرق الإنشاء وقتاً أطول من المتوقع. عد بعد لحظات.",
+    "retry": "أعد المحاولة",
+    "forbidden": "ليست لديك صلاحية الوصول إلى هذا التحليل.",
+    "errorGeneric": "حدث خطأ أثناء تحميل التحليل."
   },
   "result": {
     "overallScore": "التقييم الإجمالي",

@@ -119,7 +119,16 @@
     "errorUpload": "Error reading file",
     "errorUploadImport": "Error importing file",
     "errorAnalysis": "Error during analysis",
-    "errorUnknown": "Unknown error"
+    "errorUnknown": "Unknown error",
+    "progressSending": "Sending document…",
+    "progressAnalyzing": "Analysis in progress…",
+    "progressDelay": "10 to 45 seconds",
+    "progressHintSending": "Transmitting your article to the server",
+    "progressHintAnalyzing": "The AI is analyzing your article in the background — you will be redirected automatically",
+    "errorQuota": "Monthly analysis quota reached.",
+    "errorNotLoggedIn": "Sign in to start an analysis.",
+    "ctaPricing": "View plans",
+    "ctaLogin": "Sign in"
   },
   "historique": {
     "title": "Analysis History",
@@ -135,7 +144,14 @@
     "notFound": "Analysis not found",
     "backHome": "Back to Home",
     "newAnalysis": "New Analysis",
-    "analyzedOn": "Analyzed on"
+    "analyzedOn": "Analyzed on",
+    "pendingTitle": "Analysis in progress",
+    "pendingDescription": "Your article has been received. The AI is analyzing it right now — this takes 10 to 45 seconds.",
+    "timeoutTitle": "Analysis still in progress",
+    "timeoutDescription": "Generation is taking longer than expected. Please come back in a few moments.",
+    "retry": "Try again",
+    "forbidden": "You do not have access to this analysis.",
+    "errorGeneric": "An error occurred while loading the analysis."
   },
   "result": {
     "overallScore": "Overall Score",

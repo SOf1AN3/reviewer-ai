@@ -119,7 +119,16 @@
     "errorUpload": "Erreur lors de la lecture du fichier",
     "errorUploadImport": "Erreur lors de l'import du fichier",
     "errorAnalysis": "Erreur lors de l'analyse",
-    "errorUnknown": "Erreur inconnue"
+    "errorUnknown": "Erreur inconnue",
+    "progressSending": "Envoi du document…",
+    "progressAnalyzing": "Analyse en cours…",
+    "progressDelay": "10 à 45 secondes",
+    "progressHintSending": "Transmission de votre article au serveur",
+    "progressHintAnalyzing": "L'IA analyse votre article en arrière-plan — vous serez redirigé automatiquement",
+    "errorQuota": "Quota d'analyses atteint pour ce mois.",
+    "errorNotLoggedIn": "Connectez-vous pour lancer une analyse.",
+    "ctaPricing": "Voir les offres",
+    "ctaLogin": "Se connecter"
   },
   "historique": {
     "title": "Historique des analyses",
@@ -135,7 +144,14 @@
     "notFound": "Analyse non trouvée",
     "backHome": "Retour à l'accueil",
     "newAnalysis": "Nouvelle analyse",
-    "analyzedOn": "Analysé le"
+    "analyzedOn": "Analysé le",
+    "pendingTitle": "Analyse en cours",
+    "pendingDescription": "Votre article a bien été reçu. L'IA l'analyse actuellement — cela prend entre 10 et 45 secondes.",
+    "timeoutTitle": "Analyse toujours en cours",
+    "timeoutDescription": "La génération prend plus de temps que prévu. Revenez dans quelques instants.",
+    "retry": "Réessayer",
+    "forbidden": "Vous n'avez pas accès à cette analyse.",
+    "errorGeneric": "Une erreur est survenue lors du chargement de l'analyse."
   },
   "result": {
     "overallScore": "Note globale",
