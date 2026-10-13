@@ -86,6 +86,17 @@ function buildEnvSchema(strict: boolean) {
       ? z.string({ message: `${name} manquante` }).min(1, `${name} vide`)
       : z.string().min(1).optional().catch(undefined);
 
+  /**
+   * Optionnelle en développement (AUCUN warning : son absence est un état
+   * attendu et documenté), exigée en production (erreur agrégée au démarrage).
+   * Contrairement à `optional()`, cette variante ne fait pas échouer le
+   * schéma strict en dev lorsque la variable est absente.
+   */
+  const requiredInProd = (name: string) =>
+    IS_PROD
+      ? z.string({ message: `${name} manquante` }).min(1, `${name} vide`)
+      : z.string().min(1).optional().catch(undefined);
+
   /** Placeholder Stripe détecté comme « non configuré ». */
   const stripeWebhookSecret = strict
     ? required("STRIPE_WEBHOOK_SECRET").refine(
@@ -127,7 +138,9 @@ function buildEnvSchema(strict: boolean) {
 
     // --- Requises uniquement en production ---
     GEMINI_API_KEY: optional("GEMINI_API_KEY"),
-    RESEND_API_KEY: optional("RESEND_API_KEY"),
+    // Absente en dev ⇒ envoi email en no-op silencieux + bypass de la
+    // vérification email (état attendu, aucun warning bloquant).
+    RESEND_API_KEY: requiredInProd("RESEND_API_KEY"),
     STRIPE_SECRET_KEY: optional("STRIPE_SECRET_KEY"),
     STRIPE_WEBHOOK_SECRET: stripeWebhookSecret,
     GOOGLE_CLIENT_ID: optional("GOOGLE_CLIENT_ID"),
