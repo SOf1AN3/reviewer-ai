@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { getAIProvider, parseAIResponse } from "@/lib/ai";
 import { buildAnalysisPrompt } from "@/lib/prompt";
 import { auth } from "@/lib/auth";
 import { consumeQuota } from "@/lib/plan";
 import { requireUser } from "@/lib/guards";
+import { runAnalysisJob } from "@/lib/jobs/analyze";
 
 /**
  * Identifiant d'erreur réduit pour le log — jamais l'objet erreur complet.
@@ -40,6 +40,20 @@ const articleSchema = z.object({
   locale: z.string().optional().default("fr"),
 });
 
+/**
+ * POST /api/analyze — CHANGE DE CONTRAT (T2.7) : la réponse n'attend plus
+ * l'appel IA. La route valide, consomme le quota, crée l'`Article` seul (état
+ * « pending » détectable : pas d'`Analyse` tant que le job n'a pas abouti),
+ * planifie le job via `after()` (API native Next 16 — voir
+ * `src/lib/jobs/analyze.ts`) et répond immédiatement :
+ *
+ *   202 { articleId, status: "pending" }
+ *
+ * ⚠️ Ancien contrat supprimé : `{ articleId, analyseId, result }` en 200.
+ * Le front (`src/components/ArticleForm.tsx`) n'utilise que `data.articleId`
+ * pour rediriger → il fonctionne toujours ; l'adaptation UI (polling de
+ * `GET /api/analyse/[id]`) est portée par la tâche T3.2.
+ */
 export const POST = auth(async (req) => {
   const currentUser = await requireUser(req);
   if (currentUser instanceof NextResponse) {
@@ -52,8 +66,10 @@ export const POST = auth(async (req) => {
     const body = await req.json();
     const validated = articleSchema.parse(body);
 
-    // Quota vérifié ET consommé en une seule écriture atomique, AVANT l'appel IA
-    // pour bloquer l'abus ; jamais sur un payload invalide (Zod échoue avant).
+    // Quota vérifié ET consommé en une seule écriture atomique, AVANT le
+    // lancement du job (anti-abus inchangé : jamais sur un payload invalide,
+    // Zod échoue avant). En cas d'échec ultérieur du job, le quota reste
+    // consommé — décision de sécurité assumée.
     const quota = await consumeQuota(userId);
     if (!quota.allowed) {
       return NextResponse.json(
@@ -64,74 +80,36 @@ export const POST = auth(async (req) => {
 
     const isFreePlan = quota.plan.key === "free";
 
-    // Appel IA + parsing AVANT toute écriture DB : si l'IA échoue
-    // (timeout, quota Gemini, AIParseError...), aucune ligne n'est écrite
-    // → plus d'articles orphelins. Le quota, lui, est déjà consommé
-    // (décision de sécurité assumée, cf. plus haut).
+    // L'Article est créé DÈS MAINTENANT : sa seule existence (sans `Analyse`)
+    // est le marqueur d'état « pending » de GET /api/analyse/[id]. Le job
+    // créera l'`Analyse` en fin de parcours. Aucune modification de schéma.
+    const article = await db.article.create({
+      data: {
+        userId,
+        titre: validated.titre,
+        contenu: validated.contenu,
+        auteur: validated.auteur || null,
+        revueCiblee: validated.revueCiblee || null,
+      },
+    });
+
+    // Prompt construit ICI pour que le job reste auto-porteur (aucune dépendance
+    // à la requête HTTP, migrable vers un orchestreur externe tel quel).
     const prompt = buildAnalysisPrompt(validated, validated.locale, isFreePlan);
-    const ai = getAIProvider();
-    const startedAt = Date.now();
-    const { text: rawResponse, usage } = await ai.generate(prompt);
-    const durationMs = Date.now() - startedAt;
 
-    const analyseResult = parseAIResponse(rawResponse, { freePlan: isFreePlan });
+    // after() = équivalent public et stable (Next ≥ 15.1) de waitUntil : le
+    // callback s'exécute APRÈS l'envoi de la réponse, sans bloquer le client.
+    // runAnalysisJob ne rejette jamais (erreurs avalées + journalisées).
+    after(() =>
+      runAnalysisJob({ userId, articleId: article.id, prompt, isFreePlan })
+    );
 
-    // Création Article + Analyse atomique : si l'une échoue, rien n'est écrit.
-    const { article, analyse } = await db.$transaction(async (tx) => {
-      const createdArticle = await tx.article.create({
-        data: {
-          userId,
-          titre: validated.titre,
-          contenu: validated.contenu,
-          auteur: validated.auteur || null,
-          revueCiblee: validated.revueCiblee || null,
-        },
-      });
-
-      const createdAnalyse = await tx.analyse.create({
-        data: {
-          articleId: createdArticle.id,
-          rapport: JSON.stringify(analyseResult.rapport),
-          noteGlobale: analyseResult.noteGlobale,
-          noteParCritere: analyseResult.notesParCritere,
-        },
-      });
-
-      return { article: createdArticle, analyse: createdAnalyse };
-    });
-
-    // Best-effort : trace d'usage (coût + durée). Un échec d'écriture ne doit
-    // pas faire échouer une analyse déjà persistée — loggé seulement.
-    try {
-      await db.usageEvent.create({
-        data: {
-          userId,
-          type: "ANALYSIS_CREATED",
-          metadata: {
-            articleId: article.id,
-            analyseId: analyse.id,
-            model: usage.model,
-            promptTokens: usage.promptTokens ?? null,
-            totalTokens: usage.totalTokens ?? null,
-            durationMs,
-          },
-        },
-      });
-    } catch (error) {
-      console.error(
-        "UsageEvent write failed (best-effort):",
-        error instanceof Error ? error.message : "unknown"
-      );
-    }
-
-    return NextResponse.json({
-      articleId: article.id,
-      analyseId: analyse.id,
-      result: analyseResult,
-    });
+    return NextResponse.json(
+      { articleId: article.id, status: "pending" },
+      { status: 202 }
+    );
   } catch (error) {
-    // Log sécurisé : jamais l'objet erreur brut (le message du SDK Gemini
-    // contient l'URL de requête avec `?key=<GEMINI_API_KEY>`).
+    // Log sécurisé : jamais l'objet erreur brut.
     console.error("Analysis error:", describeError(error));
 
     if (error instanceof z.ZodError) {

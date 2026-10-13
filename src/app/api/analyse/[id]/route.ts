@@ -34,23 +34,36 @@ export const GET = auth(async (req, { params }: { params: Promise<{ id: string }
       );
     }
 
+    const articlePayload = {
+      id: article.id,
+      titre: article.titre,
+      contenu: article.contenu,
+      auteur: article.auteur,
+      revueCiblee: article.revueCiblee,
+      dateCreation: article.dateCreation,
+    };
+
     const latestAnalyse = article.analyses[0];
+
+    // T2.7 (option a, sans migration) : un article SANS `Analyse` = job
+    // d'analyse encore en cours (ou en échec, cf. journal `analysis_job`) →
+    // ce n'est plus une 404 mais un statut explicite. Un article inexistant
+    // reste bien une 404 (testé plus haut).
     if (!latestAnalyse) {
-      return NextResponse.json(
-        { error: "Aucune analyse trouvée pour cet article" },
-        { status: 404 }
-      );
+      return NextResponse.json({
+        articleId: article.id,
+        status: "pending",
+        article: articlePayload,
+      });
     }
 
+    // Contrat conservé pour la page de résultat (`src/app/[locale]/
+    // analyse/[id]/page.tsx` lit `data.article` et `data.analyse`) :
+    // les champs `articleId` / `status` sont purement additionnels.
     return NextResponse.json({
-      article: {
-        id: article.id,
-        titre: article.titre,
-        contenu: article.contenu,
-        auteur: article.auteur,
-        revueCiblee: article.revueCiblee,
-        dateCreation: article.dateCreation,
-      },
+      articleId: article.id,
+      status: "completed",
+      article: articlePayload,
       analyse: {
         id: latestAnalyse.id,
         rapport: JSON.parse(latestAnalyse.rapport as string),
