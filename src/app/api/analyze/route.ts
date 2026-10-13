@@ -45,7 +45,9 @@ export const POST = auth(async (req) => {
     // (décision de sécurité assumée, cf. plus haut).
     const prompt = buildAnalysisPrompt(validated, validated.locale, isFreePlan);
     const ai = getAIProvider();
-    const rawResponse = await ai.generate(prompt);
+    const startedAt = Date.now();
+    const { text: rawResponse, usage } = await ai.generate(prompt);
+    const durationMs = Date.now() - startedAt;
 
     const analyseResult = parseAIResponse(rawResponse, { freePlan: isFreePlan });
 
@@ -72,6 +74,30 @@ export const POST = auth(async (req) => {
 
       return { article: createdArticle, analyse: createdAnalyse };
     });
+
+    // Best-effort : trace d'usage (coût + durée). Un échec d'écriture ne doit
+    // pas faire échouer une analyse déjà persistée — loggé seulement.
+    try {
+      await db.usageEvent.create({
+        data: {
+          userId,
+          type: "ANALYSIS_CREATED",
+          metadata: {
+            articleId: article.id,
+            analyseId: analyse.id,
+            model: usage.model,
+            promptTokens: usage.promptTokens ?? null,
+            totalTokens: usage.totalTokens ?? null,
+            durationMs,
+          },
+        },
+      });
+    } catch (error) {
+      console.error(
+        "UsageEvent write failed (best-effort):",
+        error instanceof Error ? error.message : "unknown"
+      );
+    }
 
     return NextResponse.json({
       articleId: article.id,
