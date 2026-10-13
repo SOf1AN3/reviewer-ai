@@ -1,16 +1,38 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { stripe, PLANS, type PlanKey } from "@/lib/stripe";
+import { env } from "@/lib/env";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/guards";
+import { defaultLocale, isValidLocale, locales, type Locale } from "@/lib/i18n";
 
-// Seul champ accepté depuis le body : le plan. Aucun `userId`/`customerId`
+// Champs acceptés depuis le body : le plan, et optionnellement la locale à
+// utiliser dans les URLs de retour Stripe. Aucun `userId`/`customerId`
 // n'est lisible depuis la requête (anti-IDOR) — le customer Stripe est
 // toujours celui de l'utilisateur de la session.
 const checkoutSchema = z.object({
   plan: z.enum(["pro", "business"]),
+  locale: z.enum(locales).optional(),
 });
+
+/**
+ * Détermine la locale des URLs `success_url` / `cancel_url` :
+ * body → cookie `NEXT_LOCALE` → `defaultLocale` (`"fr"`).
+ */
+function resolveLocale(
+  req: NextRequest,
+  rawLocale: string | undefined
+): Locale {
+  if (rawLocale && isValidLocale(rawLocale)) {
+    return rawLocale;
+  }
+  const cookieLocale = req.cookies.get("NEXT_LOCALE")?.value;
+  if (cookieLocale && isValidLocale(cookieLocale)) {
+    return cookieLocale;
+  }
+  return defaultLocale;
+}
 
 async function getOrCreatePriceId(plan: PlanKey): Promise<string> {
   const planConfig = PLANS[plan];
@@ -59,6 +81,7 @@ export const POST = auth(async (req) => {
     }
 
     const { plan } = parsed.data;
+    const locale = resolveLocale(req, parsed.data.locale);
 
     const user = await db.user.findUnique({
       where: { id: currentUser.id },
@@ -87,6 +110,12 @@ export const POST = auth(async (req) => {
 
     const priceId = await getOrCreatePriceId(plan as PlanKey);
 
+    const base = (
+      env.NEXT_APP_URL ||
+      env.NEXT_PUBLIC_APP_URL ||
+      "http://localhost:3000"
+    ).replace(/\/+$/, "");
+
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       mode: "subscription",
@@ -97,11 +126,19 @@ export const POST = auth(async (req) => {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_APP_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/analyser?upgraded=true`,
-      cancel_url: `${process.env.NEXT_APP_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/pricing`,
+      success_url: `${base}/${locale}/analyser?upgraded=true`,
+      cancel_url: `${base}/${locale}/pricing`,
       metadata: {
         userId: currentUser.id,
         plan: plan,
+      },
+      // Porte le plan sur l'abonnement Stripe lui-même : les events
+      // `customer.subscription.*` n'emportent PAS la metadata de la session et
+      // arrivent dans un ordre non garanti — `sub.metadata.plan` sert alors de
+      // hint à la résolution du plan (indispensable en dev où les price IDs
+      // sont absents et les prix créés dynamiquement).
+      subscription_data: {
+        metadata: { plan },
       },
     });
 
