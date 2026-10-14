@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SessionProvider } from "@/components/SessionProvider";
 import { I18nProvider } from "@/components/I18nProvider";
+import { CookieBanner } from "@/components/CookieBanner";
 import { getDictionary, type Locale, isValidLocale } from "@/lib/i18n";
 
 const spaceGrotesk = Space_Grotesk({
@@ -58,6 +59,7 @@ export default async function RootLayout({
             <I18nProvider locale={validLocale}>
               <Header />
               <main className="min-h-[calc(100vh-4rem)]">{children}</main>
+              <CookieBanner />
             </I18nProvider>
           </ThemeProvider>
         </SessionProvider>

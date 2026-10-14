@@ -292,6 +292,18 @@
       "revokeError": "La révocation a échoué."
     }
   },
+  "legal": {
+    "cookies": {
+      "message": "Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement. Aucun traceur ni cookie de mesure d'audience.",
+      "learnMore": "En savoir plus",
+      "dismiss": "Fermer"
+    },
+    "nav": {
+      "privacy": "Confidentialité",
+      "terms": "CGU",
+      "cookies": "Cookies"
+    }
+  },
   "admin": {
     "title": "Administration",
     "subtitle": "Vue d'ensemble de la plateforme et gestion des utilisateurs.",

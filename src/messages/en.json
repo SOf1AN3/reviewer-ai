@@ -292,6 +292,18 @@
       "revokeError": "Revocation failed."
     }
   },
+  "legal": {
+    "cookies": {
+      "message": "This site uses only technical cookies required for its operation. No tracking or audience-measurement cookies.",
+      "learnMore": "Learn more",
+      "dismiss": "Close"
+    },
+    "nav": {
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "cookies": "Cookies"
+    }
+  },
   "admin": {
     "title": "Administration",
     "subtitle": "Platform overview and user management.",
