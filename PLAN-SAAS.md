@@ -384,3 +384,52 @@ Points restant à confirmer **au moment de la tâche concernée** :
 **Modifications structurantes** : `prisma/schema.prisma` (+7 modèles, +index) · `src/lib/plan.ts` (atomique) ·
 `src/lib/ai.ts` (Zod + retry + coût) · `src/app/api/analyze/route.ts` (transaction + async) ·
 `src/middleware.ts` (rate limit + protection routes) · `src/app/api/stripe/webhook/route.ts` (idempotent)
+
+---
+
+## ✅ STATUT FINAL — PLAN EXÉCUTÉ (14/10/2026)
+
+**7 vagues sur 7 terminées · 43 commits · 0 tâche restante.**
+
+| Vague | Tâches | Statut |
+|---|---|---|
+| 0 | WIP Stripe, hygiène repo, \.env.example\, README | ✅ |
+| 1 | \env.ts\, quotas atomiques, Zod IA, transaction analyse, rate limiting, anti-IDOR | ✅ validée runtime |
+| 2 | Modèles SaaS, baseline migrations, webhooks idempotents, résilience Gemini | ✅ validée runtime |
+| 3 | Email Resend (bypass sans clé), auth complète, pages settings + RGPD | ✅ validée runtime |
+| 4 | Analyse asynchrone (202), progression UI, error boundaries, i18n, onboarding, rétention | ✅ validée runtime |
+| 5 | Observabilité, admin dashboard, API publique | ✅ validée runtime |
+| 6 | Vitest (53 tests), Playwright (11 E2E), CI/CD, RGPD légal, seed/ops, SEO | ✅ validée runtime |
+
+### Validation machine finale
+\\\
+npm run lint        → 0 erreur / 0 warning
+npx tsc --noEmit    → 0 erreur
+npm test            → 53/53
+npx playwright test → 11/11
+prisma migrate status → Database schema is up to date!
+Smoke runtime       → 20/20 pages 200
+API sans session    → 401 (history, user/plan, keys, admin/stats) · 503 (cron sans secret)
+\\\
+
+### Revues rejetées puis corrigées (5)
+1. \.env.example\ ignoré par git (motif \.env*\).
+2. Webhooks Stripe : perte d'event sur crash, conflit d'unicité sur 2ᵉ abonnement, rétrogradation du plan en dev.
+3. Auth : **lockout de tous les comptes existants** en prod.
+4. API publique : alias de type inutilisé (code mort).
+5. E2E : artefacts Playwright non ignorés + collision de rate limit.
+
+### Failles interceptées hors plan
+- **Fuite de \GEMINI_API_KEY\** dans les logs serveur (l'erreur du SDK embarque l'URL).
+- **Régression Turbopack** (\eact-dom/server\ importé statiquement) qui empoisonnait tout le serveur dev.
+- **Cache \.next\ corrompu** simulant une panne applicative généralisée.
+- **Bug de quota** : le schéma Zod strict aurait fait échouer **toutes** les analyses free.
+
+### Dette technique documentée (non bloquante)
+- Pages légales rédigées en **FR** uniquement (\TODO(i18n)\ pour EN/AR).
+- Quota par clé API non atomique (le quota **plan**, lui, l'est — vrai garde-fou).
+- Sessions JWT non révoquées après reset de mot de passe (nécessite un champ \passwordChangedAt\).
+- \middleware.ts\ déprécié au profit de \proxy.ts\ en Next 16.
+- \.env\ porte \AUTH_URL=http://localhost:3000\ alors que le dev tourne sur 3001 (déconnexion redirige vers une autre app — **à corriger avant prod**).
+- Backups et restauration : **documentés mais non automatisés** (voir \docs/OPERATIONS.md\).
+- Email placeholder \privacy@papernote.example\ à personnaliser.
