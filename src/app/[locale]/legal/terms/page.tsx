@@ -34,17 +34,26 @@ export default async function TermsPage({
   const { locale } = await params;
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-16">
-      <h1 className="mb-2 text-3xl font-bold uppercase tracking-tight sm:text-5xl">
-        Conditions générales d&apos;utilisation
-      </h1>
-      <p className="mb-10 text-sm text-muted-foreground">
-        Dernière mise à jour : octobre 2026.
-      </p>
+    <div className="container mx-auto max-w-3xl px-4 py-12">
+      <header className="relative isolate mb-10">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-12 -left-16 -z-10 h-56 w-72 rounded-full bg-sage-glow blur-3xl"
+        />
+        <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.04em] text-teal-highlight">
+          Document légal
+        </p>
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-cream-text sm:text-4xl">
+          Conditions générales d&apos;utilisation
+        </h1>
+        <p className="mt-3 text-sm text-cream-muted">
+          Dernière mise à jour : octobre 2026.
+        </p>
+      </header>
 
-      <div className="space-y-10 text-sm leading-relaxed sm:text-base">
+      <div className="max-w-[70ch] space-y-10 text-[15px] leading-relaxed text-on-surface-variant sm:text-base">
         <section aria-labelledby="objet">
-          <h2 id="objet" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="objet" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             1. Objet
           </h2>
           <p>
@@ -57,10 +66,10 @@ export default async function TermsPage({
         </section>
 
         <section aria-labelledby="compte">
-          <h2 id="compte" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="compte" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             2. Compte utilisateur
           </h2>
-          <ul className="list-disc space-y-2 pl-6">
+          <ul className="list-disc space-y-2 pl-6 text-on-surface-variant">
             <li>
               Le service est réservé aux personnes physiques âgées
               d&apos;au moins <strong>16 ans</strong>.
@@ -82,11 +91,11 @@ export default async function TermsPage({
         </section>
 
         <section aria-labelledby="usage">
-          <h2 id="usage" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="usage" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             3. Usage acceptable
           </h2>
           <p className="mb-2">Il est interdit de soumettre au service :</p>
-          <ul className="list-disc space-y-2 pl-6">
+          <ul className="list-disc space-y-2 pl-6 text-on-surface-variant">
             <li>
               des contenus illicites, diffamatoires, haineux ou portant
               atteinte aux droits de tiers ;{" "}
@@ -108,7 +117,7 @@ export default async function TermsPage({
         </section>
 
         <section aria-labelledby="nature">
-          <h2 id="nature" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="nature" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             4. Nature du service et absence de garantie
           </h2>
           <p className="mb-2">
@@ -134,10 +143,10 @@ export default async function TermsPage({
         </section>
 
         <section aria-labelledby="facturation">
-          <h2 id="facturation" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="facturation" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             5. Plans et facturation
           </h2>
-          <ul className="list-disc space-y-2 pl-6">
+          <ul className="list-disc space-y-2 pl-6 text-on-surface-variant">
             <li>
               <strong>Plan gratuit</strong> : 3 analyses par mois, rapport
               partiel, historique conservé 7 jours.
@@ -158,7 +167,7 @@ export default async function TermsPage({
               Vous pouvez résilier à tout moment depuis la{" "}
               <Link
                 href={`/${locale}/settings/billing`}
-                className="font-bold underline underline-offset-4"
+                className="font-medium text-teal-highlight underline underline-offset-4 hover:text-cream-text"
               >
                 page de facturation
               </Link>{" "}
@@ -174,7 +183,7 @@ export default async function TermsPage({
         </section>
 
         <section aria-labelledby="pi">
-          <h2 id="pi" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="pi" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             6. Propriété intellectuelle
           </h2>
           <p className="mb-2">
@@ -190,14 +199,14 @@ export default async function TermsPage({
         </section>
 
         <section aria-labelledby="responsabilite">
-          <h2 id="responsabilite" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="responsabilite" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             7. Limitation de responsabilité
           </h2>
           <p className="mb-2">
             Dans les limites permises par la loi, PaperNote ne saurait être tenu
             responsable :
           </p>
-          <ul className="list-disc space-y-2 pl-6">
+          <ul className="list-disc space-y-2 pl-6 text-on-surface-variant">
             <li>
               des décisions prises sur la base des analyses automatisées
               produites (relecture, soumission à une revue, évaluation
@@ -220,14 +229,14 @@ export default async function TermsPage({
         </section>
 
         <section aria-labelledby="resiliation">
-          <h2 id="resiliation" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="resiliation" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             8. Résiliation et suppression de compte
           </h2>
           <p>
             Vous pouvez supprimer votre compte à tout moment depuis vos{" "}
             <Link
               href={`/${locale}/settings/profile`}
-              className="font-bold underline underline-offset-4"
+              className="font-medium text-teal-highlight underline underline-offset-4 hover:text-cream-text"
             >
               paramètres de profil
             </Link>
@@ -237,7 +246,7 @@ export default async function TermsPage({
         </section>
 
         <section aria-labelledby="droit">
-          <h2 id="droit" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="droit" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             9. Droit applicable
           </h2>
           <p>
@@ -248,7 +257,10 @@ export default async function TermsPage({
         </section>
       </div>
 
-      <nav aria-label="Documents légaux" className="mt-12 flex flex-wrap gap-4 text-sm">
+      <nav
+        aria-label="Documents légaux"
+        className="mt-12 flex flex-wrap gap-4 border-t border-glass-border pt-8 text-sm"
+      >
         <Link
           href={`/${locale}/legal/privacy`}
           className="pn-btn-secondary pn-btn px-4 py-2 text-xs"

@@ -40,19 +40,28 @@ export default async function PrivacyPage({
   const { locale } = await params;
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-16">
-      <h1 className="mb-2 text-3xl font-bold uppercase tracking-tight sm:text-5xl">
-        Politique de confidentialité
-      </h1>
-      <p className="mb-10 text-sm text-muted-foreground">
-        Dernière mise à jour : octobre 2026. Ce document décrit le traitement
-        des données personnelles tel qu&apos;il est réellement mis en œuvre par
-        PaperNote.
-      </p>
+    <div className="container mx-auto max-w-3xl px-4 py-12">
+      <header className="relative isolate mb-10">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-12 -left-16 -z-10 h-56 w-72 rounded-full bg-sage-glow blur-3xl"
+        />
+        <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.04em] text-teal-highlight">
+          Document légal
+        </p>
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-cream-text sm:text-4xl">
+          Politique de confidentialité
+        </h1>
+        <p className="mt-3 text-sm text-cream-muted">
+          Dernière mise à jour : octobre 2026. Ce document décrit le traitement
+          des données personnelles tel qu&apos;il est réellement mis en œuvre par
+          PaperNote.
+        </p>
+      </header>
 
-      <div className="space-y-10 text-sm leading-relaxed sm:text-base">
+      <div className="max-w-[70ch] space-y-10 text-[15px] leading-relaxed text-on-surface-variant sm:text-base">
         <section aria-labelledby="responsable">
-          <h2 id="responsable" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="responsable" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             1. Responsable du traitement
           </h2>
           <p className="mb-2">
@@ -63,7 +72,7 @@ export default async function PrivacyPage({
             Contact : écrivez-nous à l&apos;adresse email{" "}
             <a
               href="mailto:privacy@papernote.example"
-              className="font-bold underline underline-offset-4"
+              className="font-medium text-teal-highlight underline underline-offset-4 hover:text-cream-text"
             >
               privacy@papernote.example
             </a>{" "}
@@ -72,10 +81,10 @@ export default async function PrivacyPage({
         </section>
 
         <section aria-labelledby="donnees">
-          <h2 id="donnees" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="donnees" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             2. Données collectées et finalités
           </h2>
-          <ul className="mb-3 list-disc space-y-2 pl-6">
+          <ul className="mb-3 list-disc space-y-2 pl-6 text-on-surface-variant">
             <li>
               <strong>Données de compte</strong> : nom (facultatif), adresse
               email, mot de passe (stocké sous forme de empreinte irréversible
@@ -103,7 +112,8 @@ export default async function PrivacyPage({
             </li>
             <li>
               <strong>Données d&apos;usage et de sécurité</strong> : événements
-              d&apos;utilisation (<code>UsageEvent</code> : type d&apos;événement
+              d&apos;utilisation (<code className="font-mono text-[13px]">UsageEvent</code> : type
+              d&apos;événement
               et métadonnées techniques telles que identifiants d&apos;article,
               modèle IA, nombre de tokens, durée) et journaux techniques
               d&apos;application. Finalité : quotas, facturation à
@@ -127,14 +137,14 @@ export default async function PrivacyPage({
         </section>
 
         <section aria-labelledby="sous-traitants">
-          <h2 id="sous-traitants" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="sous-traitants" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             3. Sous-traitants
           </h2>
           <p className="mb-3">
             PaperNote s&apos;appuie sur les services tiers suivants, choisis
             pour leur conformité RGPD :
           </p>
-          <ul className="list-disc space-y-2 pl-6">
+          <ul className="list-disc space-y-2 pl-6 text-on-surface-variant">
             <li>
               <strong>Google (Gemini API)</strong> : traitement de
               l&apos;intelligence artificielle. Le contenu des articles soumis à
@@ -168,10 +178,10 @@ export default async function PrivacyPage({
         </section>
 
         <section aria-labelledby="bases">
-          <h2 id="bases" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="bases" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             4. Bases légales
           </h2>
-          <ul className="list-disc space-y-2 pl-6">
+          <ul className="list-disc space-y-2 pl-6 text-on-surface-variant">
             <li>
               <strong>Exécution du contrat</strong> (article 6.1.b RGPD) :
               création du compte, analyses demandées, gestion de
@@ -195,10 +205,10 @@ export default async function PrivacyPage({
         </section>
 
         <section aria-labelledby="conservation">
-          <h2 id="conservation" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="conservation" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             5. Durées de conservation
           </h2>
-          <ul className="list-disc space-y-2 pl-6">
+          <ul className="list-disc space-y-2 pl-6 text-on-surface-variant">
             <li>
               <strong>Articles et analyses — plan gratuit</strong> : conservés{" "}
               <strong>7 jours</strong> puis supprimés automatiquement par un
@@ -243,7 +253,7 @@ export default async function PrivacyPage({
         </section>
 
         <section aria-labelledby="transferts">
-          <h2 id="transferts" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="transferts" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             6. Transferts hors Union européenne
           </h2>
           <p className="mb-2">
@@ -259,7 +269,7 @@ export default async function PrivacyPage({
         </section>
 
         <section aria-labelledby="droits">
-          <h2 id="droits" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="droits" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             7. Vos droits
           </h2>
           <p className="mb-3">
@@ -267,7 +277,7 @@ export default async function PrivacyPage({
             rectification, d&apos;effacement, de limitation, de portabilité et
             d&apos;opposition sur vos données personnelles. Concrètement :
           </p>
-          <ul className="list-disc space-y-2 pl-6">
+          <ul className="list-disc space-y-2 pl-6 text-on-surface-variant">
             <li>
               <strong>Accès et portabilité</strong> : vos articles, analyses et
               informations de compte restent consultables dans votre espace
@@ -282,7 +292,7 @@ export default async function PrivacyPage({
               disponible dans{" "}
               <Link
                 href={`/${locale}/settings/profile`}
-                className="font-bold underline underline-offset-4"
+                className="font-medium text-teal-highlight underline underline-offset-4 hover:text-cream-text"
               >
                 vos paramètres de profil
               </Link>
@@ -296,7 +306,7 @@ export default async function PrivacyPage({
               contactez-nous à{" "}
               <a
                 href="mailto:privacy@papernote.example"
-                className="font-bold underline underline-offset-4"
+                className="font-medium text-teal-highlight underline underline-offset-4 hover:text-cream-text"
               >
                 privacy@papernote.example
               </a>{" "}
@@ -310,7 +320,7 @@ export default async function PrivacyPage({
         </section>
 
         <section aria-labelledby="securite">
-          <h2 id="securite" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="securite" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             8. Sécurité
           </h2>
           <p>
@@ -324,14 +334,14 @@ export default async function PrivacyPage({
         </section>
 
         <section aria-labelledby="contact-privacy">
-          <h2 id="contact-privacy" className="mb-3 text-xl font-bold uppercase tracking-wide">
+          <h2 id="contact-privacy" className="mb-3 border-t border-glass-border pt-6 font-display text-xl font-semibold tracking-tight text-cream-text sm:text-2xl">
             9. Contact
           </h2>
           <p>
             Pour toute question relative à cette politique :{" "}
             <a
               href="mailto:privacy@papernote.example"
-              className="font-bold underline underline-offset-4"
+              className="font-medium text-teal-highlight underline underline-offset-4 hover:text-cream-text"
             >
               privacy@papernote.example
             </a>{" "}
@@ -340,7 +350,10 @@ export default async function PrivacyPage({
         </section>
       </div>
 
-      <nav aria-label="Documents légaux" className="mt-12 flex flex-wrap gap-4 text-sm">
+      <nav
+        aria-label="Documents légaux"
+        className="mt-12 flex flex-wrap gap-4 border-t border-glass-border pt-8 text-sm"
+      >
         <Link
           href={`/${locale}/legal/terms`}
           className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
