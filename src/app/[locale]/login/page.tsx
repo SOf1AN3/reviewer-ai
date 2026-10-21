@@ -47,7 +47,10 @@ function LoginForm() {
   return (
     <>
       {error && (
-        <div className="mb-4 border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
+        <div
+          role="alert"
+          className="mb-4 rounded-lg border border-error/40 bg-error-container px-4 py-3 text-sm text-error"
+        >
           {error}
         </div>
       )}
@@ -56,7 +59,7 @@ function LoginForm() {
         <div>
           <label
             htmlFor="email"
-            className="mb-1 block text-xs font-bold uppercase tracking-wider"
+            className="mb-1 block font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
           >
             {dict.login.emailLabel}
           </label>
@@ -74,7 +77,7 @@ function LoginForm() {
         <div>
           <label
             htmlFor="password"
-            className="mb-1 block text-xs font-bold uppercase tracking-wider"
+            className="mb-1 block font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
           >
             {dict.login.passwordLabel}
           </label>
@@ -104,11 +107,11 @@ function LoginForm() {
       </form>
 
       <div className="my-6 flex items-center gap-3">
-        <div className="h-px flex-1 bg-border" />
-        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+        <div className="h-px flex-1 bg-glass-border" />
+        <span className="font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
           {dict.login.or}
         </span>
-        <div className="h-px flex-1 bg-border" />
+        <div className="h-px flex-1 bg-glass-border" />
       </div>
 
       <button
@@ -144,25 +147,41 @@ export default function LoginPage() {
   const dict = getDictionary(locale as Locale);
 
   return (
-    <div className="container mx-auto px-4 py-8 sm:py-12">
-      <div className="mx-auto max-w-md">
+    <div className="relative isolate flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden px-4 py-12">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 -top-40 h-80 w-80 rounded-full bg-sage-glow blur-3xl -z-10"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-40 -right-40 h-80 w-80 rounded-full bg-amber-glow blur-3xl -z-10"
+      />
+
+      <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <div className="mb-4 inline-flex items-center justify-center bg-secondary px-4 py-3 border-2 border-border shadow-[3px_3px_0px_var(--border)]">
-            <FlaskConical className="h-8 w-8 text-foreground" />
+          <div
+            aria-hidden="true"
+            className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-glass-border bg-surface-sage text-teal-highlight"
+          >
+            <FlaskConical className="h-6 w-6" />
           </div>
-          <h1 className="mb-2 text-2xl sm:text-3xl font-bold uppercase tracking-tight">
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-cream-text">
             {dict.login.title}
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <span
+            aria-hidden="true"
+            className="mx-auto mt-3 block h-px w-12 bg-teal-highlight"
+          />
+          <p className="mt-3 text-sm text-cream-muted">
             {dict.login.subtitle}
           </p>
         </div>
 
-        <div className="pn-card">
+        <div className="pn-card w-full max-w-md rounded-xl">
           <Suspense
             fallback={
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                <Loader2 className="h-6 w-6 animate-spin text-teal-highlight" />
               </div>
             }
           >
@@ -170,11 +189,11 @@ export default function LoginPage() {
           </Suspense>
         </div>
 
-        <p className="mt-6 text-center text-sm text-muted-foreground">
+        <p className="mt-6 text-center text-sm text-cream-muted">
           {dict.login.noAccount}{" "}
           <Link
             href={`/${locale}/register`}
-            className="font-bold text-primary underline-offset-4 hover:underline"
+            className="text-teal-highlight hover:underline"
           >
             {dict.login.signUp}
           </Link>

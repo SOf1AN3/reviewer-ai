@@ -100,13 +100,16 @@ function ResetPasswordForm() {
   if (status === "success") {
     return (
       <div className="py-4 text-center">
-        <div className="mb-4 inline-flex items-center justify-center border-2 border-border bg-secondary p-3">
-          <KeyRound className="h-6 w-6 text-foreground" />
+        <div
+          aria-hidden="true"
+          className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-glass-border bg-surface-sage text-teal-highlight"
+        >
+          <KeyRound className="h-6 w-6" />
         </div>
-        <h2 className="mb-2 text-lg font-bold uppercase tracking-tight">
+        <h2 className="mb-2 font-display text-lg font-semibold tracking-tight text-cream-text">
           {COPY.successTitle}
         </h2>
-        <p className="mb-6 text-sm text-muted-foreground">{COPY.successText}</p>
+        <p className="mb-6 text-sm text-cream-muted">{COPY.successText}</p>
         <Link href={`/${locale}/login`} className="pn-btn inline-block">
           {dict.login.submit}
         </Link>
@@ -116,7 +119,10 @@ function ResetPasswordForm() {
 
   if (!hasParams) {
     return (
-      <div className="border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
+      <div
+        role="alert"
+        className="rounded-lg border border-error/40 bg-error-container px-4 py-3 text-sm text-error"
+      >
         {COPY.missingParams}
       </div>
     );
@@ -125,8 +131,11 @@ function ResetPasswordForm() {
   return (
     <>
       {status === "error" && error && (
-        <div className="mb-4 border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
-          <span className="mb-1 flex items-center gap-2">
+        <div
+          role="alert"
+          className="mb-4 rounded-lg border border-error/40 bg-error-container px-4 py-3 text-sm text-error"
+        >
+          <span className="mb-1 flex items-center gap-2 font-semibold">
             <ShieldAlert className="h-4 w-4" />
             {COPY.errorTitle}
           </span>
@@ -135,12 +144,12 @@ function ResetPasswordForm() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <p className="text-sm text-muted-foreground">{COPY.intro}</p>
+        <p className="text-sm text-cream-muted">{COPY.intro}</p>
 
         <div>
           <label
             htmlFor="password"
-            className="mb-1 block text-xs font-bold uppercase tracking-wider"
+            className="mb-1 block font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
           >
             {dict.register.passwordLabel}
           </label>
@@ -159,7 +168,7 @@ function ResetPasswordForm() {
         <div>
           <label
             htmlFor="confirm-password"
-            className="mb-1 block text-xs font-bold uppercase tracking-wider"
+            className="mb-1 block font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
           >
             {COPY.confirmLabel}
           </label>
@@ -197,23 +206,39 @@ export default function ResetPasswordPage() {
   const dict = getDictionary(locale as Locale);
 
   return (
-    <div className="container mx-auto px-4 py-8 sm:py-12">
-      <div className="mx-auto max-w-md">
+    <div className="relative isolate flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden px-4 py-12">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 -top-40 h-80 w-80 rounded-full bg-sage-glow blur-3xl -z-10"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-40 -right-40 h-80 w-80 rounded-full bg-amber-glow blur-3xl -z-10"
+      />
+
+      <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <div className="mb-4 inline-flex items-center justify-center bg-secondary px-4 py-3 border-2 border-border shadow-[3px_3px_0px_var(--border)]">
-            <KeyRound className="h-8 w-8 text-foreground" />
+          <div
+            aria-hidden="true"
+            className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-glass-border bg-surface-sage text-teal-highlight"
+          >
+            <KeyRound className="h-6 w-6" />
           </div>
-          <h1 className="mb-2 text-2xl sm:text-3xl font-bold uppercase tracking-tight">
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-cream-text">
             {COPY.title}
           </h1>
-          <p className="text-sm text-muted-foreground">{COPY.subtitle}</p>
+          <span
+            aria-hidden="true"
+            className="mx-auto mt-3 block h-px w-12 bg-teal-highlight"
+          />
+          <p className="mt-3 text-sm text-cream-muted">{COPY.subtitle}</p>
         </div>
 
-        <div className="pn-card">
+        <div className="pn-card w-full max-w-md rounded-xl">
           <Suspense
             fallback={
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                <Loader2 className="h-6 w-6 animate-spin text-teal-highlight" />
               </div>
             }
           >
@@ -221,10 +246,10 @@ export default function ResetPasswordPage() {
           </Suspense>
         </div>
 
-        <p className="mt-6 text-center text-sm text-muted-foreground">
+        <p className="mt-6 text-center text-sm text-cream-muted">
           <Link
             href={`/${locale}/login`}
-            className="font-bold text-primary underline-offset-4 hover:underline"
+            className="text-teal-highlight hover:underline"
           >
             {dict.login.submit}
           </Link>
