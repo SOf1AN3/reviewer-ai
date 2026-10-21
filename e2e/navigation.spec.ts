@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { gotoHydrated } from "./helpers";
 
 test.describe("Navigation et internationalisation", () => {
-  test("l'accueil /fr répond 200, rend le Header et un lien vers /fr/analyser", async ({ page }) => {
+  test("l'accueil /fr répond 200, rend le Header et un CTA vers /fr/analyser", async ({ page }) => {
     const response = await page.goto("/fr");
     expect(response?.status()).toBe(200);
 
@@ -13,11 +13,20 @@ test.describe("Navigation et internationalisation", () => {
 
     // Le Header n'affiche le libellé « Analyser » (src/components/Header.tsx)
     // que lorsque la session est active. En navigation anonyme, l'accès à
-    // l'analyse est porté par le CTA « Commencer l'analyse » de l'accueil,
-    // qui pointe vers /fr/analyser. Le libellé « Analyser » du Header est
-    // couvert une fois connecté dans e2e/auth.spec.ts.
-    await expect(page.locator('a[href="/fr/analyser"]').first()).toBeVisible();
-    await expect(page.getByRole("link", { name: "Commencer l'analyse" })).toBeVisible();
+    // l'analyse est porté par le CTA « Auditer mon manuscrit gratuitement »
+    // de l'accueil (un <button> qui déclenche `router.push('/fr/analyser')`,
+    // cf. src/app/[locale]/page.tsx), lequel n'est donc PAS un <a href>.
+    // Le libellé « Analyser » du Header est couvert une fois connecté dans
+    // e2e/auth.spec.ts.
+    const ctaAccueil = page.getByRole("button", {
+      name: "Auditer mon manuscrit gratuitement",
+    });
+    await expect(ctaAccueil).toBeVisible();
+
+    // Un clic dérive bien vers /fr/analyser (route existante et protégée).
+    await ctaAccueil.click();
+    await page.waitForURL("**/fr/analyser", { timeout: 15_000 });
+    expect(new URL(page.url()).pathname).toBe("/fr/analyser");
   });
 
   test("bascule de locale : /en affiche les libellés anglais", async ({ page }) => {
@@ -26,7 +35,9 @@ test.describe("Navigation et internationalisation", () => {
     await page.getByRole("button", { name: "EN", exact: true }).click();
     await page.waitForURL("**/en", { timeout: 15_000 });
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
-    await expect(page.getByRole("link", { name: "Start Analysis" })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Audit my manuscript for free" })
+    ).toBeVisible();
   });
 
   test("bascule de locale : /ar bascule le document en RTL", async ({ page }) => {
