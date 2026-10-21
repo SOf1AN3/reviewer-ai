@@ -107,7 +107,7 @@ function ResetPasswordForm() {
           {COPY.successTitle}
         </h2>
         <p className="mb-6 text-sm text-muted-foreground">{COPY.successText}</p>
-        <Link href={`/${locale}/login`} className="brutal-btn inline-block">
+        <Link href={`/${locale}/login`} className="pn-btn inline-block">
           {dict.login.submit}
         </Link>
       </div>
@@ -149,7 +149,7 @@ function ResetPasswordForm() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="brutal-input w-full"
+            className="pn-input w-full"
             placeholder={dict.register.passwordPlaceholder}
             minLength={8}
             required
@@ -168,7 +168,7 @@ function ResetPasswordForm() {
             type="password"
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
-            className="brutal-input w-full"
+            className="pn-input w-full"
             placeholder="••••••••"
             minLength={8}
             required
@@ -178,7 +178,7 @@ function ResetPasswordForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="brutal-btn w-full flex items-center justify-center gap-2"
+          className="pn-btn w-full flex items-center justify-center gap-2"
         >
           {status === "loading" ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -209,7 +209,7 @@ export default function ResetPasswordPage() {
           <p className="text-sm text-muted-foreground">{COPY.subtitle}</p>
         </div>
 
-        <div className="brutal-card">
+        <div className="pn-card">
           <Suspense
             fallback={
               <div className="flex items-center justify-center py-8">

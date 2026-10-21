@@ -61,32 +61,32 @@ export function Header() {
             <>
               <Link
                 href={`/${locale}/analyser`}
-                className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
+                className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
               >
                 {dict.header.analyze}
               </Link>
               <Link
                 href={`/${locale}/historique`}
-                className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
+                className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
               >
                 {dict.header.history}
               </Link>
               <Link
                 href={`/${locale}/pricing`}
-                className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs flex items-center gap-1"
+                className="pn-btn-secondary pn-btn px-4 py-2 text-xs flex items-center gap-1"
               >
                 <CreditCard className="h-3 w-3" />
                 {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : dict.header.upgrade}
               </Link>
               <Link
                 href={`/${locale}/settings/profile`}
-                className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
+                className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
               >
                 {dict.header.profile}
               </Link>
               <Link
                 href={`/${locale}/settings/billing`}
-                className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
+                className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
               >
                 {dict.header.billing}
               </Link>
@@ -96,7 +96,7 @@ export function Header() {
               </span>
               <button
                 onClick={() => signOut({ callbackUrl: `/${locale}/login` })}
-                className="brutal-btn-destructive brutal-btn px-3 py-2 text-xs flex items-center gap-1"
+                className="pn-btn-destructive pn-btn px-3 py-2 text-xs flex items-center gap-1"
                 aria-label={dict.header.logout}
               >
                 <LogOut className="h-4 w-4" />
@@ -106,14 +106,14 @@ export function Header() {
             <>
               <Link
                 href={`/${locale}/login`}
-                className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs flex items-center gap-1"
+                className="pn-btn-secondary pn-btn px-4 py-2 text-xs flex items-center gap-1"
               >
                 <LogIn className="h-4 w-4" />
                 {dict.header.login}
               </Link>
               <Link
                 href={`/${locale}/register`}
-                className="brutal-btn px-4 py-2 text-xs"
+                className="pn-btn px-4 py-2 text-xs"
               >
                 {dict.header.register}
               </Link>
@@ -124,7 +124,7 @@ export function Header() {
           <div className="relative">
             <button
               onClick={() => setLangOpen(!langOpen)}
-              className="brutal-btn px-3 py-2 text-xs flex items-center gap-1"
+              className="pn-btn px-3 py-2 text-xs flex items-center gap-1"
               aria-label={dict.header.changeLanguage}
             >
               <Globe className="h-4 w-4" />
@@ -152,7 +152,7 @@ export function Header() {
 
           <button
             onClick={toggleTheme}
-            className="brutal-btn px-3 py-2 text-xs"
+            className="pn-btn px-3 py-2 text-xs"
             aria-label={dict.header.toggleTheme}
           >
             {theme === "light" ? (
@@ -167,7 +167,7 @@ export function Header() {
         <div className="flex sm:hidden items-center gap-2">
           <button
             onClick={() => setLangOpen(!langOpen)}
-            className="brutal-btn px-3 py-2 text-xs"
+            className="pn-btn px-3 py-2 text-xs"
             aria-label={dict.header.changeLanguage}
           >
             <Globe className="h-4 w-4" />
@@ -192,7 +192,7 @@ export function Header() {
           )}
           <button
             onClick={toggleTheme}
-            className="brutal-btn px-3 py-2 text-xs"
+            className="pn-btn px-3 py-2 text-xs"
             aria-label={dict.header.toggleTheme}
           >
             {theme === "light" ? (
@@ -203,7 +203,7 @@ export function Header() {
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="brutal-btn px-3 py-2 text-xs"
+            className="pn-btn px-3 py-2 text-xs"
             aria-label={dict.header.menu}
           >
             {mobileOpen ? (
@@ -227,21 +227,21 @@ export function Header() {
                 <Link
                   href={`/${locale}/analyser`}
                   onClick={() => setMobileOpen(false)}
-                  className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
+                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm text-center"
                 >
                   {dict.header.analyze}
                 </Link>
                 <Link
                   href={`/${locale}/historique`}
                   onClick={() => setMobileOpen(false)}
-                  className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
+                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm text-center"
                 >
                   {dict.header.history}
                 </Link>
                 <Link
                   href={`/${locale}/pricing`}
                   onClick={() => setMobileOpen(false)}
-                  className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center flex items-center justify-center gap-2"
+                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm text-center flex items-center justify-center gap-2"
                 >
                   <CreditCard className="h-4 w-4" />
                   {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : dict.header.upgrade}
@@ -249,14 +249,14 @@ export function Header() {
                 <Link
                   href={`/${locale}/settings/profile`}
                   onClick={() => setMobileOpen(false)}
-                  className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
+                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm text-center"
                 >
                   {dict.header.profile}
                 </Link>
                 <Link
                   href={`/${locale}/settings/billing`}
                   onClick={() => setMobileOpen(false)}
-                  className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm text-center"
+                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm text-center"
                 >
                   {dict.header.billing}
                 </Link>
@@ -265,7 +265,7 @@ export function Header() {
                     setMobileOpen(false);
                     signOut({ callbackUrl: `/${locale}/login` });
                   }}
-                  className="brutal-btn-destructive brutal-btn px-4 py-3 text-sm flex items-center justify-center gap-2"
+                  className="pn-btn-destructive pn-btn px-4 py-3 text-sm flex items-center justify-center gap-2"
                 >
                   <LogOut className="h-4 w-4" />
                   {dict.header.logout}
@@ -276,7 +276,7 @@ export function Header() {
                 <Link
                   href={`/${locale}/login`}
                   onClick={() => setMobileOpen(false)}
-                  className="brutal-btn-secondary brutal-btn px-4 py-3 text-sm flex items-center justify-center gap-2"
+                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm flex items-center justify-center gap-2"
                 >
                   <LogIn className="h-4 w-4" />
                   {dict.header.login}
@@ -284,7 +284,7 @@ export function Header() {
                 <Link
                   href={`/${locale}/register`}
                   onClick={() => setMobileOpen(false)}
-                  className="brutal-btn px-4 py-3 text-sm text-center"
+                  className="pn-btn px-4 py-3 text-sm text-center"
                 >
                   {dict.header.register}
                 </Link>

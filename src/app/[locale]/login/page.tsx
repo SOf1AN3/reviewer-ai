@@ -65,7 +65,7 @@ function LoginForm() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="brutal-input w-full"
+            className="pn-input w-full"
             placeholder="vous@example.com"
             required
           />
@@ -83,7 +83,7 @@ function LoginForm() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="brutal-input w-full"
+            className="pn-input w-full"
             placeholder="••••••••"
             required
           />
@@ -92,7 +92,7 @@ function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="brutal-btn w-full flex items-center justify-center gap-2"
+          className="pn-btn w-full flex items-center justify-center gap-2"
         >
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -113,7 +113,7 @@ function LoginForm() {
 
       <button
         onClick={() => signIn("google", { callbackUrl })}
-        className="brutal-btn-secondary brutal-btn w-full flex items-center justify-center gap-2"
+        className="pn-btn-secondary pn-btn w-full flex items-center justify-center gap-2"
       >
         <svg className="h-4 w-4" viewBox="0 0 24 24">
           <path
@@ -158,7 +158,7 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <div className="brutal-card">
+        <div className="pn-card">
           <Suspense
             fallback={
               <div className="flex items-center justify-center py-8">

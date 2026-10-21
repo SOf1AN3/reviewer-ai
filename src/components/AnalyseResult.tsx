@@ -111,7 +111,7 @@ export function NoteGlobaleCard({
   const dict = getDictionary(locale as Locale);
 
   return (
-    <div className="brutal-card">
+    <div className="pn-card">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
         <Target className="h-5 w-5" />
         {dict.result.overallScore}
@@ -138,7 +138,7 @@ export function NotesParCritereCard({
   const dict = getDictionary(locale as Locale);
 
   return (
-    <div className="brutal-card">
+    <div className="pn-card">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
         <TrendingUp className="h-5 w-5" />
         {dict.result.scoreByCriteria}
@@ -165,7 +165,7 @@ export function PointsFortsCard({
   const dict = getDictionary(locale as Locale);
 
   return (
-    <div className="brutal-card">
+    <div className="pn-card">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider text-score-great">
         <CheckCircle className="h-5 w-5" />
         {dict.result.strengths}
@@ -193,7 +193,7 @@ export function PointsAmeliorerCard({
   const dict = getDictionary(locale as Locale);
 
   return (
-    <div className="brutal-card">
+    <div className="pn-card">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider text-score-ok">
         <AlertCircle className="h-5 w-5" />
         {dict.result.weaknesses}
@@ -221,7 +221,7 @@ export function RecommandationsCard({
   const dict = getDictionary(locale as Locale);
 
   return (
-    <div className="brutal-card">
+    <div className="pn-card">
       <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
         <Lightbulb className="h-5 w-5" />
         {dict.result.recommendations}
@@ -247,7 +247,7 @@ export function AnalyseDetailleeCard({
   const dict = getDictionary(locale as Locale);
 
   return (
-    <div className="brutal-card">
+    <div className="pn-card">
       <h2 className="mb-4 text-lg font-bold uppercase tracking-wider">
         {dict.result.detailedAnalysis}
       </h2>

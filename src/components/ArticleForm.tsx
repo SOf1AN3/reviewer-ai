@@ -251,7 +251,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
           value={titre}
           onChange={(e) => setTitre(e.target.value)}
           placeholder={dict.articleForm.titlePlaceholder}
-          className="brutal-input w-full"
+          className="pn-input w-full"
           required
         />
       </div>
@@ -270,7 +270,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
             value={auteur}
             onChange={(e) => setAuteur(e.target.value)}
             placeholder={dict.articleForm.authorPlaceholder}
-            className="brutal-input w-full"
+            className="pn-input w-full"
           />
         </div>
         <div className="space-y-2">
@@ -286,7 +286,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
             value={revueCiblee}
             onChange={(e) => setRevueCiblee(e.target.value)}
             placeholder={dict.articleForm.journalPlaceholder}
-            className="brutal-input w-full"
+            className="pn-input w-full"
           />
         </div>
       </div>
@@ -320,7 +320,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
           value={contenu}
           onChange={(e) => setContenu(e.target.value)}
           placeholder={dict.articleForm.contentPlaceholder}
-          className="brutal-input h-48 sm:h-72 w-full resize-none"
+          className="pn-input h-48 sm:h-72 w-full resize-none"
           required
         />
         <p className="text-xs font-mono font-bold text-muted-foreground">
@@ -374,7 +374,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
             <button
               type="button"
               onClick={() => router.push(`/${locale}/pricing`)}
-              className="brutal-btn mt-3 inline-flex items-center gap-2 text-xs"
+              className="pn-btn mt-3 inline-flex items-center gap-2 text-xs"
             >
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               {dict.articleForm.ctaPricing}
@@ -384,7 +384,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
             <button
               type="button"
               onClick={() => router.push(`/${locale}/login`)}
-              className="brutal-btn mt-3 inline-flex items-center gap-2 text-xs"
+              className="pn-btn mt-3 inline-flex items-center gap-2 text-xs"
             >
               <LogIn className="h-4 w-4" aria-hidden="true" />
               {dict.articleForm.ctaLogin}
@@ -397,7 +397,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
         type="submit"
         disabled={isLoading || isUploading || contenu.length < 100}
         aria-busy={isLoading}
-        className="brutal-btn flex w-full items-center justify-center gap-2"
+        className="pn-btn flex w-full items-center justify-center gap-2"
       >
         {isLoading ? (
           <>

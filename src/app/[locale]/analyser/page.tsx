@@ -53,7 +53,7 @@ export default function AnalyserPage() {
         </div>
 
         {isAnalyzing ? (
-          <div className="brutal-card p-6 sm:p-12 text-center">
+          <div className="pn-card p-6 sm:p-12 text-center">
             <div className="relative mx-auto mb-6 h-24 w-24 sm:h-32 sm:w-32">
               <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
                 <circle
@@ -95,7 +95,7 @@ export default function AnalyserPage() {
             </div>
           </div>
         ) : (
-          <div className="brutal-card">
+          <div className="pn-card">
             <ArticleForm
               onAnalysisStart={startProgress}
               onAnalysisEnd={stopProgress}

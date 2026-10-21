@@ -23,7 +23,7 @@ export function PricingCard({
 }: PricingCardProps) {
   return (
     <div
-      className={`brutal-card flex flex-col ${
+      className={`pn-card flex flex-col ${
         highlighted
           ? "border-primary shadow-[6px_6px_0px_var(--primary)]"
           : ""
@@ -57,8 +57,8 @@ export function PricingCard({
       <button
         onClick={onSelect}
         disabled={currentPlan}
-        className={`brutal-btn w-full text-center ${
-          highlighted ? "" : "brutal-btn-secondary"
+        className={`pn-btn w-full text-center ${
+          highlighted ? "" : "pn-btn-secondary"
         } ${currentPlan ? "pointer-events-none" : ""}`}
       >
         {currentPlan ? "Plan actuel" : cta}

@@ -190,7 +190,7 @@ export default function AnalysePage() {
         <div className="mx-auto max-w-6xl">
           <button
             onClick={() => router.push(`/${locale}/analyser`)}
-            className="brutal-btn mb-6 inline-flex items-center gap-2 text-xs"
+            className="pn-btn mb-6 inline-flex items-center gap-2 text-xs"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             {dict.analyseDetail.newAnalysis}
@@ -199,7 +199,7 @@ export default function AnalysePage() {
           <div
             role="status"
             aria-live="polite"
-            className="brutal-card mx-auto max-w-2xl text-center"
+            className="pn-card mx-auto max-w-2xl text-center"
           >
             <Loader2 className="mx-auto mb-4 h-10 w-10 animate-spin text-primary" aria-hidden="true" />
             <p className="text-lg font-bold uppercase tracking-wider">
@@ -227,7 +227,7 @@ export default function AnalysePage() {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-2xl text-center">
-          <div className="brutal-card p-8">
+          <div className="pn-card p-8">
             <Clock className="mx-auto mb-4 h-10 w-10 text-primary" aria-hidden="true" />
             <p className="text-lg font-bold">
               {dict.analyseDetail.timeoutTitle}
@@ -238,14 +238,14 @@ export default function AnalysePage() {
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
               <button
                 onClick={handleRetry}
-                className="brutal-btn inline-flex items-center gap-2"
+                className="pn-btn inline-flex items-center gap-2"
               >
                 <RefreshCw className="h-4 w-4" aria-hidden="true" />
                 {dict.analyseDetail.retry}
               </button>
               <button
                 onClick={() => router.push(`/${locale}/analyser`)}
-                className="brutal-btn brutal-btn-secondary inline-flex items-center gap-2"
+                className="pn-btn pn-btn-secondary inline-flex items-center gap-2"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                 {dict.analyseDetail.newAnalysis}
@@ -261,11 +261,11 @@ export default function AnalysePage() {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-2xl text-center">
-          <div className="brutal-card p-8">
+          <div className="pn-card p-8">
             <p className="text-lg font-bold text-destructive">{state.message}</p>
             <button
               onClick={() => router.push(`/${locale}/analyser`)}
-              className="brutal-btn mt-4 inline-flex items-center gap-2"
+              className="pn-btn mt-4 inline-flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               {dict.analyseDetail.backHome}
@@ -281,13 +281,13 @@ export default function AnalysePage() {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-2xl text-center">
-          <div className="brutal-card p-8">
+          <div className="pn-card p-8">
             <p className="text-lg font-bold text-destructive">
               {dict.analyseDetail.notFound}
             </p>
             <button
               onClick={() => router.push(`/${locale}/analyser`)}
-              className="brutal-btn mt-4 inline-flex items-center gap-2"
+              className="pn-btn mt-4 inline-flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               {dict.analyseDetail.backHome}
@@ -311,23 +311,23 @@ export default function AnalysePage() {
         {/* Back button */}
         <button
           onClick={() => router.push(`/${locale}/analyser`)}
-          className="brutal-btn mb-6 inline-flex items-center gap-2 text-xs"
+          className="pn-btn mb-6 inline-flex items-center gap-2 text-xs"
         >
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
           {dict.analyseDetail.newAnalysis}
         </button>
 
         {/* Article info */}
-        <div className="brutal-card mb-6">
+        <div className="pn-card mb-6">
           <h1 className="mb-3 text-2xl font-bold uppercase tracking-tight">
             {article.titre}
           </h1>
           <div className="flex flex-wrap gap-2">
             {article.auteur && (
-              <span className="brutal-tag">{article.auteur}</span>
+              <span className="pn-tag">{article.auteur}</span>
             )}
             {article.revueCiblee && (
-              <span className="brutal-tag">{article.revueCiblee}</span>
+              <span className="pn-tag">{article.revueCiblee}</span>
             )}
             <span className="inline-flex items-center font-mono text-xs text-muted-foreground">
               {dict.analyseDetail.analyzedOn}{" "}

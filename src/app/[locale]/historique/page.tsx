@@ -77,7 +77,7 @@ export default function HistoriquePage() {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-2xl text-center">
-          <div className="brutal-card p-8">
+          <div className="pn-card p-8">
             <p className="text-lg font-bold text-destructive">{error}</p>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default function HistoriquePage() {
         </h1>
 
         {history.length === 0 ? (
-          <div className="brutal-card p-8 sm:p-12 text-center">
+          <div className="pn-card p-8 sm:p-12 text-center">
             <FlaskConical className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
             <h2 className="text-xl font-bold uppercase">
               {dict.historique.emptyTitle}
@@ -103,7 +103,7 @@ export default function HistoriquePage() {
             </p>
             <Link
               href={`/${locale}/analyser`}
-              className="brutal-btn mt-6 inline-flex items-center gap-2"
+              className="pn-btn mt-6 inline-flex items-center gap-2"
             >
               {dict.historique.emptyButton}
               <ArrowRight className="h-4 w-4" />
@@ -115,7 +115,7 @@ export default function HistoriquePage() {
               <button
                 key={item.id}
                 onClick={() => router.push(`/${locale}/analyse/${item.id}`)}
-                className="brutal-card-hover w-full text-left"
+                className="pn-card-hover w-full text-left"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">
@@ -124,10 +124,10 @@ export default function HistoriquePage() {
                     </h2>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {item.auteur && (
-                        <span className="brutal-tag">{item.auteur}</span>
+                        <span className="pn-tag">{item.auteur}</span>
                       )}
                       {item.revueCiblee && (
-                        <span className="brutal-tag">{item.revueCiblee}</span>
+                        <span className="pn-tag">{item.revueCiblee}</span>
                       )}
                       <span className="inline-flex items-center gap-1 font-mono text-xs text-muted-foreground">
                         <Clock className="h-3 w-3" />

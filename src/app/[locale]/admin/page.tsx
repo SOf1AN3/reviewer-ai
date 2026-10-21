@@ -237,7 +237,7 @@ export default function AdminPage() {
   if (forbidden) {
     return (
       <div className="container mx-auto px-4 py-8 sm:py-12">
-        <div className="brutal-card mx-auto max-w-md p-8 text-center">
+        <div className="pn-card mx-auto max-w-md p-8 text-center">
           <ShieldAlert className="mx-auto mb-4 h-10 w-10 text-destructive" />
           <h1 className="mb-2 text-2xl font-bold uppercase tracking-tight">
             {admin.forbiddenTitle}
@@ -245,7 +245,7 @@ export default function AdminPage() {
           <p className="mb-6 text-sm text-muted-foreground">
             {admin.forbiddenDescription}
           </p>
-          <Link href={`/${locale}`} className="brutal-btn inline-block">
+          <Link href={`/${locale}`} className="pn-btn inline-block">
             {admin.backHome}
           </Link>
         </div>
@@ -301,7 +301,7 @@ export default function AdminPage() {
       {/* --- Cartes de stats --- */}
       <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {/* Utilisateurs */}
-        <section className="brutal-card p-6">
+        <section className="pn-card p-6">
           <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
             <UsersIcon className="h-5 w-5" />
             {admin.stats.usersCard}
@@ -330,7 +330,7 @@ export default function AdminPage() {
         </section>
 
         {/* Analyses */}
-        <section className="brutal-card p-6">
+        <section className="pn-card p-6">
           <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
             <BarChart3 className="h-5 w-5" />
             {admin.stats.analysesCard}
@@ -346,7 +346,7 @@ export default function AdminPage() {
         </section>
 
         {/* Revenus */}
-        <section className="brutal-card p-6">
+        <section className="pn-card p-6">
           <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
             <CreditCard className="h-5 w-5" />
             {admin.stats.revenueCard}
@@ -378,7 +378,7 @@ export default function AdminPage() {
       </div>
 
       {/* --- Abonnements par statut --- */}
-      <section className="brutal-card mb-8 p-6">
+      <section className="pn-card mb-8 p-6">
         <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
           <TrendingUp className="h-5 w-5" />
           {admin.stats.subscriptionsCard}
@@ -399,7 +399,7 @@ export default function AdminPage() {
       </section>
 
       {/* --- Tableau des utilisateurs --- */}
-      <section className="brutal-card p-6">
+      <section className="pn-card p-6">
         <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
           <UsersIcon className="h-5 w-5" />
           {admin.users.cardTitle}
@@ -420,9 +420,9 @@ export default function AdminPage() {
               setSearchInput(event.target.value);
             }}
             placeholder={admin.users.searchPlaceholder}
-            className="brutal-input w-full max-w-xs flex-1 px-3 py-2 text-sm"
+            className="pn-input w-full max-w-xs flex-1 px-3 py-2 text-sm"
           />
-          <button type="submit" className="brutal-btn inline-flex items-center gap-2">
+          <button type="submit" className="pn-btn inline-flex items-center gap-2">
             <Search className="h-4 w-4" />
             {admin.users.searchButton}
           </button>
@@ -484,10 +484,10 @@ export default function AdminPage() {
                       )}
                     </td>
                     <td className="py-2 pr-4">
-                      <span className="brutal-tag">{user.role}</span>
+                      <span className="pn-tag">{user.role}</span>
                     </td>
                     <td className="py-2 pr-4">
-                      <span className="brutal-tag">{user.plan}</span>
+                      <span className="pn-tag">{user.plan}</span>
                     </td>
                     <td className="py-2 pr-4 text-right tabular-nums">
                       {user.analysesCount}
@@ -516,7 +516,7 @@ export default function AdminPage() {
                 setPage((current) => Math.max(1, current - 1));
               }}
               disabled={usersLoading || page <= 1}
-              className="brutal-btn inline-flex items-center gap-1"
+              className="pn-btn inline-flex items-center gap-1"
             >
               <ChevronLeft className="h-4 w-4" />
               {admin.users.prev}
@@ -527,7 +527,7 @@ export default function AdminPage() {
                 setPage((current) => Math.min(totalPages, current + 1));
               }}
               disabled={usersLoading || page >= totalPages}
-              className="brutal-btn inline-flex items-center gap-1"
+              className="pn-btn inline-flex items-center gap-1"
             >
               {admin.users.next}
               <ChevronRight className="h-4 w-4" />

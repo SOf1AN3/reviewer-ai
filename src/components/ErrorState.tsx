@@ -95,7 +95,7 @@ export function ErrorState({ kind = "error", error, retry }: ErrorStateProps) {
       aria-labelledby="error-state-title"
       className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-16 text-center"
     >
-      <span className="brutal-badge mb-6" aria-hidden="true">
+      <span className="pn-badge mb-6" aria-hidden="true">
         {isNotFound ? "404" : "500"}
       </span>
       <h1 id="error-state-title" className="mb-3 text-3xl font-bold">
@@ -109,14 +109,14 @@ export function ErrorState({ kind = "error", error, retry }: ErrorStateProps) {
           <button
             type="button"
             onClick={() => retry()}
-            className="brutal-btn focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="pn-btn focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             {t.retry}
           </button>
         ) : null}
         <Link
           href={`/${locale}`}
-          className="brutal-btn brutal-btn-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="pn-btn pn-btn-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           {t.backHome}
         </Link>

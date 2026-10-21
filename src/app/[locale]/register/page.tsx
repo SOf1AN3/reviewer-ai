@@ -72,7 +72,7 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        <div className="brutal-card">
+        <div className="pn-card">
           {error && (
             <div className="mb-4 border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
               {error}
@@ -92,7 +92,7 @@ export default function RegisterPage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="brutal-input w-full"
+                className="pn-input w-full"
                 placeholder={dict.register.namePlaceholder}
                 required
               />
@@ -110,7 +110,7 @@ export default function RegisterPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="brutal-input w-full"
+                className="pn-input w-full"
                 placeholder="vous@example.com"
                 required
               />
@@ -128,7 +128,7 @@ export default function RegisterPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="brutal-input w-full"
+                className="pn-input w-full"
                 placeholder={dict.register.passwordPlaceholder}
                 minLength={8}
                 required
@@ -138,7 +138,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="brutal-btn w-full flex items-center justify-center gap-2"
+              className="pn-btn w-full flex items-center justify-center gap-2"
             >
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -159,7 +159,7 @@ export default function RegisterPage() {
 
           <button
             onClick={() => signIn("google", { callbackUrl: `/${locale}` })}
-            className="brutal-btn-secondary brutal-btn w-full flex items-center justify-center gap-2"
+            className="pn-btn-secondary pn-btn w-full flex items-center justify-center gap-2"
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24">
               <path

@@ -247,7 +247,7 @@ export default function SettingsApiPage() {
 
         {/* --- Clé brute affichée une seule fois --- */}
         {newKey && (
-          <section className="brutal-card mb-6 border-2 border-primary">
+          <section className="pn-card mb-6 border-2 border-primary">
             <h2 className="mb-3 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
               <KeyRound className="h-5 w-5 text-primary" />
               {api.createdTitle}
@@ -267,7 +267,7 @@ export default function SettingsApiPage() {
                 onClick={() => {
                   void handleCopy();
                 }}
-                className="brutal-btn inline-flex items-center gap-2"
+                className="pn-btn inline-flex items-center gap-2"
               >
                 {copied ? (
                   <Check className="h-4 w-4" />
@@ -279,7 +279,7 @@ export default function SettingsApiPage() {
               <button
                 type="button"
                 onClick={() => setNewKey(null)}
-                className="brutal-btn inline-flex items-center gap-2"
+                className="pn-btn inline-flex items-center gap-2"
               >
                 <X className="h-4 w-4" />
                 {api.dismiss}
@@ -289,7 +289,7 @@ export default function SettingsApiPage() {
         )}
 
         {/* --- Formulaire de création --- */}
-        <section className="brutal-card mb-6">
+        <section className="pn-card mb-6">
           <h2 className="mb-4 text-lg font-bold uppercase tracking-wider">
             {api.createTitle}
           </h2>
@@ -308,7 +308,7 @@ export default function SettingsApiPage() {
                 onChange={(e) => setNameInput(e.target.value)}
                 placeholder={api.namePlaceholder}
                 maxLength={100}
-                className="brutal-input w-full"
+                className="pn-input w-full"
               />
             </div>
             <div>
@@ -325,7 +325,7 @@ export default function SettingsApiPage() {
                 value={limitInput}
                 onChange={(e) => setLimitInput(e.target.value)}
                 placeholder={api.limitPlaceholder}
-                className="brutal-input w-full"
+                className="pn-input w-full"
               />
               <p className="mt-1 text-xs text-muted-foreground">{api.limitHelp}</p>
             </div>
@@ -344,7 +344,7 @@ export default function SettingsApiPage() {
             <button
               type="submit"
               disabled={creating}
-              className="brutal-btn inline-flex items-center gap-2"
+              className="pn-btn inline-flex items-center gap-2"
             >
               {creating ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -357,7 +357,7 @@ export default function SettingsApiPage() {
         </section>
 
         {/* --- Liste des clés --- */}
-        <section className="brutal-card">
+        <section className="pn-card">
           <h2 className="mb-4 text-lg font-bold uppercase tracking-wider">
             {api.keysTitle}
           </h2>
@@ -393,7 +393,7 @@ export default function SettingsApiPage() {
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="font-bold">{key.name}</span>
                         <span
-                          className={`brutal-tag ${
+                          className={`pn-tag ${
                             revoked
                               ? "bg-destructive/10 text-destructive"
                               : "bg-primary/10 text-primary"
@@ -426,7 +426,7 @@ export default function SettingsApiPage() {
                           setRevokeTarget(key);
                           setRevokeError(null);
                         }}
-                        className="brutal-btn inline-flex items-center gap-2"
+                        className="pn-btn inline-flex items-center gap-2"
                       >
                         <Trash2 className="h-4 w-4" />
                         {api.revokeButton}
@@ -442,7 +442,7 @@ export default function SettingsApiPage() {
         {/* --- Confirmation de révocation --- */}
         {revokeTarget && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-            <div className="brutal-card w-full max-w-md">
+            <div className="pn-card w-full max-w-md">
               <h3 className="mb-2 text-lg font-bold uppercase tracking-wider">
                 {api.revokeConfirmTitle}
               </h3>
@@ -461,7 +461,7 @@ export default function SettingsApiPage() {
                     void handleRevoke();
                   }}
                   disabled={revoking}
-                  className="brutal-btn inline-flex items-center gap-2"
+                  className="pn-btn inline-flex items-center gap-2"
                 >
                   {revoking ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -474,7 +474,7 @@ export default function SettingsApiPage() {
                   type="button"
                   onClick={() => setRevokeTarget(null)}
                   disabled={revoking}
-                  className="brutal-btn inline-flex items-center gap-2"
+                  className="pn-btn inline-flex items-center gap-2"
                 >
                   {api.revokeCancel}
                 </button>

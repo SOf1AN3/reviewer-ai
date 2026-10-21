@@ -343,13 +343,13 @@ export default async function PrivacyPage({
       <nav aria-label="Documents légaux" className="mt-12 flex flex-wrap gap-4 text-sm">
         <Link
           href={`/${locale}/legal/terms`}
-          className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
+          className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
         >
           Conditions générales
         </Link>
         <Link
           href={`/${locale}/legal/cookies`}
-          className="brutal-btn-secondary brutal-btn px-4 py-2 text-xs"
+          className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
         >
           Politique cookies
         </Link>

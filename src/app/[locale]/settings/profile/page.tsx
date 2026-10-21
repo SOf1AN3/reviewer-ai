@@ -218,7 +218,7 @@ export default function SettingsProfilePage() {
         </div>
 
         {/* --- Profil --- */}
-        <section className="brutal-card mb-6">
+        <section className="pn-card mb-6">
           <h2 className="mb-6 text-lg font-bold uppercase tracking-wider">
             {settings.profile.sectionTitle}
           </h2>
@@ -233,12 +233,12 @@ export default function SettingsProfilePage() {
                   {profile.email ?? "—"}
                 </span>
                 {profile.emailVerified ? (
-                  <span className="brutal-badge flex items-center gap-1 text-score-great">
+                  <span className="pn-badge flex items-center gap-1 text-score-great">
                     <ShieldCheck className="h-3 w-3" />
                     {settings.profile.verified}
                   </span>
                 ) : (
-                  <span className="brutal-badge flex items-center gap-1 text-destructive">
+                  <span className="pn-badge flex items-center gap-1 text-destructive">
                     <ShieldAlert className="h-3 w-3" />
                     {settings.profile.unverified}
                   </span>
@@ -251,7 +251,7 @@ export default function SettingsProfilePage() {
                 {settings.profile.planLabel}
               </dt>
               <dd>
-                <span className="brutal-tag">{profile.plan}</span>
+                <span className="pn-tag">{profile.plan}</span>
               </dd>
             </div>
           </dl>
@@ -275,7 +275,7 @@ export default function SettingsProfilePage() {
                 }}
                 minLength={2}
                 maxLength={100}
-                className="brutal-input w-full"
+                className="pn-input w-full"
                 placeholder={settings.profile.namePlaceholder}
                 required
               />
@@ -285,7 +285,7 @@ export default function SettingsProfilePage() {
               <button
                 type="submit"
                 disabled={saveState === "saving" || !canSave}
-                className="brutal-btn inline-flex items-center gap-2"
+                className="pn-btn inline-flex items-center gap-2"
               >
                 {saveState === "saving" ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -333,7 +333,7 @@ export default function SettingsProfilePage() {
             type="email"
             value={confirmInput}
             onChange={(e) => setConfirmInput(e.target.value)}
-            className="brutal-input mb-4 w-full"
+            className="pn-input mb-4 w-full"
             placeholder={
               profile.email ?? settings.profile.danger.confirmPlaceholder
             }
@@ -352,7 +352,7 @@ export default function SettingsProfilePage() {
               void handleDeleteAccount();
             }}
             disabled={!canDelete || deleting}
-            className="brutal-btn brutal-btn-destructive inline-flex items-center gap-2"
+            className="pn-btn pn-btn-destructive inline-flex items-center gap-2"
           >
             {deleting ? (
               <Loader2 className="h-4 w-4 animate-spin" />

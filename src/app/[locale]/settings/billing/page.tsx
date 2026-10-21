@@ -254,7 +254,7 @@ export default function SettingsBillingPage() {
         </div>
 
         {/* --- Plan & quota --- */}
-        <section className="brutal-card mb-6">
+        <section className="pn-card mb-6">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
@@ -272,7 +272,7 @@ export default function SettingsBillingPage() {
                 </span>
               </div>
             </div>
-            <span className="brutal-tag">{settings.billing.monthlyRenewal}</span>
+            <span className="pn-tag">{settings.billing.monthlyRenewal}</span>
           </div>
 
           <div className="mb-2 flex items-center justify-between text-sm">
@@ -305,7 +305,7 @@ export default function SettingsBillingPage() {
 
         {/* --- Features du plan --- */}
         {featureRows && (
-          <section className="brutal-card mb-6">
+          <section className="pn-card mb-6">
             <h2 className="mb-4 text-lg font-bold uppercase tracking-wider">
               {settings.billing.includedTitle}
             </h2>
@@ -329,7 +329,7 @@ export default function SettingsBillingPage() {
         )}
 
         {/* --- Abonnement Stripe --- */}
-        <section className="brutal-card mb-6">
+        <section className="pn-card mb-6">
           <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
             <CreditCard className="h-5 w-5" />
             {settings.billing.subscriptionTitle}
@@ -356,7 +356,7 @@ export default function SettingsBillingPage() {
                   void handleManageSubscription();
                 }}
                 disabled={portalLoading}
-                className="brutal-btn inline-flex items-center gap-2"
+                className="pn-btn inline-flex items-center gap-2"
               >
                 {portalLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -377,7 +377,7 @@ export default function SettingsBillingPage() {
         {/* --- Historique des factures ---
             Emplacement réservé : nécessite une route `GET /api/user/invoices`
             (Stripe `invoices.list` ou table `Invoice`), volontairement vide. */}
-        <section className="brutal-card">
+        <section className="pn-card">
           <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
             <Receipt className="h-5 w-5" />
             {settings.billing.invoicesTitle}

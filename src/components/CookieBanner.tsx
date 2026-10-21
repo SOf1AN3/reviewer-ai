@@ -105,7 +105,7 @@ export function CookieBanner() {
         <button
           type="button"
           onClick={dismiss}
-          className="brutal-btn-secondary brutal-btn shrink-0 self-start px-3 py-2 text-xs sm:self-auto"
+          className="pn-btn-secondary pn-btn shrink-0 self-start px-3 py-2 text-xs sm:self-auto"
           aria-label={dict.legal.cookies.dismiss}
         >
           <X className="h-4 w-4" aria-hidden="true" />
