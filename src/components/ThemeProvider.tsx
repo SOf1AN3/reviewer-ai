@@ -19,7 +19,7 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: "light",
+  theme: "dark",
   toggleTheme: () => {},
 });
 
@@ -28,14 +28,20 @@ export function useTheme() {
 }
 
 /**
- * Thème persisté en `localStorage`, exposé comme store externe via
- * `useSyncExternalStore` :
+ * Thème persisté en `localStorage` (`papernote-theme`), exposé comme store
+ * externe via `useSyncExternalStore` :
  *
- * - `getServerSnapshot` renvoie toujours `"light"` côté serveur → pas de
- *   mismatch SSR/client, et React ré-rendu automatiquement avec le snapshot
- *   client après hydratation (aucun `setState` dans un `useEffect`).
- * - `subscribe` écrit les changements externes : autre onglet (`storage`)
- *   ou préférence système (`prefers-color-scheme`).
+ * - Le thème par défaut est **sombre** : `getServerSnapshot` renvoie `"dark"`
+ *   et le layout rend la classe `dark` sur `<html>` — serveur et client
+ *   concordent dès l'hydratation, donc aucun flash de thème clair.
+ * - `getSnapshot` : un choix explicite stocké (`light` ou `dark`) prime ;
+ *   sinon repli sur `"dark"`. La préférence système
+ *   (`prefers-color-scheme`) n'est plus écoutée, le défaut n'étant plus
+ *   « système ».
+ * - `subscribe` n'écoute que `storage` : le toggle reste propagé aux autres
+ *   onglets de la même origine.
+ *
+ * API publique inchangée : `useTheme()` renvoie `{ theme, toggleTheme }`.
  */
 const listeners = new Set<() => void>();
 
@@ -45,13 +51,12 @@ function emitChange(): void {
 
 function subscribe(onStoreChange: () => void): () => void {
   listeners.add(onStoreChange);
+  // Propagation du toggle aux autres onglets ; `prefers-color-scheme` n'est
+  // plus écouté : le thème par défaut n'est plus celui du système.
   window.addEventListener("storage", onStoreChange);
-  const media = window.matchMedia("(prefers-color-scheme: dark)");
-  media.addEventListener("change", onStoreChange);
   return () => {
     listeners.delete(onStoreChange);
     window.removeEventListener("storage", onStoreChange);
-    media.removeEventListener("change", onStoreChange);
   };
 }
 
@@ -62,21 +67,21 @@ function readStoredTheme(): Theme | null {
 
 function getSnapshot(): Theme {
   const stored = readStoredTheme();
-  if (stored !== null) {
-    return stored;
-  }
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  // Choix explicite de l'utilisateur > thème sombre par défaut.
+  return stored ?? "dark";
 }
 
 function getServerSnapshot(): Theme {
-  return "light";
+  return "dark";
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   // Synchronise le DOM (classe `dark`) avec l'état : premier rendu après
-  // hydratation, toggle, ou changement externe (autre onglet / OS).
+  // hydratation, toggle, ou changement externe (autre onglet). Par défaut
+  // l'état est `dark`, donc la classe rendue par le serveur n'est jamais
+  // retirée — elle ne l'est que sur un choix explicite `light`.
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);

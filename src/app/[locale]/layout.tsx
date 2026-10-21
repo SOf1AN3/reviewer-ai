@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Hanken_Grotesk, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "../globals.css";
 import { Header } from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -39,10 +39,38 @@ function getBaseUrl(): string {
   }
 }
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+/**
+ * Polices du design system « Atmospheric Intelligence », exposées comme
+ * variables CSS sur `<html>` puis consommées par `globals.css` :
+ * `--font-hanken` → `--font-display`, `--font-jakarta` → `--font-sans`,
+ * `--font-jetbrains-mono` → `--font-mono`.
+ *
+ * Choix des subsets : le layout sert aussi la locale `ar` (`dir="rtl"`), mais
+ * **aucune de ces trois familles ne propose le subset `arabic`** chez Google
+ * Fonts (Hanken Grotesk et Plus Jakarta Sans : `cyrillic-ext, latin, latin-ext,
+ * vietnamese` ; JetBrains Mono : `cyrillic, greek, latin, latin-ext,
+ * vietnamese` — vérifié dans `next/dist/compiled/@next/font/.../font-data.json`).
+ * `next/font` fait échouer le build sur un subset inconnu, donc on garde
+ * `latin` pour toutes les locales : pour `ar`, la couverture des glyphes
+ * arabes repose sur les fallbacks système déjà déclarés dans les variables
+ * `--font-display` / `--font-sans` (globals.css).
+ *
+ * Syntaxe conforme à `next/dist/docs/01-app/03-api-reference/02-components/font.md` :
+ * `weight` accepte un tableau de poids pour ces fontes (poids tous présents
+ * dans les métadonnées : Hanken Grotesk 100–900, Plus Jakarta Sans 200–800,
+ * JetBrains Mono 100–800), et les variables sont posées via la méthode
+ * « CSS variables » (`${font.variable}` sur `<html>`).
+ */
+const hankenGrotesk = Hanken_Grotesk({
+  variable: "--font-hanken",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -106,12 +134,16 @@ export default async function RootLayout({
   const validLocale: Locale = isValidLocale(locale) ? locale : defaultLocale;
   const dir = validLocale === "ar" ? "rtl" : "ltr";
 
+  // Thème sombre par défaut : la classe `dark` est rendue côté serveur, donc
+  // présente dès le premier paint — aucun flash de thème clair. Elle n'est
+  // retirée par le client que si l'utilisateur a explicitement choisi `light`
+  // (choix persisté, voir `ThemeProvider`).
   return (
     <html
       lang={validLocale}
       dir={dir}
       suppressHydrationWarning
-      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
+      className={`dark ${hankenGrotesk.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-background text-foreground">
         <SessionProvider>

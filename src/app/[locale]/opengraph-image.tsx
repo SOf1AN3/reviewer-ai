@@ -7,6 +7,10 @@ import { ImageResponse } from "next/og";
  * (`node_modules/next/dist/compiled/@vercel/og/Geist-Regular.ttf`), utilisée
  * comme police par défaut. Aucune police Google distante n'est chargée.
  *
+ * Palette du design system « Atmospheric Intelligence » (thème sombre,
+ * canonical) : fond `#121414`, encre `#F2F1EB`, accents teal `#A6C9C5` et
+ * ambre `#E87C3E`, halo teal `rgba(79,133,139,.28)`.
+ *
  * Le texte reste volontairement en latin : Geist ne couvre pas les caractères
  * arabes, et une baseline en « paper » rendrait des glyphes vides pour `ar`.
  */
@@ -28,8 +32,8 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "80px",
-          backgroundColor: "#0f172a",
-          color: "#f8fafc",
+          backgroundColor: "#121414",
+          color: "#F2F1EB",
           fontFamily: "geist",
         }}
       >
@@ -40,7 +44,7 @@ export default function Image() {
             gap: "28px",
           }}
         >
-          {/* Cartouche logo, reprise du style « brutal » du site. */}
+          {/* Cartouche logo : bloc teal, liseré ambre et halo teal. */}
           <div
             style={{
               display: "flex",
@@ -48,11 +52,12 @@ export default function Image() {
               justifyContent: "center",
               width: "96px",
               height: "96px",
-              backgroundColor: "#facc15",
-              border: "6px solid #f8fafc",
+              backgroundColor: "#A6C9C5",
+              border: "6px solid #E87C3E",
+              boxShadow: "0 0 96px rgba(79,133,139,0.28)",
               fontSize: "52px",
               fontWeight: 700,
-              color: "#0f172a",
+              color: "#121414",
             }}
           >
             PN
@@ -75,7 +80,7 @@ export default function Image() {
             <div
               style={{
                 fontSize: "32px",
-                color: "#94a3b8",
+                color: "#A6C9C5",
                 marginTop: "4px",
               }}
             >
@@ -97,15 +102,19 @@ export default function Image() {
               gap: "16px",
             }}
           >
-            {["Note / 100", "8 critères", "Rapport complet"].map((label) => (
+            {[
+              { label: "Note / 100", accent: true },
+              { label: "8 critères", accent: false },
+              { label: "Rapport complet", accent: false },
+            ].map(({ label, accent }) => (
               <div
                 key={label}
                 style={{
                   display: "flex",
                   padding: "12px 24px",
-                  border: "4px solid #334155",
+                  border: `4px solid ${accent ? "#E87C3E" : "rgba(166,201,197,0.35)"}`,
                   fontSize: "28px",
-                  color: "#e2e8f0",
+                  color: accent ? "#E87C3E" : "#F2F1EB",
                 }}
               >
                 {label}
@@ -116,7 +125,7 @@ export default function Image() {
             style={{
               display: "flex",
               fontSize: "26px",
-              color: "#64748b",
+              color: "rgba(242,241,235,0.6)",
             }}
           >
             PDF · DOCX · TEX · TXT · MD
