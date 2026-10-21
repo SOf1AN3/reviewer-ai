@@ -218,20 +218,26 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative space-y-6"
+      className="relative isolate space-y-6"
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
+      {/* Halo décoratif derrière le formulaire. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-28 left-1/2 -z-10 h-64 w-64 -translate-x-1/2 rounded-full bg-sage-glow blur-3xl"
+      />
+
       {isDragging && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center border-4 border-dashed border-primary bg-background/90 backdrop-blur-sm">
+        <div className="absolute inset-0 z-50 flex items-center justify-center border-4 border-dashed border-teal-highlight/70 bg-surface-glass/90 backdrop-blur-sm">
           <div className="text-center">
-            <FileUp className="mx-auto mb-4 h-12 w-12 animate-bounce text-primary" />
-            <p className="text-lg font-bold uppercase tracking-wider">
+            <FileUp className="mx-auto mb-4 h-12 w-12 animate-bounce text-teal-highlight" />
+            <p className="text-lg font-medium uppercase tracking-wider text-cream-text">
               {dict.articleForm.dropzoneTitle}
             </p>
-            <p className="mt-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            <p className="mt-1 text-sm text-on-surface-variant">
               {dict.articleForm.dropzoneFormats}
             </p>
           </div>
@@ -241,7 +247,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
       <div className="space-y-2">
         <label
           htmlFor="titre"
-          className="text-sm font-bold uppercase tracking-wider"
+          className="font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
         >
           {dict.articleForm.titleLabel}
         </label>
@@ -260,7 +266,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
         <div className="space-y-2">
           <label
             htmlFor="auteur"
-            className="text-sm font-bold uppercase tracking-wider"
+            className="font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
           >
             {dict.articleForm.author}
           </label>
@@ -276,7 +282,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
         <div className="space-y-2">
           <label
             htmlFor="revue"
-            className="text-sm font-bold uppercase tracking-wider"
+            className="font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
           >
             {dict.articleForm.journal}
           </label>
@@ -295,17 +301,19 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <label
             htmlFor="contenu"
-            className="text-sm font-bold uppercase tracking-wider"
+            className="font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
           >
             {dict.articleForm.contentLabel}
           </label>
-          <label className="flex cursor-pointer items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground">
+          <label className="flex w-fit cursor-pointer items-center gap-2 rounded-xl border border-glass-border bg-surface-container-low px-3 py-2 transition-colors hover:bg-surface-sage/50">
             {isUploading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <Loader2 className="h-4 w-4 animate-spin text-teal-highlight" />
             ) : (
-              <Upload className="h-4 w-4" />
+              <Upload className="h-4 w-4 text-teal-highlight" />
             )}
-            {isUploading ? dict.articleForm.importing : dict.articleForm.importFile}
+            <span className="text-sm font-medium text-cream-text">
+              {isUploading ? dict.articleForm.importing : dict.articleForm.importFile}
+            </span>
             <input
               type="file"
               accept=".txt,.md,.docx,.pdf,.tex"
@@ -323,7 +331,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
           className="pn-input h-48 sm:h-72 w-full resize-none"
           required
         />
-        <p className="text-xs font-mono font-bold text-muted-foreground">
+        <p className="text-xs font-mono text-cream-muted">
           {contenu.length} {dict.articleForm.charCount}
         </p>
       </div>
@@ -332,20 +340,20 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
         <div
           role="status"
           aria-live="polite"
-          className="border-2 border-primary bg-primary/5 p-4 shadow-[2px_2px_0px_var(--primary)]"
+          className="rounded-xl border border-glass-border bg-surface-container-low p-4"
         >
           <div className="flex items-start gap-3">
             <Loader2
-              className="mt-0.5 h-5 w-5 shrink-0 animate-spin text-primary"
+              className="mt-0.5 h-5 w-5 shrink-0 animate-spin text-teal-highlight"
               aria-hidden="true"
             />
             <div>
-              <p className="text-sm font-bold uppercase tracking-wider">
+              <p className="font-mono text-[11px] uppercase tracking-[0.04em] text-cream-text">
                 {submitPhase === "sending"
                   ? dict.articleForm.progressSending
                   : dict.articleForm.progressAnalyzing}
               </p>
-              <p className="mt-1 font-mono text-xs text-muted-foreground">
+              <p className="mt-1 font-mono text-xs text-cream-muted">
                 {submitPhase === "sending"
                   ? dict.articleForm.progressHintSending
                   : `${dict.articleForm.progressHintAnalyzing} (${dict.articleForm.progressDelay})`}
@@ -353,11 +361,11 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
             </div>
           </div>
           <div
-            className="mt-3 h-2 w-full overflow-hidden border-2 border-primary bg-background"
+            className="mt-3 h-2 w-full overflow-hidden rounded-full bg-surface-container-high"
             aria-hidden="true"
           >
             <div
-              className="h-full w-1/3 animate-pulse bg-primary"
+              className="h-full w-1/3 animate-pulse rounded-full bg-teal-highlight"
               style={{ marginLeft: submitPhase === "sending" ? "0%" : "33%" }}
             />
           </div>
@@ -367,14 +375,14 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
       {error && (
         <div
           role="alert"
-          className="border-2 border-destructive bg-destructive/10 p-3 text-sm font-bold shadow-[2px_2px_0px_var(--destructive)]"
+          className="rounded-xl border border-error/40 bg-error-container p-3 text-sm text-error"
         >
           <p>{error.message}</p>
           {error.action === "pricing" && (
             <button
               type="button"
               onClick={() => router.push(`/${locale}/pricing`)}
-              className="pn-btn mt-3 inline-flex items-center gap-2 text-xs"
+              className="pn-btn mt-3 inline-flex items-center justify-center gap-2 text-xs"
             >
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               {dict.articleForm.ctaPricing}
@@ -384,7 +392,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
             <button
               type="button"
               onClick={() => router.push(`/${locale}/login`)}
-              className="pn-btn mt-3 inline-flex items-center gap-2 text-xs"
+              className="pn-btn mt-3 inline-flex items-center justify-center gap-2 text-xs"
             >
               <LogIn className="h-4 w-4" aria-hidden="true" />
               {dict.articleForm.ctaLogin}
@@ -397,7 +405,7 @@ export function ArticleForm({ onAnalysisStart, onAnalysisEnd }: ArticleFormProps
         type="submit"
         disabled={isLoading || isUploading || contenu.length < 100}
         aria-busy={isLoading}
-        className="pn-btn flex w-full items-center justify-center gap-2"
+        className="pn-btn inline-flex w-full items-center justify-center gap-2"
       >
         {isLoading ? (
           <>
