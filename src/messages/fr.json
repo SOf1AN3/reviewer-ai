@@ -380,6 +380,12 @@
         "Note globale uniquement",
         "Formats PDF et TXT",
         "Historique de 7 jours"
+      ],
+      "excludedFeatures": [
+        "Rapport détaillé sur 8 critères",
+        "Tous les formats importés",
+        "Export PDF",
+        "Support prioritaire"
       ]
     },
     "pro": {
@@ -394,6 +400,9 @@
         "Historique illimité",
         "Export PDF",
         "Support par email"
+      ],
+      "excludedFeatures": [
+        "Support prioritaire"
       ]
     },
     "business": {
@@ -408,7 +417,8 @@
         "Historique illimité",
         "Support prioritaire",
         "Export PDF"
-      ]
+      ],
+      "excludedFeatures": []
     },
     "guarantee": "Annulation à tout moment. Aucun engagement."
   },

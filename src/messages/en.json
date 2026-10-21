@@ -380,6 +380,12 @@
         "Overall score only",
         "PDF and TXT formats",
         "7-day history"
+      ],
+      "excludedFeatures": [
+        "Detailed report across 8 criteria",
+        "All import formats",
+        "PDF export",
+        "Priority support"
       ]
     },
     "pro": {
@@ -394,6 +400,9 @@
         "Unlimited history",
         "PDF export",
         "Email support"
+      ],
+      "excludedFeatures": [
+        "Priority support"
       ]
     },
     "business": {
@@ -408,7 +417,8 @@
         "Unlimited history",
         "Priority support",
         "PDF export"
-      ]
+      ],
+      "excludedFeatures": []
     },
     "guarantee": "Cancel anytime. No commitment."
   },

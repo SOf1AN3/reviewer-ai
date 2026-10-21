@@ -7,6 +7,27 @@ import { PricingCard } from "@/components/PricingCard";
 import { useI18n } from "@/components/I18nProvider";
 import { getDictionary, type Locale } from "@/lib/i18n";
 
+type PlanFeature = { label: string; included: boolean };
+
+/**
+ * Les dictionnaires exposent les features comme des tables de strings
+ * (incluses + exclues). PricingCard attend { label, included }[] :
+ * on liste d'abord les features incluses, puis les features exclues.
+ */
+function toIncludedFeatures(labels: readonly string[]): PlanFeature[] {
+  return labels.map((label) => ({ label, included: true }));
+}
+
+function toFeatures(
+  included: readonly string[],
+  excluded: readonly string[]
+): PlanFeature[] {
+  return [
+    ...toIncludedFeatures(included),
+    ...excluded.map((label) => ({ label, included: false })),
+  ];
+}
+
 export default function PricingPage() {
   const { locale } = useI18n();
   const dict = getDictionary(locale as Locale);
@@ -15,6 +36,7 @@ export default function PricingPage() {
   const [loading, setLoading] = useState<string | null>(null);
 
   const pricing = dict.pricing;
+  const { tierTags, popularBadge: popularLabel } = dict.home.pricingSection;
 
   const handleSelect = async (plan: string) => {
     if (!session) {
@@ -45,67 +67,66 @@ export default function PricingPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="mx-auto max-w-4xl text-center">
-        <h1 className="mb-4 text-3xl font-bold uppercase tracking-tight sm:text-5xl">
-          {pricing.title}
-        </h1>
-        <p className="mb-12 text-lg text-muted-foreground">
-          {pricing.subtitle}
-        </p>
-      </div>
+    <div className="relative overflow-hidden">
+      {/* Blobs atmosphériques décoratifs derrière le titre */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 h-64 w-[32rem] -translate-x-1/2 rounded-full bg-sage-glow blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 top-48 h-56 w-56 rounded-full bg-amber-glow blur-3xl"
+      />
 
-      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3">
-        <PricingCard
-          plan={pricing.free.name}
-          price={0}
-          features={[
-            { label: "3 analyses/mois", included: true },
-            { label: "Note globale uniquement", included: true },
-            { label: "PDF, TXT", included: true },
-            { label: "Historique 7 jours", included: true },
-            { label: "Rapport détaillé 8 critères", included: false },
-            { label: "Tous formats", included: false },
-            { label: "Export PDF", included: false },
-            { label: "Support prioritaire", included: false },
-          ]}
-          cta={pricing.free.cta}
-          onSelect={() => handleSelect("free")}
-        />
-        <PricingCard
-          plan={pricing.pro.name}
-          price={19}
-          features={[
-            { label: "50 analyses/mois", included: true },
-            { label: "Rapport détaillé 8 critères", included: true },
-            { label: "Tous formats", included: true },
-            { label: "Historique illimité", included: true },
-            { label: "Export PDF", included: true },
-            { label: "Support email", included: true },
-            { label: "Support prioritaire", included: false },
-          ]}
-          cta={loading === "pro" ? "..." : pricing.pro.cta}
-          highlighted
-          onSelect={() => handleSelect("pro")}
-        />
-        <PricingCard
-          plan={pricing.business.name}
-          price={49}
-          features={[
-            { label: "Analyses illimitées", included: true },
-            { label: "Rapport détaillé 8 critères", included: true },
-            { label: "Tous formats", included: true },
-            { label: "Historique illimité", included: true },
-            { label: "Export PDF", included: true },
-            { label: "Support prioritaire", included: true },
-          ]}
-          cta={loading === "business" ? "..." : pricing.business.cta}
-          onSelect={() => handleSelect("business")}
-        />
-      </div>
+      <div className="mx-auto w-full max-w-[1140px] px-4 py-16">
+        <div className="relative mx-auto max-w-2xl text-center">
+          <h1 className="font-display text-3xl font-semibold tracking-tight text-cream-text sm:text-5xl">
+            {pricing.title}
+          </h1>
+          <p className="mt-4 text-lg text-cream-muted">{pricing.subtitle}</p>
+        </div>
 
-      <div className="mt-12 text-center">
-        <p className="text-sm text-muted-foreground">
+        <div className="mt-14 grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
+          <PricingCard
+            plan={pricing.free.name}
+            price={0}
+            features={toFeatures(
+              pricing.free.features,
+              pricing.free.excludedFeatures
+            )}
+            cta={pricing.free.cta}
+            tag={tierTags.free}
+            popularLabel={popularLabel}
+            onSelect={() => handleSelect("free")}
+          />
+          <PricingCard
+            plan={pricing.pro.name}
+            price={19}
+            features={toFeatures(
+              pricing.pro.features,
+              pricing.pro.excludedFeatures
+            )}
+            cta={loading === "pro" ? "..." : pricing.pro.cta}
+            highlighted
+            tag={tierTags.pro}
+            popularLabel={popularLabel}
+            onSelect={() => handleSelect("pro")}
+          />
+          <PricingCard
+            plan={pricing.business.name}
+            price={49}
+            features={toFeatures(
+              pricing.business.features,
+              pricing.business.excludedFeatures
+            )}
+            cta={loading === "business" ? "..." : pricing.business.cta}
+            tag={tierTags.business}
+            popularLabel={popularLabel}
+            onSelect={() => handleSelect("business")}
+          />
+        </div>
+
+        <p className="mt-12 text-center text-sm text-cream-muted">
           {pricing.guarantee}
         </p>
       </div>
