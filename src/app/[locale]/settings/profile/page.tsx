@@ -195,11 +195,11 @@ export default function SettingsProfilePage() {
     return (
       <div className="container mx-auto flex min-h-[50vh] items-center justify-center px-4">
         {loadError ? (
-          <p className="border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
+          <p className="rounded-xl border border-error/40 bg-error-container px-4 py-3 text-sm text-error">
             {loadError}
           </p>
         ) : (
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <Loader2 className="h-8 w-8 animate-spin text-teal-highlight" />
         )}
       </div>
     );
@@ -207,29 +207,35 @@ export default function SettingsProfilePage() {
 
   return (
     <div className="container mx-auto px-4 py-8 sm:py-12">
-      <div className="mx-auto max-w-2xl">
+      <div className="relative isolate mx-auto max-w-2xl">
+        {/* Halo décoratif */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -z-10 left-1/2 top-0 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-sage-glow blur-3xl"
+        />
+
         <div className="mb-8">
-          <h1 className="mb-2 text-2xl font-bold uppercase tracking-tight sm:text-3xl">
+          <h1 className="mb-2 font-display text-2xl font-semibold tracking-tight text-cream-text sm:text-3xl">
             {settings.profile.title}
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-cream-muted">
             {settings.profile.subtitle}
           </p>
         </div>
 
         {/* --- Profil --- */}
-        <section className="pn-card mb-6">
-          <h2 className="mb-6 text-lg font-bold uppercase tracking-wider">
+        <section className="pn-card rounded-xl mb-6">
+          <h2 className="mb-6 font-display text-lg font-semibold tracking-tight text-cream-text">
             {settings.profile.sectionTitle}
           </h2>
 
           <dl className="mb-6 space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <dt className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <dt className="font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
                 {settings.profile.emailLabel}
               </dt>
               <dd className="flex items-center gap-3">
-                <span className="text-sm font-bold">
+                <span className="font-mono text-sm text-cream-text">
                   {profile.email ?? "—"}
                 </span>
                 {profile.emailVerified ? (
@@ -247,7 +253,7 @@ export default function SettingsProfilePage() {
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <dt className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <dt className="font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
                 {settings.profile.planLabel}
               </dt>
               <dd>
@@ -260,7 +266,7 @@ export default function SettingsProfilePage() {
             <div>
               <label
                 htmlFor="profile-name"
-                className="mb-1 block text-xs font-bold uppercase tracking-wider"
+                className="mb-1 block font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
               >
                 {settings.profile.nameLabel}
               </label>
@@ -296,37 +302,35 @@ export default function SettingsProfilePage() {
               </button>
 
               {saveState === "success" && (
-                <span className="text-sm font-bold text-score-great">
+                <span className="text-sm text-score-great">
                   {settings.profile.saveSuccess}
                 </span>
               )}
               {saveState === "error" && saveError && (
-                <span className="text-sm font-bold text-destructive">
-                  {saveError}
-                </span>
+                <span className="text-sm text-error">{saveError}</span>
               )}
             </div>
           </form>
         </section>
 
         {/* --- Zone dangereuse --- */}
-        <section className="border-2 border-destructive bg-destructive/10 p-4 sm:p-6">
-          <h2 className="mb-3 flex items-center gap-2 text-lg font-bold uppercase tracking-wider text-destructive">
+        <section className="rounded-xl border border-error/40 bg-error-container/15 p-4 sm:p-6">
+          <h2 className="mb-3 flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-error">
             <AlertTriangle className="h-5 w-5" />
             {settings.profile.danger.title}
           </h2>
 
-          <p className="mb-3 text-sm">
+          <p className="mb-3 text-sm text-cream-text">
             <strong>{settings.profile.danger.warningStrong}</strong>{" "}
             {settings.profile.danger.warningBody}
           </p>
 
           <label
             htmlFor="confirm-delete-email"
-            className="mb-1 block text-xs font-bold uppercase tracking-wider"
+            className="mb-1 block font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
           >
             {settings.profile.danger.confirmLabel}{" "}
-            <span className="text-destructive">{profile.email}</span>
+            <span className="text-error">{profile.email}</span>
           </label>
           <input
             id="confirm-delete-email"
@@ -341,7 +345,7 @@ export default function SettingsProfilePage() {
           />
 
           {deleteError && (
-            <p className="mb-4 border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
+            <p className="mb-4 rounded-lg border border-error/40 bg-error-container px-4 py-3 text-sm text-error">
               {deleteError}
             </p>
           )}
@@ -363,7 +367,7 @@ export default function SettingsProfilePage() {
           </button>
 
           {!canDelete && !deleteError && (
-            <p className="mt-3 text-xs text-muted-foreground">
+            <p className="mt-3 text-xs text-cream-muted">
               {settings.profile.danger.deleteHint}
             </p>
           )}

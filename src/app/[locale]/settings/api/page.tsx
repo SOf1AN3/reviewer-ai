@@ -230,34 +230,40 @@ export default function SettingsApiPage() {
   if (status === "loading" || status === "unauthenticated") {
     return (
       <div className="container mx-auto flex min-h-[50vh] items-center justify-center px-4">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-teal-highlight" />
       </div>
     );
   }
 
   return (
     <div className="container mx-auto px-4 py-8 sm:py-12">
-      <div className="mx-auto max-w-2xl">
+      <div className="relative isolate mx-auto max-w-2xl">
+        {/* Halo décoratif */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -z-10 left-1/2 top-0 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-sage-glow blur-3xl"
+        />
+
         <div className="mb-8">
-          <h1 className="mb-2 text-2xl font-bold uppercase tracking-tight sm:text-3xl">
+          <h1 className="mb-2 font-display text-2xl font-semibold tracking-tight text-cream-text sm:text-3xl">
             {api.title}
           </h1>
-          <p className="text-sm text-muted-foreground">{api.subtitle}</p>
+          <p className="text-sm text-cream-muted">{api.subtitle}</p>
         </div>
 
         {/* --- Clé brute affichée une seule fois --- */}
         {newKey && (
-          <section className="pn-card mb-6 border-2 border-primary">
-            <h2 className="mb-3 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
-              <KeyRound className="h-5 w-5 text-primary" />
+          <section className="pn-card rounded-xl mb-6 border-glass-border outline outline-2 -outline-offset-2 outline-teal-highlight">
+            <h2 className="mb-3 flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-cream-text">
+              <KeyRound className="h-5 w-5 text-teal-highlight" />
               {api.createdTitle}
             </h2>
-            <div className="mb-3 flex items-start gap-2 border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
+            <div className="mb-3 flex items-start gap-2 rounded-lg border border-error/40 bg-error-container px-4 py-3 text-sm text-error">
               <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0" />
               <span>{api.createdWarning}</span>
             </div>
-            <div className="mb-3 flex items-center gap-2 border-2 border-border bg-secondary px-3 py-2">
-              <code className="min-w-0 flex-1 select-all break-all font-mono text-sm">
+            <div className="mb-3 flex items-center gap-2 rounded-lg border border-glass-border bg-surface-container-low px-3 py-2">
+              <code className="min-w-0 flex-1 select-all break-all font-mono text-sm text-cream-text">
                 {newKey.key}
               </code>
             </div>
@@ -279,7 +285,7 @@ export default function SettingsApiPage() {
               <button
                 type="button"
                 onClick={() => setNewKey(null)}
-                className="pn-btn inline-flex items-center gap-2"
+                className="pn-btn pn-btn-secondary inline-flex items-center gap-2"
               >
                 <X className="h-4 w-4" />
                 {api.dismiss}
@@ -289,15 +295,15 @@ export default function SettingsApiPage() {
         )}
 
         {/* --- Formulaire de création --- */}
-        <section className="pn-card mb-6">
-          <h2 className="mb-4 text-lg font-bold uppercase tracking-wider">
+        <section className="pn-card rounded-xl mb-6">
+          <h2 className="mb-4 font-display text-lg font-semibold tracking-tight text-cream-text">
             {api.createTitle}
           </h2>
           <form onSubmit={(e) => void handleCreate(e)} className="space-y-4">
             <div>
               <label
                 htmlFor="api-key-name"
-                className="mb-1 block text-sm font-bold"
+                className="mb-1 block font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
               >
                 {api.nameLabel}
               </label>
@@ -314,7 +320,7 @@ export default function SettingsApiPage() {
             <div>
               <label
                 htmlFor="api-key-limit"
-                className="mb-1 block text-sm font-bold"
+                className="mb-1 block font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted"
               >
                 {api.limitLabel}
               </label>
@@ -327,16 +333,16 @@ export default function SettingsApiPage() {
                 placeholder={api.limitPlaceholder}
                 className="pn-input w-full"
               />
-              <p className="mt-1 text-xs text-muted-foreground">{api.limitHelp}</p>
+              <p className="mt-1 text-xs text-cream-muted">{api.limitHelp}</p>
             </div>
 
             {formError && (
-              <p className="border-2 border-destructive bg-destructive/10 px-4 py-2 text-sm font-bold text-destructive">
+              <p className="rounded-lg border border-error/40 bg-error-container px-4 py-2 text-sm text-error">
                 {formError}
               </p>
             )}
             {createError && (
-              <p className="border-2 border-destructive bg-destructive/10 px-4 py-2 text-sm font-bold text-destructive">
+              <p className="rounded-lg border border-error/40 bg-error-container px-4 py-2 text-sm text-error">
                 {createError}
               </p>
             )}
@@ -357,29 +363,33 @@ export default function SettingsApiPage() {
         </section>
 
         {/* --- Liste des clés --- */}
-        <section className="pn-card">
-          <h2 className="mb-4 text-lg font-bold uppercase tracking-wider">
+        <section className="pn-card rounded-xl">
+          <h2 className="mb-4 font-display text-lg font-semibold tracking-tight text-cream-text">
             {api.keysTitle}
           </h2>
 
           {revokeError && (
-            <p className="mb-4 border-2 border-destructive bg-destructive/10 px-4 py-2 text-sm font-bold text-destructive">
+            <p className="mb-4 rounded-lg border border-error/40 bg-error-container px-4 py-2 text-sm text-error">
               {revokeError}
             </p>
           )}
 
           {loading ? (
             <div className="flex justify-center py-8">
-              <Loader2 className="h-6 w-6 animate-spin text-primary" />
+              <Loader2 className="h-6 w-6 animate-spin text-teal-highlight" />
             </div>
           ) : loadError ? (
-            <p className="border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
-              {loadError}
-            </p>
+            <div className="flex flex-col items-center gap-3 py-8 text-center">
+              <AlertTriangle className="h-8 w-8 text-teal-highlight" />
+              <p className="text-sm text-cream-muted">{loadError}</p>
+            </div>
           ) : keys.length === 0 ? (
-            <p className="text-sm text-muted-foreground">
-              {api.emptyDescription}
-            </p>
+            <div className="flex flex-col items-center gap-3 py-8 text-center">
+              <KeyRound className="h-8 w-8 text-teal-highlight" />
+              <p className="text-sm text-cream-muted">
+                {api.emptyDescription}
+              </p>
+            </div>
           ) : (
             <ul className="space-y-3">
               {keys.map((key) => {
@@ -387,25 +397,25 @@ export default function SettingsApiPage() {
                 return (
                   <li
                     key={key.id}
-                    className="flex flex-wrap items-center justify-between gap-3 border-2 border-border px-4 py-3"
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-glass-border px-4 py-3 odd:bg-surface-container-low/50"
                   >
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-bold">{key.name}</span>
+                        <span className="font-mono text-sm text-cream-text">
+                          {key.name}
+                        </span>
                         <span
-                          className={`pn-tag ${
-                            revoked
-                              ? "bg-destructive/10 text-destructive"
-                              : "bg-primary/10 text-primary"
+                          className={`pn-badge ${
+                            revoked ? "text-error" : "text-teal-highlight"
                           }`}
                         >
                           {revoked ? api.badgeRevoked : api.badgeActive}
                         </span>
                       </div>
-                      <div className="mt-1 font-mono text-xs text-muted-foreground">
+                      <div className="mt-1 font-mono text-xs text-cream-muted">
                         {key.keyPrefix}…
                       </div>
-                      <div className="mt-1 text-xs text-muted-foreground">
+                      <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
                         {api.lastUsedLabel}:{" "}
                         {key.lastUsedAt
                           ? formatDate(key.lastUsedAt, locale)
@@ -426,7 +436,7 @@ export default function SettingsApiPage() {
                           setRevokeTarget(key);
                           setRevokeError(null);
                         }}
-                        className="pn-btn inline-flex items-center gap-2"
+                        className="pn-btn pn-btn-destructive inline-flex items-center gap-2"
                       >
                         <Trash2 className="h-4 w-4" />
                         {api.revokeButton}
@@ -442,15 +452,23 @@ export default function SettingsApiPage() {
         {/* --- Confirmation de révocation --- */}
         {revokeTarget && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-            <div className="pn-card w-full max-w-md">
-              <h3 className="mb-2 text-lg font-bold uppercase tracking-wider">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="revoke-confirm-title"
+              className="pn-card w-full max-w-md"
+            >
+              <h3
+                id="revoke-confirm-title"
+                className="mb-2 font-display text-lg font-semibold tracking-tight text-cream-text"
+              >
                 {api.revokeConfirmTitle}
               </h3>
-              <p className="mb-4 text-sm text-muted-foreground">
+              <p className="mb-4 text-sm text-cream-muted">
                 {api.revokeConfirmBody.replace("{name}", revokeTarget.name)}
               </p>
               {revokeError && (
-                <p className="mb-4 border-2 border-destructive bg-destructive/10 px-4 py-2 text-sm font-bold text-destructive">
+                <p className="mb-4 rounded-lg border border-error/40 bg-error-container px-4 py-2 text-sm text-error">
                   {revokeError}
                 </p>
               )}
@@ -461,7 +479,7 @@ export default function SettingsApiPage() {
                     void handleRevoke();
                   }}
                   disabled={revoking}
-                  className="pn-btn inline-flex items-center gap-2"
+                  className="pn-btn pn-btn-destructive inline-flex items-center gap-2"
                 >
                   {revoking ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -474,7 +492,7 @@ export default function SettingsApiPage() {
                   type="button"
                   onClick={() => setRevokeTarget(null)}
                   disabled={revoking}
-                  className="pn-btn inline-flex items-center gap-2"
+                  className="pn-btn pn-btn-secondary inline-flex items-center gap-2"
                 >
                   {api.revokeCancel}
                 </button>

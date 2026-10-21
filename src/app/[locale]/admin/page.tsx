@@ -79,9 +79,11 @@ const PAGE_SIZE = 20;
 /** Une ligne « clé / valeur » de carte de stats. */
 function StatRow({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="flex items-center justify-between text-sm">
-      <span className="text-muted-foreground">{label}</span>
-      <span className="font-bold tabular-nums">{value}</span>
+    <div className="flex items-center justify-between gap-4 text-sm">
+      <span className="text-cream-muted">{label}</span>
+      <span className="font-mono font-semibold tabular-nums text-cream-text">
+        {value}
+      </span>
     </div>
   );
 }
@@ -238,11 +240,11 @@ export default function AdminPage() {
     return (
       <div className="container mx-auto px-4 py-8 sm:py-12">
         <div className="pn-card mx-auto max-w-md p-8 text-center">
-          <ShieldAlert className="mx-auto mb-4 h-10 w-10 text-destructive" />
-          <h1 className="mb-2 text-2xl font-bold uppercase tracking-tight">
+          <ShieldAlert className="mx-auto mb-4 h-10 w-10 text-teal-highlight" />
+          <h1 className="mb-2 font-display text-2xl font-semibold tracking-tight text-cream-text">
             {admin.forbiddenTitle}
           </h1>
-          <p className="mb-6 text-sm text-muted-foreground">
+          <p className="mb-6 text-sm text-cream-muted">
             {admin.forbiddenDescription}
           </p>
           <Link href={`/${locale}`} className="pn-btn inline-block">
@@ -256,7 +258,7 @@ export default function AdminPage() {
   if (status === "loading" || status === "unauthenticated") {
     return (
       <div className="container mx-auto flex min-h-[50vh] items-center justify-center px-4">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-teal-highlight" />
       </div>
     );
   }
@@ -264,7 +266,7 @@ export default function AdminPage() {
   if (loadError && !stats) {
     return (
       <div className="container mx-auto flex min-h-[50vh] items-center justify-center px-4">
-        <p className="border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
+        <p className="rounded-xl border border-error/40 bg-error-container px-4 py-3 text-sm text-error">
           {loadError}
         </p>
       </div>
@@ -274,7 +276,7 @@ export default function AdminPage() {
   if (!stats) {
     return (
       <div className="container mx-auto flex min-h-[50vh] items-center justify-center px-4">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-teal-highlight" />
       </div>
     );
   }
@@ -290,28 +292,34 @@ export default function AdminPage() {
     }).format(value);
 
   return (
-    <div className="container mx-auto px-4 py-8 sm:py-12">
+    <div className="container relative isolate mx-auto px-4 py-8 sm:py-12">
+      {/* Halo décoratif */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -z-10 left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-amber-glow blur-3xl"
+      />
+
       <div className="mb-8">
-        <h1 className="mb-2 text-2xl font-bold uppercase tracking-tight sm:text-3xl">
+        <h1 className="mb-2 font-display text-2xl font-semibold tracking-tight text-cream-text sm:text-3xl">
           {admin.title}
         </h1>
-        <p className="text-sm text-muted-foreground">{admin.subtitle}</p>
+        <p className="text-sm text-cream-muted">{admin.subtitle}</p>
       </div>
 
       {/* --- Cartes de stats --- */}
       <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {/* Utilisateurs */}
-        <section className="pn-card p-6">
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
-            <UsersIcon className="h-5 w-5" />
+        <section className="pn-card rounded-xl p-6">
+          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-cream-text">
+            <UsersIcon className="h-5 w-5 text-teal-highlight" />
             {admin.stats.usersCard}
           </h2>
           <StatRow
             label={admin.stats.totalLabel}
             value={stats.users.total}
           />
-          <div className="mt-3 border-t-2 border-border pt-3">
-            <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+          <div className="mt-3 border-t border-glass-border pt-3">
+            <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
               {admin.stats.byPlan}
             </p>
             <StatRow
@@ -330,9 +338,9 @@ export default function AdminPage() {
         </section>
 
         {/* Analyses */}
-        <section className="pn-card p-6">
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
-            <BarChart3 className="h-5 w-5" />
+        <section className="pn-card rounded-xl p-6">
+          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-cream-text">
+            <BarChart3 className="h-5 w-5 text-teal-highlight" />
             {admin.stats.analysesCard}
           </h2>
           <StatRow
@@ -346,9 +354,9 @@ export default function AdminPage() {
         </section>
 
         {/* Revenus */}
-        <section className="pn-card p-6">
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
-            <CreditCard className="h-5 w-5" />
+        <section className="pn-card rounded-xl p-6">
+          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-cream-text">
+            <CreditCard className="h-5 w-5 text-teal-highlight" />
             {admin.stats.revenueCard}
           </h2>
           <StatRow
@@ -367,7 +375,7 @@ export default function AdminPage() {
                 : formatEur(stats.revenue.mrr.euros)
             }
           />
-          <p className="mt-3 text-xs text-muted-foreground">
+          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
             {stats.revenue.mrr === null
               ? admin.stats.mrrUnavailable
               : !stats.revenue.mrr.complete
@@ -378,15 +386,18 @@ export default function AdminPage() {
       </div>
 
       {/* --- Abonnements par statut --- */}
-      <section className="pn-card mb-8 p-6">
-        <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
-          <TrendingUp className="h-5 w-5" />
+      <section className="pn-card rounded-xl mb-8 p-6">
+        <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-cream-text">
+          <TrendingUp className="h-5 w-5 text-teal-highlight" />
           {admin.stats.subscriptionsCard}
         </h2>
         {Object.keys(stats.subscriptions.byStatus).length === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            {admin.stats.subscriptionsEmpty}
-          </p>
+          <div className="flex flex-col items-center gap-3 py-4 text-center">
+            <TrendingUp className="h-8 w-8 text-teal-highlight" />
+            <p className="text-sm text-cream-muted">
+              {admin.stats.subscriptionsEmpty}
+            </p>
+          </div>
         ) : (
           <div className="grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
             {Object.entries(stats.subscriptions.byStatus).map(
@@ -399,9 +410,9 @@ export default function AdminPage() {
       </section>
 
       {/* --- Tableau des utilisateurs --- */}
-      <section className="pn-card p-6">
-        <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
-          <UsersIcon className="h-5 w-5" />
+      <section className="pn-card rounded-xl p-6">
+        <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-cream-text">
+          <UsersIcon className="h-5 w-5 text-teal-highlight" />
           {admin.users.cardTitle}
         </h2>
 
@@ -420,49 +431,53 @@ export default function AdminPage() {
               setSearchInput(event.target.value);
             }}
             placeholder={admin.users.searchPlaceholder}
-            className="pn-input w-full max-w-xs flex-1 px-3 py-2 text-sm"
+            className="pn-input w-full max-w-xs flex-1 text-sm"
           />
-          <button type="submit" className="pn-btn inline-flex items-center gap-2">
+          <button
+            type="submit"
+            className="pn-btn inline-flex items-center gap-2"
+          >
             <Search className="h-4 w-4" />
             {admin.users.searchButton}
           </button>
         </form>
 
         {usersError ? (
-          <p className="mb-4 border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
+          <p className="mb-4 rounded-lg border border-error/40 bg-error-container px-4 py-3 text-sm text-error">
             {usersError}
           </p>
         ) : null}
 
         {!usersPage ? (
           <div className="flex justify-center py-8">
-            <Loader2 className="h-6 w-6 animate-spin text-primary" />
+            <Loader2 className="h-6 w-6 animate-spin text-teal-highlight" />
           </div>
         ) : usersPage.users.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted-foreground">
-            {admin.users.empty}
-          </p>
+          <div className="flex flex-col items-center gap-3 py-8 text-center">
+            <UsersIcon className="h-8 w-8 text-teal-highlight" />
+            <p className="text-sm text-cream-muted">{admin.users.empty}</p>
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] border-collapse text-sm">
               <thead>
-                <tr className="border-b-2 border-border text-left">
-                  <th className="py-2 pr-4 font-bold uppercase tracking-wider">
+                <tr className="border-b border-glass-border text-left">
+                  <th className="py-2 pr-4 font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
                     {admin.users.columns.name}
                   </th>
-                  <th className="py-2 pr-4 font-bold uppercase tracking-wider">
+                  <th className="py-2 pr-4 font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
                     {admin.users.columns.email}
                   </th>
-                  <th className="py-2 pr-4 font-bold uppercase tracking-wider">
+                  <th className="py-2 pr-4 font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
                     {admin.users.columns.role}
                   </th>
-                  <th className="py-2 pr-4 font-bold uppercase tracking-wider">
+                  <th className="py-2 pr-4 font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
                     {admin.users.columns.plan}
                   </th>
-                  <th className="py-2 pr-4 text-right font-bold uppercase tracking-wider">
+                  <th className="py-2 pr-4 text-right font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
                     {admin.users.columns.analyses}
                   </th>
-                  <th className="py-2 text-right font-bold uppercase tracking-wider">
+                  <th className="py-2 text-right font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
                     {admin.users.columns.analysesMonth}
                   </th>
                 </tr>
@@ -471,28 +486,24 @@ export default function AdminPage() {
                 {usersPage.users.map((user: AdminUser) => (
                   <tr
                     key={user.id}
-                    className="border-b border-border last:border-b-0"
+                    className="border-b border-glass-border odd:bg-surface-container-low/50 last:border-b-0"
                   >
-                    <td className="py-2 pr-4">
-                      {user.name ?? (
-                        <span className="text-muted-foreground">—</span>
-                      )}
+                    <td className="px-2 py-2 pr-4 text-cream-text">
+                      {user.name ?? <span className="text-cream-muted">—</span>}
                     </td>
-                    <td className="py-2 pr-4">
-                      {user.email ?? (
-                        <span className="text-muted-foreground">—</span>
-                      )}
+                    <td className="px-2 py-2 pr-4 font-mono text-cream-text">
+                      {user.email ?? <span className="text-cream-muted">—</span>}
                     </td>
-                    <td className="py-2 pr-4">
+                    <td className="px-2 py-2 pr-4">
                       <span className="pn-tag">{user.role}</span>
                     </td>
-                    <td className="py-2 pr-4">
+                    <td className="px-2 py-2 pr-4">
                       <span className="pn-tag">{user.plan}</span>
                     </td>
-                    <td className="py-2 pr-4 text-right tabular-nums">
+                    <td className="px-2 py-2 pr-4 text-right font-mono tabular-nums text-cream-text">
                       {user.analysesCount}
                     </td>
-                    <td className="py-2 text-right tabular-nums">
+                    <td className="px-2 py-2 text-right font-mono tabular-nums text-cream-text">
                       {user.analysesThisMonth}
                     </td>
                   </tr>
@@ -504,7 +515,7 @@ export default function AdminPage() {
 
         {/* Pagination */}
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">
+          <p className="font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
             {admin.users.pagination
               .replace("{page}", String(usersPage?.page ?? page))
               .replace("{pages}", String(totalPages))}
@@ -516,7 +527,7 @@ export default function AdminPage() {
                 setPage((current) => Math.max(1, current - 1));
               }}
               disabled={usersLoading || page <= 1}
-              className="pn-btn inline-flex items-center gap-1"
+              className="pn-btn pn-btn-secondary inline-flex items-center gap-1"
             >
               <ChevronLeft className="h-4 w-4" />
               {admin.users.prev}
@@ -527,7 +538,7 @@ export default function AdminPage() {
                 setPage((current) => Math.min(totalPages, current + 1));
               }}
               disabled={usersLoading || page >= totalPages}
-              className="pn-btn inline-flex items-center gap-1"
+              className="pn-btn pn-btn-secondary inline-flex items-center gap-1"
             >
               {admin.users.next}
               <ChevronRight className="h-4 w-4" />

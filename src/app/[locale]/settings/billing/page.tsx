@@ -221,11 +221,11 @@ export default function SettingsBillingPage() {
     return (
       <div className="container mx-auto flex min-h-[50vh] items-center justify-center px-4">
         {loadError ? (
-          <p className="border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
+          <p className="rounded-xl border border-error/40 bg-error-container px-4 py-3 text-sm text-error">
             {loadError}
           </p>
         ) : (
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <Loader2 className="h-8 w-8 animate-spin text-teal-highlight" />
         )}
       </div>
     );
@@ -243,26 +243,32 @@ export default function SettingsBillingPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 sm:py-12">
-      <div className="mx-auto max-w-2xl">
+      <div className="relative isolate mx-auto max-w-2xl">
+        {/* Halo décoratif */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -z-10 left-1/2 top-0 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-sage-glow blur-3xl"
+        />
+
         <div className="mb-8">
-          <h1 className="mb-2 text-2xl font-bold uppercase tracking-tight sm:text-3xl">
+          <h1 className="mb-2 font-display text-2xl font-semibold tracking-tight text-cream-text sm:text-3xl">
             {settings.billing.title}
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-cream-muted">
             {settings.billing.subtitle}
           </p>
         </div>
 
         {/* --- Plan & quota --- */}
-        <section className="pn-card mb-6">
+        <section className="pn-card rounded-xl mb-6">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <span className="font-mono text-[11px] uppercase tracking-[0.04em] text-cream-muted">
                 {settings.billing.planLabel}
               </span>
-              <div className="text-xl font-bold uppercase tracking-wider">
+              <div className="font-display text-xl font-semibold tracking-tight text-cream-text">
                 {plan.name ?? plan.plan}
-                <span className="ml-2 text-sm font-normal text-muted-foreground">
+                <span className="ml-2 font-mono text-sm font-normal text-cream-muted">
                   {price === 0
                     ? settings.billing.freePrice
                     : settings.billing.monthlyPrice.replace(
@@ -275,9 +281,9 @@ export default function SettingsBillingPage() {
             <span className="pn-tag">{settings.billing.monthlyRenewal}</span>
           </div>
 
-          <div className="mb-2 flex items-center justify-between text-sm">
-            <span className="font-bold">{settings.billing.usageLabel}</span>
-            <span>
+          <div className="mb-2 flex items-center justify-between gap-3 text-sm">
+            <span className="text-cream-text">{settings.billing.usageLabel}</span>
+            <span className="font-mono tabular-nums text-cream-muted">
               {unlimited
                 ? settings.billing.usageUnlimited.replace(
                     "{used}",
@@ -288,16 +294,16 @@ export default function SettingsBillingPage() {
                     .replace("{limit}", String(plan.monthlyLimit))}
             </span>
           </div>
-          <div className="h-4 w-full border-2 border-border bg-secondary">
+          <div className="h-2.5 w-full overflow-hidden rounded-full border border-glass-border bg-surface-container-low">
             <div
-              className={`h-full transition-all ${
-                percent >= 100 ? "bg-destructive" : "bg-primary"
+              className={`h-full rounded-full transition-all ${
+                percent >= 100 ? "bg-destructive" : "bg-teal-highlight"
               }`}
               style={{ width: `${unlimited ? 100 : percent}%` }}
             />
           </div>
           {unlimited && (
-            <p className="mt-2 text-xs text-muted-foreground">
+            <p className="mt-2 text-xs text-cream-muted">
               {settings.billing.unlimitedNote}
             </p>
           )}
@@ -305,20 +311,23 @@ export default function SettingsBillingPage() {
 
         {/* --- Features du plan --- */}
         {featureRows && (
-          <section className="pn-card mb-6">
-            <h2 className="mb-4 text-lg font-bold uppercase tracking-wider">
+          <section className="pn-card rounded-xl mb-6">
+            <h2 className="mb-4 font-display text-lg font-semibold tracking-tight text-cream-text">
               {settings.billing.includedTitle}
             </h2>
             <ul className="space-y-3">
               {featureRows.map((row) => (
-                <li key={row.label} className="flex items-center gap-2 text-sm">
+                <li
+                  key={row.label}
+                  className="flex items-center gap-2 border-b border-glass-border pb-3 text-sm last:border-b-0 last:pb-0"
+                >
                   {row.included ? (
                     <Check className="h-4 w-4 flex-shrink-0 text-score-great" />
                   ) : (
-                    <X className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                    <X className="h-4 w-4 flex-shrink-0 text-outline" />
                   )}
                   <span
-                    className={row.included ? "" : "text-muted-foreground"}
+                    className={row.included ? "text-cream-text" : "text-cream-muted"}
                   >
                     {row.label}
                   </span>
@@ -329,24 +338,24 @@ export default function SettingsBillingPage() {
         )}
 
         {/* --- Abonnement Stripe --- */}
-        <section className="pn-card mb-6">
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
-            <CreditCard className="h-5 w-5" />
+        <section className="pn-card rounded-xl mb-6">
+          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-cream-text">
+            <CreditCard className="h-5 w-5 text-teal-highlight" />
             {settings.billing.subscriptionTitle}
           </h2>
 
           {stripeConfigured === null ? (
             /* État inconnu (flag illisible) : ni bouton cassé, ni mensonge. */
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-cream-muted">
               {settings.billing.statusUnavailable}
             </p>
           ) : stripeConfigured ? (
             <>
-              <p className="mb-4 text-sm text-muted-foreground">
+              <p className="mb-4 text-sm text-cream-muted">
                 {settings.billing.portalDescription}
               </p>
               {portalError && (
-                <p className="mb-4 border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm font-bold text-destructive">
+                <p className="mb-4 rounded-lg border border-error/40 bg-error-container px-4 py-3 text-sm text-error">
                   {portalError}
                 </p>
               )}
@@ -368,7 +377,7 @@ export default function SettingsBillingPage() {
             </>
           ) : (
             /* Stripe non configuré (cas actuel) : état honnête, pas de bouton cassé. */
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-cream-muted">
               {settings.billing.notActivated}
             </p>
           )}
@@ -377,12 +386,12 @@ export default function SettingsBillingPage() {
         {/* --- Historique des factures ---
             Emplacement réservé : nécessite une route `GET /api/user/invoices`
             (Stripe `invoices.list` ou table `Invoice`), volontairement vide. */}
-        <section className="pn-card">
-          <h2 className="mb-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wider">
-            <Receipt className="h-5 w-5" />
+        <section className="pn-card rounded-xl">
+          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-cream-text">
+            <Receipt className="h-5 w-5 text-teal-highlight" />
             {settings.billing.invoicesTitle}
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-cream-muted">
             {settings.billing.invoicesEmpty}
           </p>
         </section>
