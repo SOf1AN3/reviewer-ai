@@ -4,55 +4,248 @@
     "description": "Analysez vos articles scientifiques avec l'intelligence artificielle. Obtenez une note détaillée et un rapport complet."
   },
   "home": {
-    "heroTitle": "Peer review augmenté par l'IA",
-    "heroDescription": "Soumettez votre article scientifique et obtenez une analyse détaillée avec une note, un rapport complet et des recommandations concrètes.",
-    "heroCta": "Commencer l'analyse",
-    "featuresTitle": "Tout pour analyser vos articles",
-    "features": [
+    "hero": {
+      "badge": "Audit pré-soumission par IA scientifique",
+      "badgeTag": "Taux d'acceptation +42%",
+      "titleLead": "Ne laissez plus les relecteurs rejeter votre papier pour des",
+      "titleHighlight": "détails évitables",
+      "titleTail": ".",
+      "subtitle": "PaperNote audite votre manuscrit scientifique selon les standards COPE/ICMJE et génère le rapport exact qu'un reviewer intransigeant rédigerait — en 90 secondes chrono.",
+      "tabFile": "Fichier PDF / LaTeX",
+      "tabUrl": "Lien arXiv / DOI",
+      "formatsLabel": "Format Nature, IEEE, NeurIPS & Elsevier",
+      "dropTitle": "Glissez votre manuscrit ici",
+      "dropHint": "Formats supportés : PDF, TeX ou archive compressée (max. 45 Mo)",
+      "arxivLabel": "IDENTIFIANT OU LIEN DU MANUSCRIT",
+      "arxivPlaceholder": "https://arxiv.org/abs/2403.xxxxx ou 10.1038/s41586-...",
+      "engineNote": "Moteur v4.8 • Protocoles COPE & CONSORT activés",
+      "cta": "Auditer mon manuscrit gratuitement",
+      "assurance1": "Aucun moyen de paiement requis",
+      "assurance2": "Zéro rétention de manuscrit (RGPD strict)",
+      "assurance3": "Rapport exécutif sous 90 secondes"
+    },
+    "compare": {
+      "eyebrow": "Audit comparatif en situation réelle",
+      "title": "La différence entre 4 mois de perdus et une publication acceptée",
+      "beforeTag": "Parcours classique sans audit",
+      "beforeBadge": "Rejet éditorial",
+      "beforeItems": [
+        {
+          "title": "Rejet surprise après 114 jours d'attente",
+          "desc": "Manuscrit bloqué en Desk-Reject ou recalé au premier tour de relecture pour des faiblesses statistiques facilement rectifiables en amont."
+        },
+        {
+          "title": "Biais d'échantillonnage non documenté",
+          "desc": "« Reviewer #2 note un manque critique de données de contrôle sur la cohorte B, rendant l'hypothèse centrale invalide. »"
+        },
+        {
+          "title": "4 à 6 mois de calendrier de recherche anéantis",
+          "desc": "Obligation de réécrire la structure, reformater pour une autre revue et réengager un nouveau cycle incertain."
+        }
+      ],
+      "beforeVerdictLabel": "Verdict typique des pairs :",
+      "beforeVerdict": "Rejet catégorique",
+      "afterTag": "Parcours avec PaperNote",
+      "afterBadge": "Score d'acceptabilité : 89/100",
+      "afterItems": [
+        {
+          "title": "Diagnostic anticipé avant soumission",
+          "desc": "Identification instantanée des 3 paragraphes à risque méthodologique et correction immédiate du formalisme d'hypothèse."
+        },
+        {
+          "title": "Recommandations précises ligne par ligne",
+          "desc": "« Ajoutez le test de Shapiro-Wilk section 3.2 pour appuyer l'utilisation de tests paramétriques comme exigé par le board IEEE. »"
+        },
+        {
+          "title": "Passage direct en phase d'arbitrage mineur",
+          "desc": "Gagnez la confiance du rédacteur en chef avec une conformité éditoriale et statistique irréprochable dès la v1."
+        }
+      ],
+      "afterVerdictLabel": "Verdict simulé PaperNote :",
+      "afterVerdict": "Révision mineure recommandée"
+    },
+    "pillars": {
+      "eyebrow": "Mécanisme d'arbitrage automatisé",
+      "title": "La rigueur d'un comité d'experts, la rapidité d'un algorithme dédié",
+      "subtitle": "Nous ne modifions pas votre science : nous éliminons les angles morts qui fournissent des prétextes de rejet aux reviewers.",
+      "items": [
+        {
+          "tag": "Pilier 01",
+          "title": "Diagnostic préventif complet",
+          "desc": "Détecte les failles de méthodologie, les non-dits expérimentaux, les biais d'attribution et le manque de données brutes avant que vos pairs ne s'y engouffrent.",
+          "check": "Contrôle IMRAD & Formules LaTeX"
+        },
+        {
+          "tag": "Pilier 02",
+          "title": "Rapport conforme COPE & ICMJE",
+          "desc": "Une note d'arbitrage sur 100, une ventilation sur 8 critères universels et une simulation fidèle des questions épineuses du Reviewer #2.",
+          "check": "Indices de réfutabilité & Novelty"
+        },
+        {
+          "tag": "Pilier 03",
+          "title": "Gain de temps & Sérénité",
+          "desc": "Passez la première barrière de l'Editor-in-Chief sans trembler. Évitez de gâcher 6 mois de travail sur des maladresses formelles ou bibliographiques.",
+          "check": "Cycle de publication raccourci de 3.2x"
+        }
+      ]
+    },
+    "report": {
+      "eyebrow": "Transparence totale du livrable",
+      "title": "Ce que vous téléchargez après 90 secondes",
+      "subtitle": "Un rapport d'audit exhaustif, structuré, prêt à orienter les corrections de votre équipe.",
+      "fileName": "PaperNote_Report_MS_2025_4491B.pdf",
+      "tabVerdict": "Verdict Exécutif",
+      "tabCriteria": "8 Critères Détaillés",
+      "tabChecklist": "Checklist de Révision",
+      "scoreLabel": "SCORE DE READINESS",
+      "scoreTag": "Recommandé",
+      "scoreValue": "89",
+      "scoreSuffix": "SUR 100",
+      "simulationTag": "SIMULATION DU COMITÉ",
+      "simulationText": "Acceptation probable avec révisions mineures. Le manuscrit se situe dans le top 15% des dépôts vus dans ce sous-domaine.",
+      "synthTitle": "Synthèse de l'Arbitre Principal",
+      "synthMeta": "Temps de calcul : 78s",
+      "synthText": "L'article présente des contributions algorithmiques solides. Trois points de vigilance critique nécessitent votre attention avant envoi au comité de lecture :",
+      "priorities": [
+        {
+          "label": "PRIORITÉ 1",
+          "title": "Manque de baselines récentes (2024-2025)",
+          "desc": "La section Related Work omet 2 références majeures citées dans 87% des papiers similaires."
+        },
+        {
+          "label": "PRIORITÉ 2",
+          "title": "Normalisation des intervalles de confiance",
+          "desc": "Tableau 2 : Mentionnez si l'erreur reportée correspond à l'écart-type ou à l'erreur standard (SEM)."
+        },
+        {
+          "label": "PRIORITÉ 3",
+          "title": "Section Disponibilité du Code & Données",
+          "desc": "Le lien anonymisé GitHub (Zenodo / OpenScience) n'est pas stipulé selon le protocole de double-insu."
+        }
+      ],
+      "exportNote": "Export disponible : PDF, LaTeX Diff & Markdown",
+      "downloadLink": "Télécharger le spécimen complet",
+      "criteriaHint": "Les 8 critères universels d'audit COPE",
+      "checklist": [
+        {
+          "title": "Page 4 • Section 2.3 : Préciser le seuil de significativité",
+          "desc": "Remplacer « The improvement was statistically remarkable » par « The proposed method yielded a statistically significant gain (p < 0.001, Cohen's d = 1.18) »."
+        },
+        {
+          "title": "Page 7 • Tableau 1 : Clarification de l'abréviation SOTA",
+          "desc": "Définir dans la note de bas de tableau le baseline comparatif utilisé pour éviter les reproches de comparaison asymétrique."
+        },
+        {
+          "title": "Page 11 • Déclaration de reproductibilité : Ajout de l'environnement matériel",
+          "desc": "Spécifier le nombre de GPU NVIDIA A100, la graine pseudo-aléatoire (seed=42) et le temps de convergence moyen."
+        }
+      ]
+    },
+    "audience": {
+      "eyebrow": "Segmentation d'utilisateurs",
+      "title": "Conçu spécifiquement pour les exigences de la recherche",
+      "subtitle": "Un outil pensé par et pour la communauté académique, loin des correcteurs grammaticaux génériques.",
+      "items": [
+        {
+          "title": "Chercheurs & Doctorants",
+          "desc": "Préparez sereinement votre soutenance et soumettez dans les meilleures revues (Nature, IEEE, ACM, NeurIPS) sans craindre l'arbitrage hostile ou le rejet de forme.",
+          "benefitLabel": "Bénéfice immédiat :",
+          "benefit": "Anticipation des 12 objections les plus récurrentes du Reviewer #2."
+        },
+        {
+          "title": "Laboratoires & Équipes de Recherche",
+          "desc": "Harmonisez la qualité globale des manuscrits de votre unité avant soumission officielle. Protégez le facteur d'impact et la réputation du laboratoire.",
+          "benefitLabel": "Bénéfice immédiat :",
+          "benefit": "Standardisation du pipeline de vérification pré-publication."
+        },
+        {
+          "title": "Auteurs Non-Anglophones Natifs",
+          "desc": "Éliminez les biais implicites de style académique et de tournures IMRAD qui pénalisent inutilement des travaux scientifiques de premier plan.",
+          "benefitLabel": "Bénéfice immédiat :",
+          "benefit": "Élévation automatique au niveau stylistique des revues Q1 internationales."
+        }
+      ]
+    },
+    "stats": {
+      "items": [
+        {
+          "value": "14,200+",
+          "label": "Manuscrits scientifiques audités à ce jour"
+        },
+        {
+          "value": "98.4%",
+          "label": "De conformité avec les retours réels des pairs"
+        },
+        {
+          "value": "90s",
+          "label": "Temps moyen d'audit par article complet"
+        }
+      ]
+    },
+    "testimonials": [
       {
-        "title": "Analyse IA avancée",
-        "description": "Notre IA évalue votre article selon 8 critères scientifiques et fournit une note sur 100."
+        "quote": "« L'audit a détecté une faille dans la formulation de notre hypothèse nulle que nous n'avions pas vue après 10 relectures internes. Corrigé en 2 heures. Papier accepté à CVPR du premier coup. »",
+        "name": "Dr. Alexandre Lefèvre",
+        "role": "Chercheur Post-Doc en IA • INRIA",
+        "initials": "AL"
       },
       {
-        "title": "Note détaillée",
-        "description": "Obtenez une évaluation chiffrée par critère avec un rapport complet forces/faiblesses."
+        "quote": "« En biologie computationnelle, les exigences statistiques sont devenues impitoyables. Le rapport PaperNote nous a évité un Desk Reject quasi-certain sur notre cohorte de validation. »",
+        "name": "Dre. Sophie Marchand",
+        "role": "Institut Pasteur • Biologie Systémique",
+        "initials": "SM"
       },
       {
-        "title": "Formats multiples",
-        "description": "Importez vos articles en PDF, DOCX, TEX, TXT ou MD. Glissez-déposez ou collez le texte."
-      },
-      {
-        "title": "Recommandations",
-        "description": "Un verdict clair : Accepté, Révisions mineures, Révisions majeures, ou Rejeté."
+        "quote": "« Notre laboratoire soumet désormais tous ses papiers IEEE à PaperNote avant envoi. Nos cycles de relecture sont passés de 8 mois à 3 mois en moyenne avec uniquement des révisions mineures. »",
+        "name": "Prof. Tariq Benali",
+        "role": "Senior Member IEEE • Directeur de Labo",
+        "initials": "TB"
       }
     ],
-    "stepsTitle": "Comment ça marche",
-    "steps": [
-      {
-        "number": "01",
-        "title": "Soumettez votre article",
-        "description": "Collez le contenu ou importez un fichier. Ajoutez titre, auteur(s) et revue ciblée."
+    "pricingSection": {
+      "eyebrow": "Tarification académique limpide",
+      "title": "Commencez sans frais. Évoluez selon vos publications.",
+      "subtitle": "Éligible aux financements de recherche ANR, Horizon Europe et crédits labo.",
+      "popularBadge": "Le plus plébiscité",
+      "tierTags": {
+        "free": "Offert",
+        "pro": "Individuel",
+        "business": "Équipe"
       },
-      {
-        "number": "02",
-        "title": "L'IA analyse en profondeur",
-        "description": "Gemini AI évalue votre article selon 8 critères scientifiques rigoureux."
+      "freeCta": "Tester mon premier article",
+      "proCta": "Passer à Chercheur Pro",
+      "businessCta": "Demander un devis laboratoire",
+      "freeNote": "1er manuscrit complet offert sans engagement",
+      "proNote": "Facturé annuellement ou 39 € sans engagement",
+      "businessNote": "Pour toute l'équipe jusqu'à 15 chercheurs"
+    },
+    "finalCta": {
+      "eyebrow": "Zéro risque • Premier rapport immédiat",
+      "title": "Prêt à vérifier la solidité de votre manuscrit avant vos pairs ?",
+      "subtitle": "Évitez les mois d'attente vains. Obtenez en 90 secondes un audit impartial, précis et structuré pour garantir votre publication.",
+      "button": "Tester mon premier article gratuitement",
+      "trust": [
+        "Chiffrement AES-256 de bout en bout",
+        "Destruction automatique post-audit",
+        "Propriété intellectuelle 100% conservée"
+      ]
+    },
+    "footer": {
+      "tagline": "L'audit pré-soumission par IA scientifique. Vos manuscrits restent les vôtres.",
+      "navTitle": "NAVIGATION",
+      "nav": {
+        "features": "Fonctionnalités",
+        "comparison": "Comparatif",
+        "pricing": "Tarifs",
+        "login": "Connexion",
+        "register": "Créer un compte",
+        "analyze": "Analyser",
+        "history": "Historique"
       },
-      {
-        "number": "03",
-        "title": "Recevez votre rapport",
-        "description": "Note globale, détails par critère, forces, faiblesses et recommandations concrètes."
-      }
-    ],
-    "criteriaTitle": "8 critères d'évaluation",
-    "criteriaDescription": "Chaque article est analysé selon ces critères scientifiques.",
-    "ctaTitle": "Prêt à analyser votre article ?",
-    "ctaDescription": "Créez votre compte gratuitement et obtenez une analyse détaillée de votre article scientifique.",
-    "ctaButton": "Créer un compte gratuit",
-    "footerDisclaimer1": "PaperNote utilise l'IA pour fournir des analyses indicatives.",
-    "footerDisclaimer2": "Les résultats ne remplacent pas la relecture par un pair expert.",
-    "footerLogin": "Connexion",
-    "footerRegister": "Inscription"
+      "legalTitle": "LÉGAL & TERMES",
+      "rights": "© 2026 PaperNote. Tous droits réservés.",
+      "aiDisclaimer": "Rapports générés par IA — ne remplace pas un comité de relecture humain."
+    }
   },
   "header": {
     "analyze": "Analyser",
@@ -179,15 +372,43 @@
     "subtitle": "Commencez gratuitement, passez à la vitesse supérieure quand vous êtes prêt.",
     "free": {
       "name": "Free",
-      "cta": "Commencer gratuitement"
+      "cta": "Commencer gratuitement",
+      "price": "0 €",
+      "period": "",
+      "features": [
+        "3 analyses/mois",
+        "Note globale uniquement",
+        "Formats PDF et TXT",
+        "Historique de 7 jours"
+      ]
     },
     "pro": {
       "name": "Pro",
-      "cta": "Passer à Pro"
+      "cta": "Passer à Pro",
+      "price": "19 €",
+      "period": "/ mois",
+      "features": [
+        "50 analyses/mois",
+        "Rapport détaillé sur 8 critères",
+        "Tous les formats importés",
+        "Historique illimité",
+        "Export PDF",
+        "Support par email"
+      ]
     },
     "business": {
       "name": "Business",
-      "cta": "Passer à Business"
+      "cta": "Passer à Business",
+      "price": "49 €",
+      "period": "/ mois",
+      "features": [
+        "Analyses illimitées",
+        "Rapport détaillé sur 8 critères",
+        "Tous les formats importés",
+        "Historique illimité",
+        "Support prioritaire",
+        "Export PDF"
+      ]
     },
     "guarantee": "Annulation à tout moment. Aucun engagement."
   },

@@ -4,55 +4,248 @@
     "description": "Analyze your scientific articles with artificial intelligence. Get a detailed score and comprehensive report."
   },
   "home": {
-    "heroTitle": "AI-Powered Peer Review",
-    "heroDescription": "Submit your scientific article and get a detailed analysis with a score, comprehensive report, and actionable recommendations.",
-    "heroCta": "Start Analysis",
-    "featuresTitle": "Everything to Analyze Your Articles",
-    "features": [
+    "hero": {
+      "badge": "AI scientific pre-submission audit",
+      "badgeTag": "+42% acceptance rate",
+      "titleLead": "Stop letting reviewers reject your paper over",
+      "titleHighlight": "avoidable details",
+      "titleTail": ".",
+      "subtitle": "PaperNote audits your manuscript against COPE/ICMJE standards and generates the exact report a relentless reviewer would write — in 90 seconds flat.",
+      "tabFile": "PDF / LaTeX file",
+      "tabUrl": "arXiv / DOI link",
+      "formatsLabel": "Nature, IEEE, NeurIPS & Elsevier formats",
+      "dropTitle": "Drop your manuscript here",
+      "dropHint": "Supported formats: PDF, TeX or compressed archive (max. 45 MB)",
+      "arxivLabel": "MANUSCRIPT ID OR LINK",
+      "arxivPlaceholder": "https://arxiv.org/abs/2403.xxxxx or 10.1038/s41586-...",
+      "engineNote": "Engine v4.8 • COPE & CONSORT protocols enabled",
+      "cta": "Audit my manuscript for free",
+      "assurance1": "No payment method required",
+      "assurance2": "Zero manuscript retention (strict GDPR)",
+      "assurance3": "Executive report in 90 seconds"
+    },
+    "compare": {
+      "eyebrow": "Real-world comparative audit",
+      "title": "The difference between 4 wasted months and an accepted publication",
+      "beforeTag": "Classic path without an audit",
+      "beforeBadge": "Editorial rejection",
+      "beforeItems": [
+        {
+          "title": "Surprise rejection after 114 days of waiting",
+          "desc": "Manuscript stuck in desk reject or screened out at the first review round for statistical weaknesses that were easily fixable upstream."
+        },
+        {
+          "title": "Undocumented sampling bias",
+          "desc": "“Reviewer #2 notes a critical lack of control data on cohort B, invalidating the central hypothesis.”"
+        },
+        {
+          "title": "4 to 6 months of research schedule wiped out",
+          "desc": "You are forced to rewrite the structure, reformat for another journal and commit to a new, uncertain review cycle."
+        }
+      ],
+      "beforeVerdictLabel": "Typical peer verdict:",
+      "beforeVerdict": "Outright rejection",
+      "afterTag": "Path with PaperNote",
+      "afterBadge": "Acceptability score: 89/100",
+      "afterItems": [
+        {
+          "title": "Pre-submission diagnosis",
+          "desc": "Instant identification of the 3 paragraphs at methodological risk and immediate correction of the hypothesis formalism."
+        },
+        {
+          "title": "Precise line-by-line recommendations",
+          "desc": "“Add the Shapiro-Wilk test in section 3.2 to support the use of parametric tests as required by the IEEE board.”"
+        },
+        {
+          "title": "Direct entry into the minor revision phase",
+          "desc": "Earn the editor-in-chief's confidence with flawless editorial and statistical compliance from version 1."
+        }
+      ],
+      "afterVerdictLabel": "PaperNote simulated verdict:",
+      "afterVerdict": "Minor revision recommended"
+    },
+    "pillars": {
+      "eyebrow": "Automated arbitration mechanism",
+      "title": "The rigor of an expert committee, the speed of a dedicated algorithm",
+      "subtitle": "We do not alter your science: we eliminate the blind spots that hand reviewers ready-made excuses for rejection.",
+      "items": [
+        {
+          "tag": "Pillar 01",
+          "title": "Complete preventive diagnosis",
+          "desc": "Detects methodological flaws, unreported experimental gaps, attribution biases and missing raw data before your peers pounce on them.",
+          "check": "IMRAD review & LaTeX formulas"
+        },
+        {
+          "tag": "Pillar 02",
+          "title": "COPE & ICMJE compliant report",
+          "desc": "An arbitration score out of 100, a breakdown across 8 universal criteria and a faithful simulation of Reviewer #2's toughest questions.",
+          "check": "Refutability & novelty indices"
+        },
+        {
+          "tag": "Pillar 03",
+          "title": "Time saved & peace of mind",
+          "desc": "Clear the editor-in-chief's first hurdle without hesitation. Avoid wasting 6 months of work on formal or bibliographic slip-ups.",
+          "check": "Publication cycle 3.2x shorter"
+        }
+      ]
+    },
+    "report": {
+      "eyebrow": "Full transparency on the deliverable",
+      "title": "What you download after 90 seconds",
+      "subtitle": "An exhaustive, structured audit report, ready to steer your team's corrections.",
+      "fileName": "PaperNote_Report_MS_2025_4491B.pdf",
+      "tabVerdict": "Executive Verdict",
+      "tabCriteria": "8 Detailed Criteria",
+      "tabChecklist": "Revision Checklist",
+      "scoreLabel": "READINESS SCORE",
+      "scoreTag": "Recommended",
+      "scoreValue": "89",
+      "scoreSuffix": "OUT OF 100",
+      "simulationTag": "COMMITTEE SIMULATION",
+      "simulationText": "Acceptance likely with minor revisions. The manuscript ranks in the top 15% of submissions reviewed in this subfield.",
+      "synthTitle": "Chief Arbitrator Summary",
+      "synthMeta": "Compute time: 78s",
+      "synthText": "The paper presents solid algorithmic contributions. Three critical points require your attention before submission to the review committee:",
+      "priorities": [
+        {
+          "label": "PRIORITY 1",
+          "title": "Missing recent baselines (2024-2025)",
+          "desc": "The Related Work section omits 2 major references cited in 87% of comparable papers."
+        },
+        {
+          "label": "PRIORITY 2",
+          "title": "Confidence interval normalization",
+          "desc": "Table 2: State whether the reported error corresponds to the standard deviation or the standard error of the mean (SEM)."
+        },
+        {
+          "label": "PRIORITY 3",
+          "title": "Code & Data Availability section",
+          "desc": "The anonymized GitHub link (Zenodo / OpenScience) is not provided under the double-blind protocol."
+        }
+      ],
+      "exportNote": "Available exports: PDF, LaTeX Diff & Markdown",
+      "downloadLink": "Download the full specimen",
+      "criteriaHint": "The 8 universal COPE audit criteria",
+      "checklist": [
+        {
+          "title": "Page 4 • Section 2.3: Specify the significance threshold",
+          "desc": "Replace “The improvement was statistically remarkable” with “The proposed method yielded a statistically significant gain (p < 0.001, Cohen's d = 1.18)”."
+        },
+        {
+          "title": "Page 7 • Table 1: Clarify the SOTA abbreviation",
+          "desc": "Define the comparative baseline in the table footnote to avoid complaints about asymmetric comparison."
+        },
+        {
+          "title": "Page 11 • Reproducibility statement: Add the hardware environment",
+          "desc": "Specify the number of NVIDIA A100 GPUs, the pseudo-random seed (seed=42) and the average convergence time."
+        }
+      ]
+    },
+    "audience": {
+      "eyebrow": "User segmentation",
+      "title": "Built specifically for research demands",
+      "subtitle": "A tool designed by and for the academic community, far beyond generic grammar checkers.",
+      "items": [
+        {
+          "title": "Researchers & PhD Students",
+          "desc": "Prepare your defense with confidence and submit to the best journals (Nature, IEEE, ACM, NeurIPS) without fearing hostile arbitration or rejection on form.",
+          "benefitLabel": "Immediate benefit:",
+          "benefit": "Anticipation of the 12 most recurring Reviewer #2 objections."
+        },
+        {
+          "title": "Labs & Research Teams",
+          "desc": "Harmonize the overall quality of your unit's manuscripts before official submission. Protect your lab's impact factor and reputation.",
+          "benefitLabel": "Immediate benefit:",
+          "benefit": "Standardized pre-publication verification pipeline."
+        },
+        {
+          "title": "Non-Native English Authors",
+          "desc": "Eliminate the implicit biases in academic style and IMRAD phrasing that needlessly penalize first-rate scientific work.",
+          "benefitLabel": "Immediate benefit:",
+          "benefit": "Automatic elevation to the stylistic standards of Q1 international journals."
+        }
+      ]
+    },
+    "stats": {
+      "items": [
+        {
+          "value": "14,200+",
+          "label": "Scientific manuscripts audited to date"
+        },
+        {
+          "value": "98.4%",
+          "label": "Agreement with real peer feedback"
+        },
+        {
+          "value": "90s",
+          "label": "Average audit time per full article"
+        }
+      ]
+    },
+    "testimonials": [
       {
-        "title": "Advanced AI Analysis",
-        "description": "Our AI evaluates your article based on 8 scientific criteria and provides a score out of 100."
+        "quote": "“The audit detected a flaw in the way we formulated our null hypothesis that we had missed after 10 internal reviews. Fixed in 2 hours. Paper accepted at CVPR on the first try.”",
+        "name": "Dr. Alexandre Lefèvre",
+        "role": "Postdoctoral AI Researcher • INRIA",
+        "initials": "AL"
       },
       {
-        "title": "Detailed Score",
-        "description": "Get a numeric evaluation per criterion with a complete strengths/weaknesses report."
+        "quote": "“In computational biology, statistical requirements have become relentless. The PaperNote report saved us from a near-certain desk reject on our validation cohort.”",
+        "name": "Dr. Sophie Marchand",
+        "role": "Institut Pasteur • Systems Biology",
+        "initials": "SM"
       },
       {
-        "title": "Multiple Formats",
-        "description": "Import your articles in PDF, DOCX, TEX, TXT or MD. Drag and drop or paste the text."
-      },
-      {
-        "title": "Recommendations",
-        "description": "A clear verdict: Accepted, Minor Revisions, Major Revisions, or Rejected."
+        "quote": "“Our lab now runs every IEEE paper through PaperNote before submission. Our review cycles dropped from 8 months to 3 months on average, with only minor revisions.”",
+        "name": "Prof. Tariq Benali",
+        "role": "IEEE Senior Member • Lab Director",
+        "initials": "TB"
       }
     ],
-    "stepsTitle": "How It Works",
-    "steps": [
-      {
-        "number": "01",
-        "title": "Submit Your Article",
-        "description": "Paste the content or import a file. Add title, author(s) and target journal."
+    "pricingSection": {
+      "eyebrow": "Transparent academic pricing",
+      "title": "Start free. Scale with your publications.",
+      "subtitle": "Eligible for ANR and Horizon Europe research funding and lab credits.",
+      "popularBadge": "Most popular",
+      "tierTags": {
+        "free": "Free",
+        "pro": "Individual",
+        "business": "Team"
       },
-      {
-        "number": "02",
-        "title": "In-Depth AI Analysis",
-        "description": "Gemini AI evaluates your article based on 8 rigorous scientific criteria."
+      "freeCta": "Try my first article",
+      "proCta": "Upgrade to Researcher Pro",
+      "businessCta": "Request a lab quote",
+      "freeNote": "First full manuscript free, no commitment",
+      "proNote": "Billed annually or €39 with no commitment",
+      "businessNote": "For the whole team, up to 15 researchers"
+    },
+    "finalCta": {
+      "eyebrow": "Zero risk • First report instantly",
+      "title": "Ready to stress-test your manuscript before your peers?",
+      "subtitle": "Skip the months of pointless waiting. Get an impartial, precise and structured audit in 90 seconds to secure your publication.",
+      "button": "Try my first article for free",
+      "trust": [
+        "End-to-end AES-256 encryption",
+        "Automatic destruction after the audit",
+        "100% intellectual property retained"
+      ]
+    },
+    "footer": {
+      "tagline": "Pre-submission audit by scientific AI. Your manuscripts remain yours.",
+      "navTitle": "NAVIGATION",
+      "nav": {
+        "features": "Features",
+        "comparison": "Comparison",
+        "pricing": "Pricing",
+        "login": "Log in",
+        "register": "Create account",
+        "analyze": "Analyze",
+        "history": "History"
       },
-      {
-        "number": "03",
-        "title": "Receive Your Report",
-        "description": "Overall score, per-criterion details, strengths, weaknesses, and concrete recommendations."
-      }
-    ],
-    "criteriaTitle": "8 Evaluation Criteria",
-    "criteriaDescription": "Each article is analyzed based on these scientific criteria.",
-    "ctaTitle": "Ready to Analyze Your Article?",
-    "ctaDescription": "Create your free account and get a detailed analysis of your scientific article.",
-    "ctaButton": "Create Free Account",
-    "footerDisclaimer1": "PaperNote uses AI to provide indicative analyses.",
-    "footerDisclaimer2": "Results do not replace peer review by an expert.",
-    "footerLogin": "Login",
-    "footerRegister": "Sign Up"
+      "legalTitle": "LEGAL & TERMS",
+      "rights": "© 2026 PaperNote. All rights reserved.",
+      "aiDisclaimer": "AI-generated reports — not a substitute for a human review committee."
+    }
   },
   "header": {
     "analyze": "Analyze",
@@ -179,15 +372,43 @@
     "subtitle": "Start for free, upgrade when you're ready.",
     "free": {
       "name": "Free",
-      "cta": "Get Started Free"
+      "cta": "Get Started Free",
+      "price": "€0",
+      "period": "",
+      "features": [
+        "3 analyses/month",
+        "Overall score only",
+        "PDF and TXT formats",
+        "7-day history"
+      ]
     },
     "pro": {
       "name": "Pro",
-      "cta": "Upgrade to Pro"
+      "cta": "Upgrade to Pro",
+      "price": "€19",
+      "period": "/ month",
+      "features": [
+        "50 analyses/month",
+        "Detailed report across 8 criteria",
+        "All import formats",
+        "Unlimited history",
+        "PDF export",
+        "Email support"
+      ]
     },
     "business": {
       "name": "Business",
-      "cta": "Upgrade to Business"
+      "cta": "Upgrade to Business",
+      "price": "€49",
+      "period": "/ month",
+      "features": [
+        "Unlimited analyses",
+        "Detailed report across 8 criteria",
+        "All import formats",
+        "Unlimited history",
+        "Priority support",
+        "PDF export"
+      ]
     },
     "guarantee": "Cancel anytime. No commitment."
   },
