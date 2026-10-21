@@ -174,9 +174,16 @@ export default function AnalysePage() {
   if (state.kind === "loading") {
     return (
       <div className="container mx-auto flex min-h-[60vh] items-center justify-center px-4">
-        <div className="text-center">
-          <Loader2 className="mx-auto mb-4 h-8 w-8 animate-spin text-primary" aria-hidden="true" />
-          <p className="font-bold uppercase tracking-wider text-muted-foreground">
+        <div className="pn-card relative w-full max-w-sm overflow-hidden p-8 text-center">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-14 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-teal-highlight/20 blur-3xl"
+          />
+          <Loader2
+            className="relative mx-auto mb-4 h-8 w-8 animate-spin text-teal-highlight"
+            aria-hidden="true"
+          />
+          <p className="relative font-mono text-[11px] text-cream-muted sm:text-xs">
             {dict.analyseDetail.loading}
           </p>
         </div>
@@ -199,21 +206,25 @@ export default function AnalysePage() {
           <div
             role="status"
             aria-live="polite"
-            className="pn-card mx-auto max-w-2xl text-center"
+            className="pn-card relative mx-auto max-w-2xl overflow-hidden rounded-xl p-6 text-center sm:p-8"
           >
-            <Loader2 className="mx-auto mb-4 h-10 w-10 animate-spin text-primary" aria-hidden="true" />
-            <p className="text-lg font-bold uppercase tracking-wider">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-16 left-1/2 h-44 w-44 -translate-x-1/2 rounded-full bg-teal-highlight/20 blur-3xl"
+            />
+            <Loader2 className="relative mx-auto mb-4 h-10 w-10 animate-spin text-teal-highlight" aria-hidden="true" />
+            <p className="relative font-display text-lg font-semibold text-cream-text">
               {dict.analyseDetail.pendingTitle}
             </p>
-            <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+            <p className="relative mx-auto mt-2 max-w-md text-sm text-cream-muted">
               {dict.analyseDetail.pendingDescription}
             </p>
-            <p className="mt-4 inline-flex items-center gap-2 font-mono text-xs text-muted-foreground">
-              <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+            <p className="relative mt-4 inline-flex items-center gap-2 font-mono text-[11px] text-cream-muted sm:text-xs">
+              <Clock className="h-3.5 w-3.5 text-teal-highlight" aria-hidden="true" />
               {dict.articleForm.progressDelay}
             </p>
             {article && (
-              <p className="mt-4 truncate border-t-2 border-border pt-4 text-sm font-bold uppercase tracking-wider">
+              <p className="relative mt-4 truncate border-t border-glass-border pt-4 text-sm font-medium text-cream-text">
                 {article.titre}
               </p>
             )}
@@ -227,15 +238,19 @@ export default function AnalysePage() {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-2xl text-center">
-          <div className="pn-card p-8">
-            <Clock className="mx-auto mb-4 h-10 w-10 text-primary" aria-hidden="true" />
-            <p className="text-lg font-bold">
+          <div className="pn-card relative overflow-hidden p-8 text-center">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-16 left-1/2 h-44 w-44 -translate-x-1/2 rounded-full bg-teal-highlight/20 blur-3xl"
+            />
+            <Clock className="relative mx-auto mb-4 h-10 w-10 text-teal-highlight" aria-hidden="true" />
+            <p className="relative font-display text-lg font-semibold text-cream-text">
               {dict.analyseDetail.timeoutTitle}
             </p>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="relative mt-2 text-sm text-cream-muted">
               {dict.analyseDetail.timeoutDescription}
             </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <div className="relative mt-6 flex flex-wrap items-center justify-center gap-3">
               <button
                 onClick={handleRetry}
                 className="pn-btn inline-flex items-center gap-2"
@@ -261,11 +276,17 @@ export default function AnalysePage() {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-2xl text-center">
-          <div className="pn-card p-8">
-            <p className="text-lg font-bold text-destructive">{state.message}</p>
+          <div className="pn-card relative overflow-hidden p-8 text-center">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-16 left-1/2 h-44 w-44 -translate-x-1/2 rounded-full bg-teal-highlight/15 blur-3xl"
+            />
+            <p className="relative font-display text-lg font-semibold text-error">
+              {state.message}
+            </p>
             <button
               onClick={() => router.push(`/${locale}/analyser`)}
-              className="pn-btn mt-4 inline-flex items-center gap-2"
+              className="pn-btn relative mt-4 inline-flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               {dict.analyseDetail.backHome}
@@ -281,13 +302,17 @@ export default function AnalysePage() {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-2xl text-center">
-          <div className="pn-card p-8">
-            <p className="text-lg font-bold text-destructive">
+          <div className="pn-card relative overflow-hidden p-8 text-center">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-16 left-1/2 h-44 w-44 -translate-x-1/2 rounded-full bg-teal-highlight/15 blur-3xl"
+            />
+            <p className="relative font-display text-lg font-semibold text-error">
               {dict.analyseDetail.notFound}
             </p>
             <button
               onClick={() => router.push(`/${locale}/analyser`)}
-              className="pn-btn mt-4 inline-flex items-center gap-2"
+              className="pn-btn relative mt-4 inline-flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               {dict.analyseDetail.backHome}
@@ -318,21 +343,43 @@ export default function AnalysePage() {
         </button>
 
         {/* Article info */}
-        <div className="pn-card mb-6">
-          <h1 className="mb-3 text-2xl font-bold uppercase tracking-tight">
-            {article.titre}
-          </h1>
-          <div className="flex flex-wrap gap-2">
-            {article.auteur && (
-              <span className="pn-tag">{article.auteur}</span>
-            )}
-            {article.revueCiblee && (
-              <span className="pn-tag">{article.revueCiblee}</span>
-            )}
-            <span className="inline-flex items-center font-mono text-xs text-muted-foreground">
-              {dict.analyseDetail.analyzedOn}{" "}
-              {new Date(analyse.dateAnalyse).toLocaleDateString(dateLocale)}
-            </span>
+        <div className="pn-card relative mb-6 overflow-hidden rounded-xl p-6 sm:p-8">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-20 -right-16 h-48 w-48 rounded-full bg-teal-highlight/10 blur-3xl"
+          />
+          <div className="relative">
+            <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
+              <h1 className="font-display text-2xl font-semibold text-cream-text tracking-tight sm:text-3xl">
+                {article.titre}
+              </h1>
+              <span
+                className={`pn-badge font-mono text-xs ${
+                  analyse.noteGlobale >= 80
+                    ? "text-score-great"
+                    : analyse.noteGlobale >= 60
+                      ? "text-score-good"
+                      : analyse.noteGlobale >= 40
+                        ? "text-score-ok"
+                        : "text-score-bad"
+                }`}
+              >
+                {analyse.noteGlobale}/100
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {article.auteur && (
+                <span className="pn-tag">{article.auteur}</span>
+              )}
+              {article.revueCiblee && (
+                <span className="pn-tag">{article.revueCiblee}</span>
+              )}
+              <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-cream-muted sm:text-xs">
+                <Clock className="h-3.5 w-3.5 text-teal-highlight" aria-hidden="true" />
+                {dict.analyseDetail.analyzedOn}{" "}
+                {new Date(analyse.dateAnalyse).toLocaleDateString(dateLocale)}
+              </span>
+            </div>
           </div>
         </div>
 
