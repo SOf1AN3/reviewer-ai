@@ -1,41 +1,139 @@
 @import "tailwindcss";
 
 /* ============================================
-   NEO-BRUTALIST DESIGN SYSTEM
+   ATMOSPHERIC INTELLIGENCE DESIGN SYSTEM
    ============================================ */
 
+/* Light Theme - Atmospheric Intelligence */
 :root {
-  /* Light Theme - Neo Brutalist */
-  --background: #f5f0e8;
-  --foreground: #1a1a1a;
-  --card: #ffffff;
-  --card-foreground: #1a1a1a;
-  --primary: #2563eb;
-  --primary-foreground: #ffffff;
-  --secondary: #fbbf24;
-  --secondary-foreground: #1a1a1a;
-  --muted: #e5e5e5;
-  --muted-foreground: #666666;
-  --accent: #f472b6;
-  --accent-foreground: #1a1a1a;
-  --destructive: #ef4444;
+  /* Core palette */
+  --background: #f4f2ec;
+  --foreground: #191b1b;
+  --card: #fbfaf6;
+  --card-foreground: #191b1b;
+  --primary: #2f666c;
+  --primary-foreground: #f7f6f1;
+  --secondary: #e5ecea;
+  --secondary-foreground: #1d3436;
+  --muted: #eceae1;
+  --muted-foreground: #5c6465;
+  --accent: #a9501f;
+  --accent-foreground: #fff8f3;
+  --destructive: #b3261e;
   --destructive-foreground: #ffffff;
-  --border: #1a1a1a;
-  --input: #1a1a1a;
-  --ring: #2563eb;
-
-  /* Brutalist-specific tokens */
-  --brutal-shadow: 4px 4px 0px #1a1a1a;
-  --brutal-shadow-sm: 2px 2px 0px #1a1a1a;
-  --brutal-shadow-lg: 6px 6px 0px #1a1a1a;
-  --brutal-border: 2px solid #1a1a1a;
-  --brutal-border-thick: 3px solid #1a1a1a;
+  --border: rgba(25, 27, 27, 0.14);
+  --input: rgba(25, 27, 27, 0.16);
+  --ring: #2f666c;
 
   /* Score colors */
-  --score-great: #22c55e;
-  --score-good: #eab308;
-  --score-ok: #f97316;
-  --score-bad: #ef4444;
+  --score-great: #196b61;
+  --score-good: #a8741a;
+  --score-ok: #a9501f;
+  --score-bad: #b3261e;
+
+  /* Buttons */
+  --btn-fill: #2f666c;
+  --btn-ink: #f7f6f1;
+  --btn-glow: rgba(47, 102, 108, 0.35);
+  --ghost-bg: rgba(47, 102, 108, 0.1);
+  --ghost-bg-hover: rgba(47, 102, 108, 0.18);
+  --ghost-border: rgba(47, 102, 108, 0.35);
+  --focus-glow: rgba(47, 102, 108, 0.3);
+  --input-bg: rgba(255, 255, 255, 0.8);
+
+  /* Semantic tokens */
+  --cream-text: #191b1b;
+  --cream-muted: #5c6465;
+  --teal-highlight: #2f666c;
+  --amber-badge: #a9501f;
+  --surface-sage: #e8efed;
+  --surface-glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(25, 27, 27, 0.14);
+  --glass-border-hover: rgba(25, 27, 27, 0.3);
+  --sage-glow: rgba(47, 102, 108, 0.16);
+  --amber-glow: rgba(184, 92, 42, 0.16);
+  --on-surface-variant: #454b4c;
+  --outline: #6b7475;
+  --error: #b3261e;
+  --error-container: #fdecea;
+
+  /* Container tiers */
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #faf9f4;
+  --surface-container: #f6f4ec;
+  --surface-container-high: #efede4;
+  --surface-container-highest: #e7e5db;
+
+  /* Theme-specific containers */
+  --primary-container: #2f666c;
+  --secondary-container: #dfe8e6;
+  --tertiary-container: #b85c2a;
+}
+
+/* Dark Theme - Atmospheric Intelligence (canonical) */
+.dark {
+  /* Core palette */
+  --background: #121414;
+  --foreground: #e2e2e2;
+  --card: #1e2020;
+  --card-foreground: #f2f1eb;
+  --primary: #99d0d6;
+  --primary-foreground: #00363b;
+  --secondary: #364d4f;
+  --secondary-foreground: #a4bdbf;
+  --muted: #282a2a;
+  --muted-foreground: #a8aba5;
+  --accent: #d87742;
+  --accent-foreground: #4b1b00;
+  --destructive: #93000a;
+  --destructive-foreground: #ffdad6;
+  --border: rgba(166, 201, 197, 0.18);
+  --input: rgba(166, 201, 197, 0.2);
+  --ring: #4f858b;
+
+  /* Score colors */
+  --score-great: #7fcbc0;
+  --score-good: #e8b33c;
+  --score-ok: #e87c3e;
+  --score-bad: #ef6b6b;
+
+  /* Buttons */
+  --btn-fill: #f2f1eb;
+  --btn-ink: #191b1b;
+  --btn-glow: rgba(153, 208, 214, 0.4);
+  --ghost-bg: rgba(79, 133, 139, 0.15);
+  --ghost-bg-hover: rgba(79, 133, 139, 0.25);
+  --ghost-border: rgba(166, 201, 197, 0.3);
+  --focus-glow: rgba(79, 133, 139, 0.3);
+  --input-bg: rgba(25, 27, 27, 0.7);
+
+  /* Semantic tokens */
+  --cream-text: #f2f1eb;
+  --cream-muted: #a8aba5;
+  --teal-highlight: #a6c9c5;
+  --amber-badge: #e87c3e;
+  --surface-sage: #1c2727;
+  --surface-glass: rgba(38, 61, 63, 0.45);
+  --glass-border: rgba(166, 201, 197, 0.18);
+  --glass-border-hover: rgba(166, 201, 197, 0.34);
+  --sage-glow: rgba(79, 133, 139, 0.28);
+  --amber-glow: rgba(217, 119, 66, 0.22);
+  --on-surface-variant: #bfc8c9;
+  --outline: #8a9293;
+  --error: #ffb4ab;
+  --error-container: #93000a;
+
+  /* Container tiers */
+  --surface-container-lowest: #0c0f0f;
+  --surface-container-low: #1a1c1c;
+  --surface-container: #1e2020;
+  --surface-container-high: #282a2a;
+  --surface-container-highest: #333535;
+
+  /* Theme-specific containers */
+  --primary-container: #6399a0;
+  --secondary-container: #364d4f;
+  --tertiary-container: #d87742;
 }
 
 @theme inline {
@@ -60,49 +158,44 @@
   --color-score-good: var(--score-good);
   --color-score-ok: var(--score-ok);
   --color-score-bad: var(--score-bad);
-  --color-brutal-shadow: var(--brutal-shadow);
-  --font-sans: var(--font-space-grotesk);
-  --font-mono: var(--font-jetbrains-mono);
-}
 
-/* Dark Theme - Neo Brutalist */
-.dark {
-  --background: #0a0a0f;
-  --foreground: #d4d4d8;
-  --card: #111118;
-  --card-foreground: #d4d4d8;
-  --primary: #3b82f6;
-  --primary-foreground: #0a0a0f;
-  --secondary: #d97706;
-  --secondary-foreground: #0a0a0f;
-  --muted: #18181f;
-  --muted-foreground: #71717a;
-  --accent: #db2777;
-  --accent-foreground: #0a0a0f;
-  --destructive: #dc2626;
-  --destructive-foreground: #0a0a0f;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #3b82f6;
+  /* Typography (variables provided by next/font on <html>, with safe fallbacks) */
+  --font-display: var(--font-hanken, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jakarta, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono, ui-monospace), ui-monospace, monospace;
 
-  --brutal-shadow: 4px 4px 0px #e4e4e7;
-  --brutal-shadow-sm: 2px 2px 0px #e4e4e7;
-  --brutal-shadow-lg: 6px 6px 0px #e4e4e7;
-  --brutal-border: 2px solid #e4e4e7;
-  --brutal-border-thick: 3px solid #e4e4e7;
-
-  --score-great: #16a34a;
-  --score-good: #ca8a04;
-  --score-ok: #ea580c;
-  --score-bad: #dc2626;
+  /* Semantic utility colors */
+  --color-cream-text: var(--cream-text);
+  --color-cream-muted: var(--cream-muted);
+  --color-teal-highlight: var(--teal-highlight);
+  --color-amber-badge: var(--amber-badge);
+  --color-surface-sage: var(--surface-sage);
+  --color-surface-glass: var(--surface-glass);
+  --color-glass-border: var(--glass-border);
+  --color-sage-glow: var(--sage-glow);
+  --color-amber-glow: var(--amber-glow);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-outline: var(--outline);
+  --color-error: var(--error);
+  --color-error-container: var(--error-container);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-primary-container: var(--primary-container);
+  --color-secondary-container: var(--secondary-container);
+  --color-tertiary-container: var(--tertiary-container);
 }
 
 /* ============================================
    BASE STYLES
    ============================================ */
 
-* {
-  border-color: var(--border);
+@layer base {
+  * {
+    border-color: var(--border);
+  }
 }
 
 html, body {
@@ -112,21 +205,20 @@ html, body {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-family: var(--font-sans);
 }
 
-/* Brutalist scrollbar - hidden on mobile */
+/* Discrete atmospheric scrollbar - hidden on mobile */
 @media (pointer: fine) {
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 10px;
   }
   ::-webkit-scrollbar-track {
     background: var(--background);
-    border-left: 2px solid var(--border);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border: 2px solid var(--background);
+    background: var(--surface-container-highest);
+    border-radius: 9999px;
   }
 }
 
@@ -134,130 +226,156 @@ body {
    UTILITY CLASSES
    ============================================ */
 
-.brutal-card {
-  background: var(--card);
-  border: var(--brutal-border-thick);
-  border-radius: 0px;
-  box-shadow: var(--brutal-shadow);
-  padding: clamp(1rem, 4vw, 1.5rem);
-}
+@layer components {
+  .glass-panel {
+    background: var(--surface-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    padding: clamp(1rem, 4vw, 1.5rem);
+  }
 
-.brutal-card-hover {
-  background: var(--card);
-  border: var(--brutal-border-thick);
-  border-radius: 0px;
-  box-shadow: var(--brutal-shadow);
-  padding: clamp(1rem, 4vw, 1.5rem);
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-}
-.brutal-card-hover:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--brutal-shadow-lg);
-}
+  .pn-card {
+    background: var(--surface-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    padding: clamp(1rem, 4vw, 1.5rem);
+  }
 
-.brutal-input {
-  background: var(--card);
-  border: var(--brutal-border);
-  border-radius: 0px;
-  box-shadow: var(--brutal-shadow-sm);
-  padding: 0.625rem 1rem;
-  font-size: 0.875rem;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-  outline: none;
-}
-.brutal-input:focus {
-  transform: translate(-1px, -1px);
-  box-shadow: var(--brutal-shadow);
-}
+  .pn-card-hover {
+    background: var(--surface-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    padding: clamp(1rem, 4vw, 1.5rem);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .pn-card-hover:hover {
+    background: var(--surface-container-high);
+    border-color: var(--glass-border-hover);
+  }
 
-.brutal-btn {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border: var(--brutal-border-thick);
-  border-radius: 0px;
-  box-shadow: var(--brutal-shadow);
-  padding: 0.75rem 1.5rem;
-  font-weight: 700;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.brutal-btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--brutal-shadow-lg);
-}
-.brutal-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: none;
-}
-.brutal-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: var(--brutal-shadow);
-}
+  .pn-input {
+    background: var(--input-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 0.5rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    color: var(--cream-text);
+    outline: none;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .pn-input:focus {
+    border-color: var(--ring);
+    box-shadow: 0 0 12px var(--focus-glow);
+  }
+  .pn-input::placeholder {
+    color: var(--outline);
+  }
 
-.brutal-btn-secondary {
-  background: var(--secondary);
-  color: var(--secondary-foreground);
-}
+  .pn-btn {
+    background: var(--btn-fill);
+    color: var(--btn-ink);
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+  .pn-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 24px var(--btn-glow);
+  }
+  .pn-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+  .pn-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
 
-.brutal-btn-accent {
-  background: var(--accent);
-  color: var(--accent-foreground);
-}
+  .pn-btn-secondary {
+    background: var(--ghost-bg);
+    border: 1px solid var(--ghost-border);
+    color: var(--cream-text);
+  }
+  .pn-btn-secondary:hover {
+    background: var(--ghost-bg-hover);
+    box-shadow: none;
+  }
 
-.brutal-btn-destructive {
-  background: var(--destructive);
-  color: var(--destructive-foreground);
-}
+  .pn-btn-accent {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
 
-.brutal-badge {
-  display: inline-flex;
-  align-items: center;
-  border: 2px solid var(--border);
-  border-radius: 0px;
-  box-shadow: var(--brutal-shadow-sm);
-  padding: 0.25rem 0.625rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
+  .pn-btn-destructive {
+    background: var(--destructive);
+    color: var(--destructive-foreground);
+  }
 
-.brutal-tag {
-  display: inline-flex;
-  align-items: center;
-  background: var(--secondary);
-  color: var(--secondary-foreground);
-  border: 2px solid var(--border);
-  box-shadow: var(--brutal-shadow-sm);
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 700;
+  .pn-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 9999px;
+    background: var(--surface-container-high);
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .pn-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 9999px;
+    background: var(--surface-sage);
+    color: var(--teal-highlight);
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+
+  .animate-pn-shake {
+    animation: pn-shake 0.3s ease-in-out;
+  }
+
+  .animate-pn-bounce {
+    animation: pn-bounce 0.5s ease-in-out infinite;
+  }
 }
 
 /* ============================================
    ANIMATIONS
    ============================================ */
 
-@keyframes brutal-shake {
+@keyframes pn-shake {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-2px); }
   75% { transform: translateX(2px); }
 }
 
-@keyframes brutal-bounce {
+@keyframes pn-bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
-}
-
-.animate-brutal-shake {
-  animation: brutal-shake 0.3s ease-in-out;
-}
-
-.animate-brutal-bounce {
-  animation: brutal-bounce 0.5s ease-in-out infinite;
 }
