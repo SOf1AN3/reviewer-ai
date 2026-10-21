@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Hanken_Grotesk, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "../globals.css";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SessionProvider } from "@/components/SessionProvider";
 import { I18nProvider } from "@/components/I18nProvider";
@@ -151,6 +152,7 @@ export default async function RootLayout({
             <I18nProvider locale={validLocale}>
               <Header />
               <main className="min-h-[calc(100vh-4rem)]">{children}</main>
+              <Footer />
               <CookieBanner />
             </I18nProvider>
           </ThemeProvider>

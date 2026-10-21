@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import {
   FlaskConical,
@@ -24,6 +25,29 @@ const localeLabels: Record<Locale, string> = {
   ar: "AR",
 };
 
+/** Style « ghost » discret partagé par tous les liens de navigation (desktop). */
+const GHOST_LINK =
+  "rounded-lg px-3 py-2 text-sm text-on-surface-variant transition-colors hover:text-cream-text";
+
+/** Bouton rond en verre (langue mobile, thème, hamburger). */
+const GLASS_ICON_BTN =
+  "flex h-9 w-9 items-center justify-center rounded-full border border-glass-border bg-surface-glass text-on-surface-variant transition-colors hover:text-cream-text";
+
+/** Sélecteur de langue en pilule (desktop). */
+const LANG_TRIGGER =
+  "flex h-9 items-center gap-1.5 rounded-full border border-glass-border bg-surface-glass px-3 text-xs font-medium text-on-surface-variant transition-colors hover:text-cream-text";
+
+/** Panneau glass du déroulant de langue. */
+const LANG_PANEL =
+  "absolute end-0 top-full z-50 mt-1 rounded-xl border border-glass-border bg-surface-container-high p-1 shadow-2xl";
+
+/** Variante du panneau ancrée au bouton de langue du menu mobile. */
+const LANG_PANEL_MOBILE =
+  "absolute end-12 top-14 z-50 rounded-xl border border-glass-border bg-surface-container-high p-1 shadow-2xl";
+
+/** Une option du sélecteur de langue. */
+const LANG_OPTION = "block w-full rounded-lg px-3 py-2 text-start text-sm transition-colors";
+
 export function Header() {
   const { theme, toggleTheme } = useTheme();
   const { data: session } = useSession();
@@ -32,6 +56,10 @@ export function Header() {
   const { locale, setLocale } = useI18n();
   const dict = getDictionary(locale);
   const [userPlan, setUserPlan] = useState<string | null>(null);
+  const pathname = usePathname();
+
+  /** Les ancres de la landing ne s'affichent que sur la page d'accueil. */
+  const isHome = pathname === `/${locale}` || pathname === "/";
 
   useEffect(() => {
     if (session) {
@@ -43,78 +71,78 @@ export function Header() {
   }, [session]);
 
   return (
-    <header className="border-b-[3px] border-border bg-card">
+    <header className="sticky top-0 z-40 h-16 border-b border-glass-border bg-surface-glass backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        {/* Logo */}
         <Link
           href={`/${locale}`}
-          className="flex items-center gap-2 sm:gap-3 text-lg sm:text-xl font-bold uppercase tracking-wider"
+          className="flex items-center gap-2.5"
         >
-          <div className="flex items-center justify-center bg-secondary px-2 sm:px-3 py-1 border-2 border-border shadow-[2px_2px_0px_var(--border)]">
-            <FlaskConical className="h-4 w-4 sm:h-5 sm:w-5 text-foreground" />
-          </div>
-          <span>PaperNote</span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-surface-sage">
+            <FlaskConical className="h-5 w-5 text-teal-highlight" aria-hidden="true" />
+          </span>
+          <span className="font-display text-lg font-semibold tracking-tight text-cream-text">
+            PaperNote
+          </span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden sm:flex items-center gap-2">
+        <nav className="hidden items-center gap-1 md:flex">
+          {!session && isHome && (
+            <>
+              <a href="#features" className={GHOST_LINK}>
+                {dict.home.footer.nav.features}
+              </a>
+              <a href="#comparison" className={GHOST_LINK}>
+                {dict.home.footer.nav.comparison}
+              </a>
+              <a href="#pricing" className={GHOST_LINK}>
+                {dict.home.footer.nav.pricing}
+              </a>
+            </>
+          )}
+
           {session ? (
             <>
-              <Link
-                href={`/${locale}/analyser`}
-                className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
-              >
+              <Link href={`/${locale}/analyser`} className={GHOST_LINK}>
                 {dict.header.analyze}
               </Link>
-              <Link
-                href={`/${locale}/historique`}
-                className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
-              >
+              <Link href={`/${locale}/historique`} className={GHOST_LINK}>
                 {dict.header.history}
               </Link>
               <Link
                 href={`/${locale}/pricing`}
-                className="pn-btn-secondary pn-btn px-4 py-2 text-xs flex items-center gap-1"
+                className={`${GHOST_LINK} flex items-center gap-1`}
               >
-                <CreditCard className="h-3 w-3" />
-                {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : dict.header.upgrade}
+                <CreditCard className="h-3.5 w-3.5" aria-hidden="true" />
+                {userPlan && userPlan !== "free"
+                  ? userPlan.toUpperCase()
+                  : dict.header.upgrade}
               </Link>
-              <Link
-                href={`/${locale}/settings/profile`}
-                className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
-              >
+              <Link href={`/${locale}/settings/profile`} className={GHOST_LINK}>
                 {dict.header.profile}
               </Link>
-              <Link
-                href={`/${locale}/settings/billing`}
-                className="pn-btn-secondary pn-btn px-4 py-2 text-xs"
-              >
+              <Link href={`/${locale}/settings/billing`} className={GHOST_LINK}>
                 {dict.header.billing}
               </Link>
-              <div className="mx-2 h-6 w-px bg-border" />
-              <span className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <div className="mx-2 h-6 w-px bg-glass-border" />
+              <span className="max-w-[10rem] truncate text-xs text-cream-muted">
                 {session.user?.name || session.user?.email}
               </span>
               <button
                 onClick={() => signOut({ callbackUrl: `/${locale}/login` })}
-                className="pn-btn-destructive pn-btn px-3 py-2 text-xs flex items-center gap-1"
+                className="pn-btn-destructive pn-btn px-3 py-2 text-xs"
                 aria-label={dict.header.logout}
               >
-                <LogOut className="h-4 w-4" />
+                <LogOut className="h-4 w-4" aria-hidden="true" />
               </button>
             </>
           ) : (
             <>
-              <Link
-                href={`/${locale}/login`}
-                className="pn-btn-secondary pn-btn px-4 py-2 text-xs flex items-center gap-1"
-              >
-                <LogIn className="h-4 w-4" />
+              <Link href={`/${locale}/login`} className={GHOST_LINK}>
                 {dict.header.login}
               </Link>
-              <Link
-                href={`/${locale}/register`}
-                className="pn-btn px-4 py-2 text-xs"
-              >
+              <Link href={`/${locale}/register`} className="pn-btn px-4 py-2 text-sm">
                 {dict.header.register}
               </Link>
             </>
@@ -124,14 +152,15 @@ export function Header() {
           <div className="relative">
             <button
               onClick={() => setLangOpen(!langOpen)}
-              className="pn-btn px-3 py-2 text-xs flex items-center gap-1"
+              className={LANG_TRIGGER}
               aria-label={dict.header.changeLanguage}
+              aria-expanded={langOpen}
             >
-              <Globe className="h-4 w-4" />
+              <Globe className="h-4 w-4" aria-hidden="true" />
               <span>{localeLabels[locale]}</span>
             </button>
             {langOpen && (
-              <div className="absolute right-0 top-full z-50 mt-1 border-2 border-border bg-card shadow-[4px_4px_0px_var(--border)]">
+              <div className={LANG_PANEL}>
                 {locales.map((l) => (
                   <button
                     key={l}
@@ -139,8 +168,10 @@ export function Header() {
                       setLocale(l);
                       setLangOpen(false);
                     }}
-                    className={`block w-full px-4 py-2 text-xs font-bold uppercase tracking-wider hover:bg-secondary transition-colors ${
-                      l === locale ? "bg-secondary text-foreground" : "text-muted-foreground"
+                    className={`${LANG_OPTION} ${
+                      l === locale
+                        ? "bg-surface-sage text-teal-highlight"
+                        : "text-on-surface-variant hover:bg-surface-sage/40"
                     }`}
                   >
                     {localeLabels[l]}
@@ -152,28 +183,29 @@ export function Header() {
 
           <button
             onClick={toggleTheme}
-            className="pn-btn px-3 py-2 text-xs"
+            className={GLASS_ICON_BTN}
             aria-label={dict.header.toggleTheme}
           >
             {theme === "light" ? (
-              <Moon className="h-4 w-4" />
+              <Moon className="h-4 w-4" aria-hidden="true" />
             ) : (
-              <Sun className="h-4 w-4" />
+              <Sun className="h-4 w-4" aria-hidden="true" />
             )}
           </button>
         </nav>
 
-        {/* Mobile: theme toggle + language + hamburger */}
-        <div className="flex sm:hidden items-center gap-2">
+        {/* Mobile: language + theme + hamburger */}
+        <div className="flex items-center gap-2 md:hidden">
           <button
             onClick={() => setLangOpen(!langOpen)}
-            className="pn-btn px-3 py-2 text-xs"
+            className={GLASS_ICON_BTN}
             aria-label={dict.header.changeLanguage}
+            aria-expanded={langOpen}
           >
-            <Globe className="h-4 w-4" />
+            <Globe className="h-4 w-4" aria-hidden="true" />
           </button>
           {langOpen && (
-            <div className="absolute right-12 top-14 z-50 border-2 border-border bg-card shadow-[4px_4px_0px_var(--border)]">
+            <div className={LANG_PANEL_MOBILE}>
               {locales.map((l) => (
                 <button
                   key={l}
@@ -181,8 +213,10 @@ export function Header() {
                     setLocale(l);
                     setLangOpen(false);
                   }}
-                  className={`block w-full px-4 py-2 text-xs font-bold uppercase tracking-wider hover:bg-secondary transition-colors ${
-                    l === locale ? "bg-secondary text-foreground" : "text-muted-foreground"
+                  className={`${LANG_OPTION} ${
+                    l === locale
+                      ? "bg-surface-sage text-teal-highlight"
+                      : "text-on-surface-variant hover:bg-surface-sage/40"
                   }`}
                 >
                   {localeLabels[l]}
@@ -192,24 +226,25 @@ export function Header() {
           )}
           <button
             onClick={toggleTheme}
-            className="pn-btn px-3 py-2 text-xs"
+            className={GLASS_ICON_BTN}
             aria-label={dict.header.toggleTheme}
           >
             {theme === "light" ? (
-              <Moon className="h-4 w-4" />
+              <Moon className="h-4 w-4" aria-hidden="true" />
             ) : (
-              <Sun className="h-4 w-4" />
+              <Sun className="h-4 w-4" aria-hidden="true" />
             )}
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="pn-btn px-3 py-2 text-xs"
+            className={GLASS_ICON_BTN}
             aria-label={dict.header.menu}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? (
-              <X className="h-4 w-4" />
+              <X className="h-4 w-4" aria-hidden="true" />
             ) : (
-              <Menu className="h-4 w-4" />
+              <Menu className="h-4 w-4" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -217,46 +252,48 @@ export function Header() {
 
       {/* Mobile dropdown menu */}
       {mobileOpen && (
-        <div className="sm:hidden border-t-[3px] border-border bg-card">
+        <div className="border-b border-glass-border bg-surface-glass backdrop-blur-xl md:hidden">
           <div className="container mx-auto flex flex-col gap-2 px-4 py-4">
             {session ? (
               <>
-                <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">
+                <span className="mb-2 truncate text-xs text-cream-muted">
                   {session.user?.name || session.user?.email}
                 </span>
                 <Link
                   href={`/${locale}/analyser`}
                   onClick={() => setMobileOpen(false)}
-                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm text-center"
+                  className="pn-btn pn-btn-secondary w-full py-3 text-sm"
                 >
                   {dict.header.analyze}
                 </Link>
                 <Link
                   href={`/${locale}/historique`}
                   onClick={() => setMobileOpen(false)}
-                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm text-center"
+                  className="pn-btn pn-btn-secondary w-full py-3 text-sm"
                 >
                   {dict.header.history}
                 </Link>
                 <Link
                   href={`/${locale}/pricing`}
                   onClick={() => setMobileOpen(false)}
-                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm text-center flex items-center justify-center gap-2"
+                  className="pn-btn pn-btn-secondary w-full py-3 text-sm"
                 >
-                  <CreditCard className="h-4 w-4" />
-                  {userPlan && userPlan !== "free" ? userPlan.toUpperCase() : dict.header.upgrade}
+                  <CreditCard className="h-4 w-4" aria-hidden="true" />
+                  {userPlan && userPlan !== "free"
+                    ? userPlan.toUpperCase()
+                    : dict.header.upgrade}
                 </Link>
                 <Link
                   href={`/${locale}/settings/profile`}
                   onClick={() => setMobileOpen(false)}
-                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm text-center"
+                  className="pn-btn pn-btn-secondary w-full py-3 text-sm"
                 >
                   {dict.header.profile}
                 </Link>
                 <Link
                   href={`/${locale}/settings/billing`}
                   onClick={() => setMobileOpen(false)}
-                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm text-center"
+                  className="pn-btn pn-btn-secondary w-full py-3 text-sm"
                 >
                   {dict.header.billing}
                 </Link>
@@ -265,9 +302,9 @@ export function Header() {
                     setMobileOpen(false);
                     signOut({ callbackUrl: `/${locale}/login` });
                   }}
-                  className="pn-btn-destructive pn-btn px-4 py-3 text-sm flex items-center justify-center gap-2"
+                  className="pn-btn-destructive pn-btn w-full py-3 text-sm"
                 >
-                  <LogOut className="h-4 w-4" />
+                  <LogOut className="h-4 w-4" aria-hidden="true" />
                   {dict.header.logout}
                 </button>
               </>
@@ -276,15 +313,15 @@ export function Header() {
                 <Link
                   href={`/${locale}/login`}
                   onClick={() => setMobileOpen(false)}
-                  className="pn-btn-secondary pn-btn px-4 py-3 text-sm flex items-center justify-center gap-2"
+                  className="pn-btn pn-btn-secondary w-full py-3 text-sm"
                 >
-                  <LogIn className="h-4 w-4" />
+                  <LogIn className="h-4 w-4" aria-hidden="true" />
                   {dict.header.login}
                 </Link>
                 <Link
                   href={`/${locale}/register`}
                   onClick={() => setMobileOpen(false)}
-                  className="pn-btn px-4 py-3 text-sm text-center"
+                  className="pn-btn w-full py-3 text-sm"
                 >
                   {dict.header.register}
                 </Link>
