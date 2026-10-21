@@ -26,8 +26,10 @@ export default function GlobalError({
   // sans cette classe une erreur globale repasserait en thème clair (flash).
   // Les variables de police du layout étant perdues, `globals.css` applique
   // ses fallbacks système (`ui-sans-serif` / `ui-monospace`).
-  // Habillage aligné sur `not-found` / `error` : canvas + carte glass ;
-  // props et comportement (reset via `retry`) inchangés.
+  // Habillage aligné sur `not-found` / `error` : fond canvas + centrage.
+  // `ErrorState` rend sa propre carte `pn-card` (avec halo décoratif), donc
+  // aucun wrapper carte ici — évite une carte imbriquée (double bordure,
+  // halo atténué). Props et comportement (reset via `retry`) inchangés.
   return (
     <html
       lang={locale}
@@ -36,10 +38,8 @@ export default function GlobalError({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-foreground">
-        <div className="flex min-h-screen items-center justify-center px-4 py-16">
-          <div className="w-full max-w-2xl rounded-2xl border border-glass-border bg-surface-glass p-8">
-            <ErrorState error={error} retry={retry} />
-          </div>
+        <div className="flex min-h-screen items-center justify-center">
+          <ErrorState error={error} retry={retry} />
         </div>
       </body>
     </html>

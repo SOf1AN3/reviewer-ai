@@ -84,19 +84,19 @@ export function CookieBanner() {
     <div
       role="status"
       aria-live="polite"
-      className="fixed inset-x-0 bottom-0 z-40 border-t-[3px] border-border bg-card"
+      className="fixed bottom-4 start-4 end-4 z-30 rounded-2xl border border-glass-border bg-surface-glass p-4 shadow-2xl backdrop-blur-xl sm:end-4 sm:w-auto sm:max-w-md"
     >
-      <div className="container mx-auto flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-start gap-3 text-sm">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex items-start gap-3">
           <Cookie
-            className="mt-0.5 h-5 w-5 shrink-0 text-foreground"
+            className="mt-0.5 h-5 w-5 shrink-0 text-teal-highlight"
             aria-hidden="true"
           />
-          <p className="text-muted-foreground">
+          <p className="text-xs text-cream-muted">
             {dict.legal.cookies.message}{" "}
             <Link
               href={`/${locale}/legal/cookies`}
-              className="font-bold text-foreground underline underline-offset-4"
+              className="font-semibold text-teal-highlight underline underline-offset-4"
             >
               {dict.legal.cookies.learnMore}
             </Link>

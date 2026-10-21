@@ -95,42 +95,63 @@ export function ErrorState({ kind = "error", error, retry }: ErrorStateProps) {
       aria-labelledby="error-state-title"
       className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-16 text-center"
     >
-      <span className="pn-badge mb-6" aria-hidden="true">
-        {isNotFound ? "404" : "500"}
-      </span>
-      <h1 id="error-state-title" className="mb-3 text-3xl font-bold">
-        {isNotFound ? t.notFoundTitle : t.errorTitle}
-      </h1>
-      <p className="mb-8 max-w-md text-muted-foreground">
-        {isNotFound ? t.notFoundMessage : t.errorMessage}
-      </p>
-      <div className="flex flex-wrap items-center justify-center gap-4">
-        {retry ? (
-          <button
-            type="button"
-            onClick={() => retry()}
-            className="pn-btn focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      <div className="relative w-full max-w-xl">
+        {/* Halo décoratif discret derrière la carte (RTL-safe, non interactif). */}
+        <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+          <span
+            className={`absolute inset-x-0 -top-8 mx-auto h-56 w-56 rounded-full opacity-40 blur-3xl ${
+              isNotFound ? "bg-sage-glow" : "bg-amber-glow"
+            }`}
+          />
+        </div>
+
+        <div className="pn-card rounded-xl px-6 py-10 sm:px-10">
+          <span
+            className={`pn-badge mb-6 ${
+              isNotFound ? "text-teal-highlight" : "text-amber-badge"
+            }`}
+            aria-hidden="true"
           >
-            {t.retry}
-          </button>
-        ) : null}
-        <Link
-          href={`/${locale}`}
-          className="pn-btn pn-btn-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        >
-          {t.backHome}
-        </Link>
+            {isNotFound ? "404" : "500"}
+          </span>
+          <h1
+            id="error-state-title"
+            className="mb-3 font-display text-3xl font-bold tracking-tight text-cream-text"
+          >
+            {isNotFound ? t.notFoundTitle : t.errorTitle}
+          </h1>
+          <p className="mx-auto mb-8 max-w-md text-cream-muted">
+            {isNotFound ? t.notFoundMessage : t.errorMessage}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {retry ? (
+              <button
+                type="button"
+                onClick={() => retry()}
+                className="pn-btn focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              >
+                {t.retry}
+              </button>
+            ) : null}
+            <Link
+              href={`/${locale}`}
+              className="pn-btn pn-btn-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            >
+              {t.backHome}
+            </Link>
+          </div>
+          {devDetails ? (
+            <details className="mt-8 w-full text-start">
+              <summary className="cursor-pointer text-sm text-on-surface-variant">
+                {t.devDetails}
+              </summary>
+              <pre className="mt-2 overflow-auto whitespace-pre-wrap rounded-lg border border-glass-border bg-surface-container-low p-4 text-start font-mono text-xs text-cream-muted">
+                {devDetails}
+              </pre>
+            </details>
+          ) : null}
+        </div>
       </div>
-      {devDetails ? (
-        <details className="mt-8 w-full max-w-2xl text-left">
-          <summary className="cursor-pointer text-sm text-muted-foreground">
-            {t.devDetails}
-          </summary>
-          <pre className="mt-2 overflow-auto whitespace-pre-wrap border-2 border-border bg-card p-4 font-mono text-xs">
-            {devDetails}
-          </pre>
-        </details>
-      ) : null}
     </section>
   );
 }
